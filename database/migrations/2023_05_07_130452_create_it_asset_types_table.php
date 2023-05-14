@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('it_asset_types', function (Blueprint $table) {
             $table->id();
+            $table->string("it_asset_type");
             $table->timestamps();
         });
     }

@@ -3,84 +3,119 @@
 namespace App\Http\Controllers\masters;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CreateFacilityRequest;
 use App\Models\masters\Facility;
+use App\Models\masters\Location;
 use Illuminate\Http\Request;
 
 class FacilityController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
+   * Display a listing of the resource.
+   *
+   * @return \Illuminate\Http\Response
+   */
+  public function index()
+  {
+    $data = [
+      "facilities" => Facility::with('location')->get(),
+      "locations" => Location::all()
+    ];
+    return view("masters.facility.index", $data);
+  }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+  /**
+   * Show the form for creating a new resource.
+   *
+   * @return \Illuminate\Http\Response
+   */
+  public function create()
+  {
+    return view("masters.facility.create");
+  }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+  /**
+   * Store a newly created resource in storage.
+   *
+   * @param  \Illuminate\Http\Request  $request
+   * @return \Illuminate\Http\Response
+   */
+  public function store(CreateFacilityRequest $request)
+  {
+    $credentials = $request->validated();
+    Facility::updateOrCreate(["id" => $request->id], $credentials);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\masters\Facility  $facility
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Facility $facility)
-    {
-        //
-    }
+    return redirect()->route("facilities.index");
+  }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\masters\Facility  $facility
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Facility $facility)
-    {
-        //
-    }
+  /**
+   * Display the specified resource.
+   *
+   * @param  \App\Models\masters\Location  $location
+   * @return \Illuminate\Http\Response
+   */
+  public function show(Facility $facility)
+  {
+    $data = [
+      "facility" => $facility
+    ];
+    return view("masters.facility.detail", $data);
+  }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\masters\Facility  $facility
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Facility $facility)
-    {
-        //
-    }
+  /**
+   * Show the form for editing the specified resource.
+   *
+   * @param  \App\Models\masters\Location  $location
+   * @return \Illuminate\Http\Response
+   */
+  public function edit($id)
+  {
+    $facility = Facility::where('id', $id)->first();
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\masters\Facility  $facility
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Facility $facility)
-    {
-        //
+    $data = [
+      'facility' => $facility,
+    ];
+
+    $response = [
+      "status" => "success",
+      "message" => "Data retrieved successfully",
+      "data" => $data
+    ];
+
+    if ($data["facility"] == null) {
+      return response()->json([
+        "status" => "failed",
+        "message" => "failed retrieved Data",
+        "data" => null
+      ], 404);
     }
+    return response()->json($response, 200);
+    // return view('masters.location.edit', $data);
+  }
+
+  /**
+   * Update the specified resource in storage.
+   *
+   * @param  \Illuminate\Http\Request  $request
+   * @param  \App\Models\masters\Location  $location
+   * @return \Illuminate\Http\Response
+   */
+  public function update(Request $request, Facility $facility)
+  {
+    // dd($request->all());
+    $facility->update($request->all());
+    return redirect()->route("facilities.index");
+  }
+
+  /**
+   * Remove the specified resource from storage.
+   *
+   * @param  \App\Models\masters\Location  $location
+   * @return \Illuminate\Http\Response
+   */
+  public function destroy(Facility $facility)
+  {
+    $facility->delete();
+    return redirect()->route("facilities.index");
+  }
 }

@@ -15,7 +15,11 @@ return new class extends Migration
     {
         Schema::create('facilities', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger("location_id");
+            $table->string("facility_name");
             $table->timestamps();
+
+            $table->foreign("location_id")->on("locations")->references("id")->cascadeOnDelete()->cascadeOnUpdate();
         });
     }
 

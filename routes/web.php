@@ -35,7 +35,10 @@ Route::get('/pages/misc-error', $controller_path . '\pages\MiscError@index')->na
 
 // Master
 Route::resource('companies', CompanyController::class);
+
 Route::resource('locations', LocationController::class);
+Route::get('user-list', [LocationController::class, "list"]);
+
 Route::resource('departments', DepartmentController::class);
 Route::resource('facilities', FacilityController::class);
 Route::resource('equipment-types', EquipmentTypeController::class);

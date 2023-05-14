@@ -15,7 +15,13 @@ return new class extends Migration
     {
         Schema::create('departments', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger("location_id")->nullable();
+            $table->unsignedBigInteger("facility_id");
+            $table->string("department");
             $table->timestamps();
+
+            $table->foreign("facility_id")->on("facilities")->references("id")->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreign("location_id")->on("locations")->references("id")->cascadeOnDelete()->cascadeOnUpdate();
         });
     }
 
