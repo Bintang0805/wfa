@@ -43,7 +43,15 @@ class EquipmentTypeController extends Controller
     $credentials = $request->validated();
     EquipmentType::updateOrCreate(['id' => $request->id], $credentials);
 
-    return redirect()->route('equipment-types.index');
+    if ($request->id == null) {
+      $successMessage = 'Equipment Type Created Successfully';
+    } else {
+      $successMessage = 'Equipment Type Updated Successfully';
+    }
+
+    return redirect()
+      ->route('equipment-types.index')
+      ->with('success', $successMessage);
   }
 
   /**
@@ -116,6 +124,8 @@ class EquipmentTypeController extends Controller
   public function destroy(EquipmentType $equipment_type)
   {
     $equipment_type->delete();
-    return redirect()->route('equipment-types.index');
+    return redirect()
+      ->route('equipment-types.index')
+      ->with('success', 'Equipment Type Deleted Successfully');
   }
 }

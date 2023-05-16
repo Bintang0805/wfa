@@ -45,6 +45,7 @@
       offCanvasForm.on('hidden.bs.offcanvas', function () {
         let fv = $("#addNewItAssetTypeForm")
         fv[0].reset(true);
+        $("#it_asset_type_id").val("");
       });
     });
 

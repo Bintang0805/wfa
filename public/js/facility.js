@@ -45,6 +45,7 @@
       offCanvasForm.on('hidden.bs.offcanvas', function () {
         let fv = $("#addNewFacilityForm")
         fv[0].reset(true);
+        $("#facility_id").val("");
       });
     });
 

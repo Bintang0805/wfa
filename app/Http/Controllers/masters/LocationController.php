@@ -18,9 +18,23 @@ class LocationController extends Controller
    */
   public function index()
   {
+    $locations = Location::with('facilities')->get();
+    $facilityCount = 0;
+    foreach ($locations as $l) {
+      $facilityCount += $l->facilities->count();
+    }
+
+    $locations = Location::with('departments')->get();
+    $departmentCount = 0;
+    foreach ($locations as $l) {
+      $departmentCount += $l->facilities->count();
+    }
+
     $data = [
-      'locations' => Location::with("company")->get(),
-      'companies' => Company::all()
+      'locations' => Location::with('company', 'facilities', 'departments')->get(),
+      'facilityCount' => $facilityCount,
+      'departmentCount' => $departmentCount,
+      'companies' => Company::all(),
     ];
     return view('masters.location.index', $data);
   }
@@ -44,11 +58,16 @@ class LocationController extends Controller
   public function store(CreateLocationRequest $request)
   {
     $credentials = $request->validated();
-    Location::updateOrCreate(["id" => $request->id], $credentials);
+    Location::updateOrCreate(['id' => $request->id], $credentials);
+    if ($request->id == null) {
+      $successMessage = 'Location Created Successfully';
+    } else {
+      $successMessage = 'Location Updated Successfully';
+    }
 
     return redirect()
       ->route('locations.index')
-      ->with('success', 'Location created successfully.');
+      ->with('success', $successMessage);
   }
 
   /**
@@ -80,17 +99,20 @@ class LocationController extends Controller
     ];
 
     $response = [
-      "status" => "success",
-      "message" => "Data retrieved successfully",
-      "data" => $data
+      'status' => 'success',
+      'message' => 'Data retrieved successfully',
+      'data' => $data,
     ];
 
-    if ($data["location"] == null) {
-      return response()->json([
-        "status" => "failed",
-        "message" => "failed retrieved Data",
-        "data" => null
-      ], 404);
+    if ($data['location'] == null) {
+      return response()->json(
+        [
+          'status' => 'failed',
+          'message' => 'failed retrieved Data',
+          'data' => null,
+        ],
+        404
+      );
     }
     return response()->json($response, 200);
     // return view('masters.location.edit', $data);
@@ -119,6 +141,8 @@ class LocationController extends Controller
   public function destroy(Location $location)
   {
     $location->delete();
-    return redirect()->route('locations.index');
+    return redirect()
+      ->route('locations.index')
+      ->with('success', 'Location Deleted Successfully');
   }
 }

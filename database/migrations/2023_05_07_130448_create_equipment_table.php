@@ -15,20 +15,24 @@ return new class extends Migration
     {
         Schema::create('equipments', function (Blueprint $table) {
             $table->id();
-            // $table->unsignedBigInteger("location_id");
+            $table->unsignedBigInteger("location_id")->nullable();
+            $table->unsignedBigInteger("facility_id")->nullable();
             $table->unsignedBigInteger("department_id");
             $table->unsignedBigInteger("equipment_type_id");
             $table->string("equipment_name");
             $table->string("equipment_make");
             $table->string("equipment_model");
-            $table->enum("data_storage", ["yes", "no", "na"]);
-            $table->enum("indirect_impact", ["yes", "no", "na"]);
-            $table->enum("qualification_status", ["c", "o", "p", "na"]);
-            $table->enum("csv_status", ["c", "o", "p", "na"]);
+            $table->enum("data_storage", ["Yes", "No", "NA"]);
+            $table->enum("indirect_impact", ["Yes", "No", "NA"]);
+            $table->enum("qualification_status", ["Completed", "On Going", "Pending", "NA"]);
+            $table->enum("csv_status", ["Completed", "On Going", "Pending", "NA"]);
             $table->string("equipment_number");
             $table->boolean("status");
             $table->timestamps();
 
+            $table->foreign("location_id")->on("locations")->references("id")->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreign("facility_id")->on("facilities")->references("id")->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreign("department_id")->on("departments")->references("id")->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreign("equipment_type_id")->on("equipment_types")->references("id")->cascadeOnDelete()->cascadeOnUpdate();
         });
     }

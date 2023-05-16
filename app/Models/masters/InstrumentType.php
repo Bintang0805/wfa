@@ -4,6 +4,7 @@ namespace App\Models\masters;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class InstrumentType extends Model
 {
@@ -12,14 +13,13 @@ class InstrumentType extends Model
   protected $fillable = ['instrument_type'];
   protected $guarded = ['id'];
 
-  public function BaseValidate()
+  /**
+   * Get all of the instruments for the InstrumentType
+   *
+   * @return \Illuminate\Database\Eloquent\Relations\HasMany
+   */
+  public function instruments(): HasMany
   {
-    $fields = $this->fillable;
-    $validateData = [];
-    foreach ($fields as $field) {
-      $combine = [$field => ['required']];
-      array_push($validateData, $combine);
-    }
-    return $validateData;
+      return $this->hasMany(Instrument::class, 'instrument_type_id', 'id');
   }
 }

@@ -45,6 +45,7 @@
       offCanvasForm.on('hidden.bs.offcanvas', function () {
         let fv = $("#addNewEquipmentTypeForm")
         fv[0].reset(true);
+        $("#equipment_type_id").val("");
       });
     });
 

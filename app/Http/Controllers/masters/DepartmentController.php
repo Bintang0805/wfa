@@ -21,6 +21,7 @@ class DepartmentController extends Controller
     $data = [
       'departments' => Department::with('facility', 'location')->get(),
       'facilities' => Facility::all(),
+      'locations' => Location::all(),
     ];
 
     return view('masters.department.index', $data);
@@ -46,11 +47,19 @@ class DepartmentController extends Controller
   {
     $location = Location::where('id', $request->facility_id)->first();
     $credentials = $request->validated();
-    $credentials["location_id"] = $location->id;
+    $credentials['location_id'] = $location->id;
 
-    Department::updateOrCreate(["id" => $request->id] ,$credentials);
+    Department::updateOrCreate(['id' => $request->id], $credentials);
 
-    return redirect()->route('departments.index');
+    if ($request->id == null) {
+      $successMessage = 'Department Created Successfully';
+    } else {
+      $successMessage = 'Department Updated Successfully';
+    }
+
+    return redirect()
+      ->route('departments.index')
+      ->with('success', $successMessage);
   }
 
   /**
@@ -124,6 +133,8 @@ class DepartmentController extends Controller
   public function destroy(Department $department)
   {
     $department->delete();
-    return redirect()->route('departments.index');
+    return redirect()
+      ->route('departments.index')
+      ->with('success', 'Department Deleted Successfully');
   }
 }

@@ -10,18 +10,25 @@ use Illuminate\Http\Request;
 
 class FacilityController extends Controller
 {
-    /**
+  /**
    * Display a listing of the resource.
    *
    * @return \Illuminate\Http\Response
    */
   public function index()
   {
+    $facilities = Facility::with('departments')->get();
+    $departmentCount = 0;
+    foreach ($facilities as $f) {
+      $departmentCount += $f->departments->count();
+    }
+
     $data = [
-      "facilities" => Facility::with('location')->get(),
-      "locations" => Location::all()
+      'facilities' => Facility::with('location')->get(),
+      'locations' => Location::all(),
+      'departmentCount' => $departmentCount
     ];
-    return view("masters.facility.index", $data);
+    return view('masters.facility.index', $data);
   }
 
   /**
@@ -31,7 +38,7 @@ class FacilityController extends Controller
    */
   public function create()
   {
-    return view("masters.facility.create");
+    return view('masters.facility.create');
   }
 
   /**
@@ -43,9 +50,17 @@ class FacilityController extends Controller
   public function store(CreateFacilityRequest $request)
   {
     $credentials = $request->validated();
-    Facility::updateOrCreate(["id" => $request->id], $credentials);
+    Facility::updateOrCreate(['id' => $request->id], $credentials);
 
-    return redirect()->route("facilities.index");
+    if ($request->id == null) {
+      $successMessage = 'Facility Created Successfully';
+    } else {
+      $successMessage = 'Facility Updated Successfully';
+    }
+
+    return redirect()
+      ->route('facilities.index')
+      ->with('success', $successMessage);
   }
 
   /**
@@ -57,9 +72,9 @@ class FacilityController extends Controller
   public function show(Facility $facility)
   {
     $data = [
-      "facility" => $facility
+      'facility' => $facility,
     ];
-    return view("masters.facility.detail", $data);
+    return view('masters.facility.detail', $data);
   }
 
   /**
@@ -77,17 +92,20 @@ class FacilityController extends Controller
     ];
 
     $response = [
-      "status" => "success",
-      "message" => "Data retrieved successfully",
-      "data" => $data
+      'status' => 'success',
+      'message' => 'Data retrieved successfully',
+      'data' => $data,
     ];
 
-    if ($data["facility"] == null) {
-      return response()->json([
-        "status" => "failed",
-        "message" => "failed retrieved Data",
-        "data" => null
-      ], 404);
+    if ($data['facility'] == null) {
+      return response()->json(
+        [
+          'status' => 'failed',
+          'message' => 'failed retrieved Data',
+          'data' => null,
+        ],
+        404
+      );
     }
     return response()->json($response, 200);
     // return view('masters.location.edit', $data);
@@ -104,7 +122,7 @@ class FacilityController extends Controller
   {
     // dd($request->all());
     $facility->update($request->all());
-    return redirect()->route("facilities.index");
+    return redirect()->route('facilities.index');
   }
 
   /**
@@ -116,6 +134,8 @@ class FacilityController extends Controller
   public function destroy(Facility $facility)
   {
     $facility->delete();
-    return redirect()->route("facilities.index");
+    return redirect()
+      ->route('facilities.index')
+      ->with('success', 'Facility Deleted Successfully');
   }
 }

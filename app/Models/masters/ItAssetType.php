@@ -4,6 +4,7 @@ namespace App\Models\masters;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class ItAssetType extends Model
 {
@@ -12,14 +13,13 @@ class ItAssetType extends Model
   protected $fillable = ['it_asset_type'];
   protected $guarded = ['id'];
 
-  public function BaseValidate()
+  /**
+   * Get all of the it_assets for the ItAssetType
+   *
+   * @return \Illuminate\Database\Eloquent\Relations\HasMany
+   */
+  public function it_assets(): HasMany
   {
-    $fields = $this->fillable;
-    $validateData = [];
-    foreach ($fields as $field) {
-      $combine = [$field => ['required']];
-      array_push($validateData, $combine);
-    }
-    return $validateData;
+      return $this->hasMany(ItAsset::class, 'it_asset_type_id', 'id');
   }
 }

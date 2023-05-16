@@ -21,7 +21,37 @@ class Facility extends Model
    */
   public function departments(): HasMany
   {
-    return $this->hasMany(Department::class, 'department_id', 'id');
+    return $this->hasMany(Department::class, 'facility_id', 'id');
+  }
+
+  /**
+   * Get all of the equipments for the Facility
+   *
+   * @return \Illuminate\Database\Eloquent\Relations\HasMany
+   */
+  public function equipments(): HasMany
+  {
+      return $this->hasMany(Equipment::class, 'facility_id', 'id');
+  }
+
+  /**
+   * Get all of the instruments for the Facility
+   *
+   * @return \Illuminate\Database\Eloquent\Relations\HasMany
+   */
+  public function instruments(): HasMany
+  {
+      return $this->hasMany(Instrument::class, 'facility_id', 'id');
+  }
+
+  /**
+   * Get all of the it_assets for the Facility
+   *
+   * @return \Illuminate\Database\Eloquent\Relations\HasMany
+   */
+  public function it_assets(): HasMany
+  {
+      return $this->hasMany(ItAsset::class, 'facility_id', 'id');
   }
 
   /**
@@ -32,16 +62,5 @@ class Facility extends Model
   public function location(): BelongsTo
   {
     return $this->belongsTo(Location::class, 'location_id', 'id');
-  }
-
-  public function BaseValidate()
-  {
-    $fields = $this->fillable;
-    $validateData = [];
-    foreach ($fields as $field) {
-      $combine = [$field => ['required']];
-      array_push($validateData, $combine);
-    }
-    return $validateData;
   }
 }

@@ -36,9 +36,56 @@
 
 @section('page-script')
     <script src="{{ asset('js/equipment-type.js') }}"></script>
+    @if (session('success'))
+        <script>
+            $(function() {
+                Swal.fire({
+                    icon: 'success',
+                    title: "Yeiy",
+                    text: "{{ session('success') }}",
+                    showConfirmButton: false,
+                    timer: 2500
+                });
+            })
+        </script>
+    @endif
+    <script>
+        function showPermission() {
+            event.preventDefault();
+            let form = document.getElementById('DeleteForm');
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't to delete this?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit(); // <--- submit form programmatically
+                } else if (
+                    result.dismiss === Swal.DismissReason.cancel
+                ) {
+                    swalWithBootstrapButtons.fire(
+                        'Cancelled',
+                        'Your data is safe :)',
+                        'error'
+                    )
+                }
+            })
+        }
+    </script>
 @endsection
 
 @section('content')
+    @if ($errors->any())
+        @foreach ($errors->all() as $error)
+            <div class="alert alert-danger" role="alert">
+                {{ $error }}
+            </div>
+        @endforeach
+    @endif
     <div class="card">
         <div class="card-header">
             <h5 class="card-title mb-0">Equipment Types Table</h5>
@@ -60,10 +107,11 @@
                             <td class="d-flex">
                                 <form
                                     action="{{ route('equipment-types.destroy', ['equipment_type' => $equipment_type]) }}"
-                                    method="POST">
+                                    id="DeleteForm" method="POST">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                    <button type="submit" class="btn btn-danger"
+                                        onclick="showPermission()"ss>Delete</button>
                                 </form>
                                 <button class="edit-button btn btn-primary mx-2" data-id="{{ $equipment_type->id }}"
                                     data-bs-toggle="offcanvas" data-bs-target="#offcanvasAddEquipmentType">

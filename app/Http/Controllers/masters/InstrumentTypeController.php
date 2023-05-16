@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 
 class InstrumentTypeController extends Controller
 {
-    /**
+  /**
    * Display a listing of the resource.
    *
    * @return \Illuminate\Http\Response
@@ -17,9 +17,9 @@ class InstrumentTypeController extends Controller
   public function index()
   {
     $data = [
-      "instrument_types" => InstrumentType::all(),
+      'instrument_types' => InstrumentType::all(),
     ];
-    return view("masters.instrument-type.index", $data);
+    return view('masters.instrument-type.index', $data);
   }
 
   /**
@@ -29,7 +29,7 @@ class InstrumentTypeController extends Controller
    */
   public function create()
   {
-    return view("masters.instrument-type.create");
+    return view('masters.instrument-type.create');
   }
 
   /**
@@ -41,9 +41,17 @@ class InstrumentTypeController extends Controller
   public function store(CreateInstrumentTypeRequest $request)
   {
     $credentials = $request->validated();
-    InstrumentType::updateOrCreate(["id" => $request->id], $credentials);
+    InstrumentType::updateOrCreate(['id' => $request->id], $credentials);
 
-    return redirect()->route("instrument-types.index");
+    if ($request->id == null) {
+      $successMessage = 'Instrument Type Created Successfully';
+    } else {
+      $successMessage = 'Instrument Type Updated Successfully';
+    }
+
+    return redirect()
+      ->route('instrument-types.index')
+      ->with('success', $successMessage);
   }
 
   /**
@@ -55,9 +63,9 @@ class InstrumentTypeController extends Controller
   public function show(InstrumentType $instrument_type)
   {
     $data = [
-      "instrument_type" => $instrument_type
+      'instrument_type' => $instrument_type,
     ];
-    return view("masters.instrument-type.detail", $data);
+    return view('masters.instrument-type.detail', $data);
   }
 
   /**
@@ -75,17 +83,20 @@ class InstrumentTypeController extends Controller
     ];
 
     $response = [
-      "status" => "success",
-      "message" => "Data retrieved successfully",
-      "data" => $data
+      'status' => 'success',
+      'message' => 'Data retrieved successfully',
+      'data' => $data,
     ];
 
-    if ($data["instrument_type"] == null) {
-      return response()->json([
-        "status" => "failed",
-        "message" => "failed retrieved Data",
-        "data" => null
-      ], 404);
+    if ($data['instrument_type'] == null) {
+      return response()->json(
+        [
+          'status' => 'failed',
+          'message' => 'failed retrieved Data',
+          'data' => null,
+        ],
+        404
+      );
     }
     return response()->json($response, 200);
     // return view('masters.location.edit', $data);
@@ -102,7 +113,7 @@ class InstrumentTypeController extends Controller
   {
     // dd($request->all());
     $instrument_type->update($request->all());
-    return redirect()->route("instrument-types.index");
+    return redirect()->route('instrument-types.index');
   }
 
   /**
@@ -114,6 +125,8 @@ class InstrumentTypeController extends Controller
   public function destroy(InstrumentType $instrument_type)
   {
     $instrument_type->delete();
-    return redirect()->route("instrument-types.index");
+    return redirect()
+      ->route('instrument-types.index')
+      ->with('success', 'Instrument Type Deleted Successfully');
   }
 }

@@ -45,6 +45,7 @@
       offCanvasForm.on('hidden.bs.offcanvas', function () {
         let fv = $("#addNewInstrumentTypeForm")
         fv[0].reset(true);
+        $("#instrument_type_id").val("");
       });
     });
 

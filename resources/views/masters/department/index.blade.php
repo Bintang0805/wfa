@@ -36,9 +36,115 @@
 
 @section('page-script')
     <script src="{{ asset('js/department.js') }}"></script>
+    @if (session('success'))
+        <script>
+            $(function() {
+                Swal.fire({
+                    icon: 'success',
+                    title: "Yeiy",
+                    text: "{{ session('success') }}",
+                    showConfirmButton: false,
+                    timer: 2500
+                });
+            })
+        </script>
+    @endif
+    <script>
+        function showPermission() {
+            event.preventDefault();
+            let form = document.getElementById('DeleteForm');
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't to delete this?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit(); // <--- submit form programmatically
+                } else if (
+                    result.dismiss === Swal.DismissReason.cancel
+                ) {
+                    swalWithBootstrapButtons.fire(
+                        'Cancelled',
+                        'Your data is safe :)',
+                        'error'
+                    )
+                }
+            })
+        }
+    </script>
 @endsection
 
 @section('content')
+    @if ($errors->any())
+        @foreach ($errors->all() as $error)
+            <div class="alert alert-danger" role="alert">
+                {{ $error }}
+            </div>
+        @endforeach
+    @endif
+    <div class="row g-4 mb-4">
+        <div class="col-sm-6 col-xl-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex align-items-start justify-content-between">
+                        <div class="content-left">
+                            <span>Departments</span>
+                            <div class="d-flex align-items-end mt-2">
+                                <h3 class="mb-0 me-2">{{ $departments->count() }}</h3>
+                                <small class="text-success">(100%)</small>
+                            </div>
+                            <small>Total Departments</small>
+                        </div>
+                        <span class="badge bg-label-primary rounded p-2">
+                            <i class="bx bx-user bx-sm"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-xl-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex align-items-start justify-content-between">
+                        <div class="content-left">
+                            <span>Facility</span>
+                            <div class="d-flex align-items-end mt-2">
+                                <h3 class="mb-0 me-2">{{ $facilities->count() }}</h3>
+                                <small class="text-success">(100%)</small>
+                            </div>
+                            <small>Total facilities</small>
+                        </div>
+                        <span class="badge bg-label-danger rounded p-2">
+                            <i class="bx bx-group bx-sm"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-xl-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex align-items-start justify-content-between">
+                        <div class="content-left">
+                            <span>Location</span>
+                            <div class="d-flex align-items-end mt-2">
+                                <h3 class="mb-0 me-2">{{ $locations->count() }}</h3>
+                                <small class="text-success">(100%)</small>
+                            </div>
+                            <small>Total Location</small>
+                        </div>
+                        <span class="badge bg-label-warning rounded p-2">
+                            <i class="bx bx-user-voice bx-sm"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="card">
         <div class="card-header">
             <h5 class="card-title mb-0">Departments Table</h5>
@@ -58,15 +164,16 @@
                     @foreach ($departments as $department)
                         <tr>
                             <td>{{ $department->id }}</td>
-                            <td>{{ $department->location != null ? $department->location->location_name : $department->facility->location->location_name}}</td>
+                            <td>{{ $department->location != null ? $department->location->location_name : $department->facility->location->location_name }}
+                            </td>
                             <td>{{ $department->facility->facility_name }}</td>
                             <td>{{ $department->department }}</td>
                             <td class="d-flex">
                                 <form action="{{ route('departments.destroy', ['department' => $department]) }}"
-                                    method="POST">
+                                    id="DeleteForm" method="POST">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                    <button type="submit" class="btn btn-danger" onclick="showPermission()">Delete</button>
                                 </form>
                                 <button class="edit-button btn btn-primary mx-2" data-id="{{ $department->id }}"
                                     data-bs-toggle="offcanvas" data-bs-target="#offcanvasAddDepartment">

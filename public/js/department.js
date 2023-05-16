@@ -45,6 +45,7 @@
       offCanvasForm.on('hidden.bs.offcanvas', function () {
         let fv = $("#addNewDepartmentForm")
         fv[0].reset(true);
+        $("#department_id").val("");
       });
     });
 

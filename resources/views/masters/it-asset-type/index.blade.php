@@ -8,7 +8,7 @@
 
 
 @section('vendor-style')
-<link rel="stylesheet" href="{{ asset('assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/datatables-buttons-bs5/buttons.bootstrap5.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/select2/select2.css') }}" />
@@ -18,15 +18,15 @@
 @endsection
 
 @section('vendor-script')
-<script src="{{ asset('assets/vendor/libs/moment/moment.js') }}"></script>
-<script src="{{ asset('assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js') }}"></script>
-<script src="{{ asset('assets/vendor/libs/select2/select2.js') }}"></script>
-<script src="{{ asset('assets/vendor/libs/formvalidation/dist/js/FormValidation.min.js') }}"></script>
-<script src="{{ asset('assets/vendor/libs/formvalidation/dist/js/plugins/Bootstrap5.min.js') }}"></script>
-<script src="{{ asset('assets/vendor/libs/formvalidation/dist/js/plugins/AutoFocus.min.js') }}"></script>
-<script src="{{ asset('assets/vendor/libs/cleavejs/cleave.js') }}"></script>
-<script src="{{ asset('assets/vendor/libs/cleavejs/cleave-phone.js') }}"></script>
-<script src="{{ asset('assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/moment/moment.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/select2/select2.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/formvalidation/dist/js/FormValidation.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/formvalidation/dist/js/plugins/Bootstrap5.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/formvalidation/dist/js/plugins/AutoFocus.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/cleavejs/cleave.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/cleavejs/cleave-phone.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
 @endsection
 
 <!-- Page -->
@@ -35,10 +35,57 @@
 @endsection
 
 @section('page-script')
-<script src="{{ asset('js/it-asset-type.js') }}"></script>
+    <script src="{{ asset('js/it-asset-type.js') }}"></script>
+    @if (session('success'))
+        <script>
+            $(function() {
+                Swal.fire({
+                    icon: 'success',
+                    title: "Yeiy",
+                    text: "{{ session('success') }}",
+                    showConfirmButton: false,
+                    timer: 2500
+                });
+            })
+        </script>
+    @endif
+    <script>
+        function showPermission() {
+            event.preventDefault();
+            let form = document.getElementById('DeleteForm');
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't to delete this?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit(); // <--- submit form programmatically
+                } else if (
+                    result.dismiss === Swal.DismissReason.cancel
+                ) {
+                    swalWithBootstrapButtons.fire(
+                        'Cancelled',
+                        'Your data is safe :)',
+                        'error'
+                    )
+                }
+            })
+        }
+    </script>
 @endsection
 
 @section('content')
+    @if ($errors->any())
+        @foreach ($errors->all() as $error)
+            <div class="alert alert-danger" role="alert">
+                {{ $error }}
+            </div>
+        @endforeach
+    @endif
     <div class="card">
         <div class="card-header">
             <h5 class="card-title mb-0">It Asset Types Table</h5>
@@ -53,22 +100,24 @@
                     </tr>
                 </thead>
                 <tbody>
-                  @foreach ($it_asset_types as $it_asset_type)
-                  <tr>
-                    <td>{{ $it_asset_type->id }}</td>
-                    <td>{{ $it_asset_type->it_asset_type }}</td>
-                    <td class="d-flex">
-                      <form action="{{ route('it-asset-types.destroy', ['it_asset_type' => $it_asset_type]) }}" method="POST">
-                          @csrf
-                          @method('DELETE')
-                          <button type="submit" class="btn btn-danger">Delete</button>
-                      </form>
-                      <button class="edit-button btn btn-primary mx-2" data-id="{{ $it_asset_type->id }}" data-bs-toggle="offcanvas" data-bs-target= "#offcanvasAddItAssetType">
-                        Edit
-                      </button>
-                  </td>
-                  </tr>
-                  @endforeach
+                    @foreach ($it_asset_types as $it_asset_type)
+                        <tr>
+                            <td>{{ $it_asset_type->id }}</td>
+                            <td>{{ $it_asset_type->it_asset_type }}</td>
+                            <td class="d-flex">
+                                <form action="{{ route('it-asset-types.destroy', ['it_asset_type' => $it_asset_type]) }}"
+                                    id="DeleteForm" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger" onclick="showPermission()">Delete</button>
+                                </form>
+                                <button class="edit-button btn btn-primary mx-2" data-id="{{ $it_asset_type->id }}"
+                                    data-bs-toggle="offcanvas" data-bs-target="#offcanvasAddItAssetType">
+                                    Edit
+                                </button>
+                            </td>
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>

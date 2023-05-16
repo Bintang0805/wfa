@@ -41,9 +41,17 @@ class ItAssetTypeController extends Controller
   public function store(CreateItAssetTypeRequest $request)
   {
     $credentials = $request->validated();
-    ItAssetType::updateOrCreate(["id" => $request->id], $credentials);
+    ItAssetType::updateOrCreate(['id' => $request->id], $credentials);
 
-    return redirect()->route('it-asset-types.index');
+    if ($request->id == null) {
+      $successMessage = 'IT Asset Type Created Successfully';
+    } else {
+      $successMessage = 'IT Asset Type Updated Successfully';
+    }
+
+    return redirect()
+      ->route('it-asset-types.index')
+      ->with('success', $successMessage);
   }
 
   /**
@@ -75,17 +83,20 @@ class ItAssetTypeController extends Controller
     ];
 
     $response = [
-      "status" => "success",
-      "message" => "Data retrieved successfully",
-      "data" => $data
+      'status' => 'success',
+      'message' => 'Data retrieved successfully',
+      'data' => $data,
     ];
 
-    if ($data["it_asset_type"] == null) {
-      return response()->json([
-        "status" => "failed",
-        "message" => "failed retrieved Data",
-        "data" => null
-      ], 404);
+    if ($data['it_asset_type'] == null) {
+      return response()->json(
+        [
+          'status' => 'failed',
+          'message' => 'failed retrieved Data',
+          'data' => null,
+        ],
+        404
+      );
     }
     return response()->json($response, 200);
     // return view('masters.location.edit', $data);
@@ -114,6 +125,8 @@ class ItAssetTypeController extends Controller
   public function destroy(ItAssetType $it_asset_type)
   {
     $it_asset_type->delete();
-    return redirect()->route('it-asset-types.index');
+    return redirect()
+      ->route('it-asset-types.index')
+      ->with('success', 'IT Asset Type Deleted Succesfully');
   }
 }
