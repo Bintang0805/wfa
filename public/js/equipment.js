@@ -24,7 +24,7 @@
     $(function () {
       // Variable declaration for table
       var dt_equipment_table = $('.datatables-equipments'),
-        offCanvasForm = $('#offcanvasAddEquipment');
+        modal = $('#modalCenter');
 
       // Facilities datatable
       if (dt_equipment_table.length) {
@@ -34,15 +34,15 @@
             text: '<i class="bx bx-plus me-0 me-sm-2"></i><span class="d-none d-sm-inline-block">Add New Equipment</span>',
             className: 'add-new btn btn-primary ms-2',
             attr: {
-              'data-bs-toggle': 'offcanvas',
-              'data-bs-target': '#offcanvasAddEquipment'
+              'data-bs-toggle': 'modal',
+              'data-bs-target': '#modalCenter'
             }
           }],
         });
       }
 
-      // clearing form data when offcanvas hidden
-      offCanvasForm.on('hidden.bs.offcanvas', function () {
+      // clearing form data when modal hidden
+      modal.on('hidden.bs.modal', function () {
         let fv = $("#addNewEquipmentForm")
         fv[0].reset(true);
         $("#equipment_id").val("");
@@ -75,6 +75,53 @@
           $('#add-csv-status').val(equipment.csv_status);
           $('#add-equipment-number').val(equipment.equipment_number);
           $('#add-status').val(equipment.status);
+        }
+      });
+    });
+
+    // Menambahkan event listener ke tombol detail
+    $(".detail-button").on("click", function () {
+      // Mendapatkan data-id dari tombol edit yang diklik
+      var id = $(this).data("id");
+
+      let urlEdit = `${baseUrl}/equipments/${id}/edit`;
+
+      $.ajax({
+        url: urlEdit,
+        type: 'GET',
+        success: function (data) {
+          console.log(urlEdit);
+          let equipment = data.data.equipment;
+          console.log(equipment);
+          $('#equipment-id-detail').text(`: ${equipment.id}`);
+          $('#equipment-name-detail').text(`: ${equipment.equipment_name}`);
+          $('#equipment-type-detail').text(`: ${equipment.equipment_type.equipment_type}`);
+          $('#equipment-make-detail').text(`: ${equipment.equipment_make}`);
+          $('#equipment-model-detail').text(`: ${equipment.equipment_model}`);
+          $('#data-storage-detail').text(`: ${equipment.data_storage}`);
+          $('#indirect-impact-detail').text(`: ${equipment.indirect_impact}`);
+          $('#qualification-status-detail').text(`: ${equipment.qualification_status}`);
+          $('#csv-status-detail').text(`: ${equipment.csv_status}`);
+          $('#equipment-number-detail').text(`: ${equipment.equipment_number}`);
+          $('#status-detail').text(equipment.status == 1 ? ": Active" : ": Retired");
+          $('#department-id-detail').text(`: ${equipment.department_id}`);
+          $('#department-name-detail').text(`: ${equipment.department.department}`);
+          // let i = 1
+          // facility.departments.forEach(department => {
+          //   $('#TableBody').append(`
+          //   <tr>
+          //   <td>
+          //   ${i++}
+          //   </td>
+          //   <td>
+          //   ${department.id}
+          //   </td>
+          //   <td>
+          //   ${department.department}
+          //   </td>
+          //   </tr>
+          //   `);
+          // });
         }
       });
     });

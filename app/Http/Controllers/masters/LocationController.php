@@ -92,7 +92,7 @@ class LocationController extends Controller
    */
   public function edit($id)
   {
-    $location = Location::where('id', $id)->first();
+    $location = Location::with('company')->where('id', $id)->first();
 
     $data = [
       'location' => $location,

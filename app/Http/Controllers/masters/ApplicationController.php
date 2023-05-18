@@ -53,10 +53,10 @@ class ApplicationController extends Controller
    */
   public function store(CreateApplicationRequest $request)
   {
-    // dd($request->all());
+
     $department = Department::where('id', $request->department_id)->first();
-    $facility = Facility::where('id', $department->id)->first();
-    $location = Location::where('id', $facility->id)->first();
+    $facility = Facility::where('id', $department->facility_id)->first();
+    $location = Location::where('id', $facility->location_id)->first();
 
     $credentials = $request->validated();
     $credentials['location_id'] = $location->id;

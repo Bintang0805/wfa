@@ -50,14 +50,25 @@ class ItAssetController extends Controller
    */
   public function store(CreateItAssetRequest $request)
   {
+    if($request->id != null) {
+      unset($request["ip_address"]);
+      unset($request["host_name"]);
+    } else {
+      $request->validate([
+        "ip_address" => ["unique:it_assets,ip_address"],
+        "host_name" => ["unique:it_assets,host_name"],
+      ]);
+    }
     // dd($request->all());
     $department = Department::where('id', $request->department_id)->first();
     $facility = Facility::where('id', $department->id)->first();
     $location = Location::where('id', $facility->id)->first();
 
+
     $credentials = $request->validated();
     $credentials['location_id'] = $location->id;
     $credentials['facility_id'] = $facility->id;
+
     ItAsset::updateOrCreate(['id' => $request->id], $credentials);
 
     if ($request->id == null) {
@@ -88,7 +99,7 @@ class ItAssetController extends Controller
    */
   public function edit($id)
   {
-    $it_asset = ItAsset::with('location', 'facility', 'department')
+    $it_asset = ItAsset::with('location', 'facility', 'department', 'it_asset_type')
       ->where('id', $id)
       ->first();
 
@@ -102,7 +113,7 @@ class ItAssetController extends Controller
       'data' => $data,
     ];
 
-    if ($data['instrument'] == null) {
+    if ($data['it_asset'] == null) {
       return response()->json(
         [
           'status' => 'failed',

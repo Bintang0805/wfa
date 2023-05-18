@@ -24,7 +24,7 @@
     $(function () {
       // Variable declaration for table
       var dt_application_table = $('.datatables-applications'),
-        offCanvasForm = $('#offcanvasAddApplication');
+        modal = $('#modalCenter');
 
       // Facilities datatable
       if (dt_application_table.length) {
@@ -34,15 +34,22 @@
             text: '<i class="bx bx-plus me-0 me-sm-2"></i><span class="d-none d-sm-inline-block">Add New Application</span>',
             className: 'add-new btn btn-primary ms-2',
             attr: {
-              'data-bs-toggle': 'offcanvas',
-              'data-bs-target': '#offcanvasAddApplication'
+              'data-bs-toggle': 'modal',
+              'data-bs-target': '#modalCenter'
             }
           }],
         });
       }
+      function filterColumn(i, val) {
+        dt_application_table.DataTable().column(i).search(val, false, true).draw();
+      }
 
-      // clearing form data when offcanvas hidden
-      offCanvasForm.on('hidden.bs.offcanvas', function () {
+      $('input.dt-input').on('keyup', function () {
+        filterColumn($(this).attr('data-column'), $(this).val());
+      });
+
+      // clearing form data when modal hidden
+      modal.on('hidden.bs.modal', function () {
         let fv = $("#addNewApplicationForm")
         fv[0].reset(true);
         $("#application_id").val("");
@@ -50,6 +57,8 @@
     });
 
     var baseUrl = window.location.origin;
+
+
 
     // Menambahkan event listener ke tombol edit
     $(".edit-button").on("click", function () {
@@ -81,6 +90,58 @@
           $('#add-data-type').val(application.data_type);
           $('#add-vendor-details').val(application.vendor_details);
           $('#add-status').val(application.status);
+        }
+      });
+    });
+
+    // Menambahkan event listener ke tombol detail
+    $(".detail-button").on("click", function () {
+      // Mendapatkan data-id dari tombol edit yang diklik
+      var id = $(this).data("id");
+
+      let urlEdit = `${baseUrl}/applications/${id}/edit`;
+
+      $.ajax({
+        url: urlEdit,
+        type: 'GET',
+        success: function (data) {
+          console.log(urlEdit);
+          let application = data.data.application;
+          console.log(application);
+          $('#application-id-detail').text(`: ${application.id}`);
+          $('#application-name-detail').text(`: ${application.application_name}`);
+          $('#application-ver-detail').text(`: ${application.application_ver}`);
+          $('#connected-to-computer-detail').text(`: ${application.connected_to_computer == 1 ? "Yes" : "No"}`);
+          $('#application-department-detail').text(`: ${application.department}.id`);
+          $('#connected-to-server-detail').text(`: ${application.connected_to_server == 1 ? "Yes" : "No"}`);
+          $('#application-role-type-detail').text(`: ${application.application_role_type}`);
+          $('#privilages-detail').text(`: ${application.privilages}`);
+          $('#manufacturer-detail').text(`: ${application.manufacturer}`);
+          $('#gamp-category-detail').text(`: ${application.gamp_category}`);
+          $('#csv-status-detail').text(`: ${application.csv_status}`);
+          $('#csv-completed-on-detail').text(`: ${application.csv_completed_on}`);
+          $('#periodic-review-detail').text(`: ${application.periodic_review}`);
+          $('#gxp-status-detail').text(`: ${application.gxp_status}`);
+          $('#backup-mode-detail').text(`: ${application.backup_mode}`);
+          $('#data-type-detail').text(`: ${application.data_type}`);
+          $('#vendor-detail').text(`: ${application.vendor_details}`);
+          $('#status-detail').text(`: ${application.status}`);
+          // let i = 1
+          // facility.departments.forEach(department => {
+          //   $('#TableBody').append(`
+          //   <tr>
+          //   <td>
+          //   ${i++}
+          //   </td>
+          //   <td>
+          //   ${department.id}
+          //   </td>
+          //   <td>
+          //   ${department.department}
+          //   </td>
+          //   </tr>
+          //   `);
+          // });
         }
       });
     });

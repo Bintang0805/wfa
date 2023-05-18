@@ -24,25 +24,91 @@
     $(function () {
       // Variable declaration for table
       var dt_instrument_type_table = $('.datatables-instrument-types'),
-        offCanvasForm = $('#offcanvasAddInstrumentType');
+        modal = $('#modalCenter');
 
       // Facilities datatable
       if (dt_instrument_type_table.length) {
         var dt_instrument_type = dt_instrument_type_table.DataTable({
           dom: '<"row mx-2"' + '<"col-md-2"<"me-3"l>>' + '<"col-md-10"<"dt-action-buttons text-xl-end text-lg-start text-md-end text-start d-flex align-items-center justify-content-end flex-md-row flex-column mb-3 mb-md-0"fB>>' + '>t' + '<"row mx-2"' + '<"col-sm-12 col-md-6"i>' + '<"col-sm-12 col-md-6"p>' + '>',
-          buttons: [{
+          buttons: [
+            {
+              extend: 'collection',
+              className: 'btn btn-label-secondary dropdown-toggle mx-3',
+              text: '<i class="bx bx-export me-2"></i>Export',
+              buttons: [
+                {
+                  extend: 'print',
+                  title: 'Instrument Types Print',
+                  text: '<i class="bx bx-printer me-2" ></i>Print',
+                  className: 'dropdown-item',
+                  exportOptions: {
+                    columns: [1],
+                  },
+                  customize: function (win) {
+                    //customize print view for dark
+                    $(win.document.body)
+                      .css('color', config.colors.headingColor)
+                      .css('border-color', config.colors.borderColor)
+                      .css('background-color', config.colors.body);
+                    $(win.document.body)
+                      .find('table')
+                      .addClass('compact')
+                      .css('color', 'inherit')
+                      .css('border-color', 'inherit')
+                      .css('background-color', 'inherit');
+                  }
+                },
+                {
+                  extend: 'csv',
+                  title: 'Instrument Types CSV',
+                  text: '<i class="bx bx-file me-2" ></i>Csv',
+                  className: 'dropdown-item',
+                  exportOptions: {
+                    columns: [1],
+                  }
+                },
+                {
+                  extend: 'excel',
+                  title: 'Location Excel',
+                  text: '<i class="bx bxs-file-export me-1"></i>Excel',
+                  className: 'dropdown-item',
+                  exportOptions: {
+                    columns: [1],
+                  }
+                },
+                {
+                  extend: 'pdf',
+                  title: 'Instrument Types PDF',
+                  text: '<i class="bx bxs-file-pdf me-2"></i>Pdf',
+                  className: 'dropdown-item',
+                  exportOptions: {
+                    columns: [1],
+                  }
+                },
+                {
+                  extend: 'copy',
+                  title: 'Instrument Types Copy',
+                  text: '<i class="bx bx-copy me-2" ></i>Copy',
+                  className: 'dropdown-item',
+                  exportOptions: {
+                    columns: [1],
+                  }
+                }
+              ]
+            },
+            {
             text: '<i class="bx bx-plus me-0 me-sm-2"></i><span class="d-none d-sm-inline-block">Add New Instrument Type</span>',
             className: 'add-new btn btn-primary ms-2',
             attr: {
-              'data-bs-toggle': 'offcanvas',
-              'data-bs-target': '#offcanvasAddInstrumentType'
+              'data-bs-toggle': 'modal',
+              'data-bs-target': '#modalCenter'
             }
           }],
         });
       }
 
-      // clearing form data when offcanvas hidden
-      offCanvasForm.on('hidden.bs.offcanvas', function () {
+      // clearing form data when modal hidden
+      modal.on('hidden.bs.modal', function () {
         let fv = $("#addNewInstrumentTypeForm")
         fv[0].reset(true);
         $("#instrument_type_id").val("");

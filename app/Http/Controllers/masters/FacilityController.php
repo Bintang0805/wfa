@@ -85,7 +85,7 @@ class FacilityController extends Controller
    */
   public function edit($id)
   {
-    $facility = Facility::where('id', $id)->first();
+    $facility = Facility::with("departments", "location")->where('id', $id)->first();
 
     $data = [
       'facility' => $facility,

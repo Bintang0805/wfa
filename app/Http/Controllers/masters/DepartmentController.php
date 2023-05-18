@@ -47,7 +47,12 @@ class DepartmentController extends Controller
   {
     $location = Location::where('id', $request->facility_id)->first();
     $credentials = $request->validated();
-    $credentials['location_id'] = $location->id;
+    if ($request->location_id == null) {
+      $credentials['location_id'] = $location->id;
+    } else {
+      $credentials['location_id'] = $request->location_id;
+    }
+    // $credentials['location_id'] = $location->id;
 
     Department::updateOrCreate(['id' => $request->id], $credentials);
 
@@ -84,7 +89,9 @@ class DepartmentController extends Controller
    */
   public function edit($id)
   {
-    $department = Department::where('id', $id)->first();
+    $department = Department::with('location', 'facility')
+      ->where('id', $id)
+      ->first();
 
     $data = [
       'department' => $department,

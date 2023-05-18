@@ -15,6 +15,8 @@
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/formvalidation/dist/css/formValidation.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/animate-css/animate.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/sweetalert2/sweetalert2.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/toastr/toastr.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/animate-css/animate.css') }}">
 @endsection
 
 @section('vendor-script')
@@ -27,6 +29,7 @@
     <script src="{{ asset('assets/vendor/libs/cleavejs/cleave.js') }}"></script>
     <script src="{{ asset('assets/vendor/libs/cleavejs/cleave-phone.js') }}"></script>
     <script src="{{ asset('assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/toastr/toastr.js') }}"></script>
 @endsection
 
 <!-- Page -->
@@ -36,7 +39,7 @@
 
 @section('page-script')
     <script src="{{ asset('js/location.js') }}"></script>
-    @if (session('success'))
+    {{-- @if (session('success'))
         <script>
             $(function() {
                 Swal.fire({
@@ -48,7 +51,7 @@
                 });
             })
         </script>
-    @endif
+    @endif --}}
     <script>
         function showPermission() {
             event.preventDefault();
@@ -79,6 +82,19 @@
 @endsection
 
 @section('content')
+    @if (session('success'))
+        <div class="bs-toast toast fade show bg-primary position-fixed bottom-0 end-0 me-4 mb-4" role="alert"
+            aria-live="assertive" aria-atomic="true">
+            <div class="toast-header pb-2">
+                {{-- <img src="..." class="rounded me-2" alt="" /> --}}
+                <div class="me-auto fw-semibold">Success Message</div>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                {{ session('success') }}
+            </div>
+        </div>
+    @endif
     @if ($errors->any())
         @foreach ($errors->all() as $error)
             <div class="alert alert-danger" role="alert">
@@ -165,6 +181,29 @@
         </div>
     </div>
     <div class="card">
+        <form action="" class="px-4 pt-3">
+            <div class="d-flex align-items-end">
+                <div class="">
+                    <label for="add-location-company" class="form-label">Company<span
+                            class="text-danger ps-1 fs-6">*</span></label>
+                    <select name="company_id" id="add-location-company" class="form-control">
+                        <option value="" disabled selected>Select Company</option>
+                        @foreach ($companies as $company)
+                            <option value="{{ $company->id }}">{{ $company->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="mx-2">
+                    <label class="form-label" for="add-location-name">Location Name<span
+                            class="text-danger ps-1 fs-6">*</span></label>
+                    <input type="text" id="add-location-name" class="form-control" placeholder="California"
+                        name="location_name" />
+                </div>
+                <button type="submit" class="btn btn-primary" style="height: min-content;">
+                  + Add New Location
+                </button>
+            </div>
+        </form>
         <div class="card-header">
             <h5 class="card-title mb-0">Locations Table</h5>
         </div>
@@ -185,23 +224,27 @@
                             <td>{{ $location->company->name }}</td>
                             <td class="location-name">{{ $location->location_name }}</td>
                             <td class="d-flex">
+                                <button class="detail-button btn btn-sm btn-secondary" data-id="{{ $location->id }}"
+                                    data-bs-toggle="modal" data-bs-target="#modalCenterDetail">
+                                    Detail
+                                </button>
+                                <button class="edit-button btn-sm btn btn-primary mx-2" data-id="{{ $location->id }}">
+                                    Edit
+                                </button>
                                 <form action="{{ route('locations.destroy', ['location' => $location]) }}" method="POST"
                                     id="DeleteForm">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-danger" onclick="showPermission()">Delete</button>
+                                    <button type="submit" class="btn btn-sm btn-danger"
+                                        onclick="showPermission()">Delete</button>
                                 </form>
-                                <button class="edit-button btn btn-primary mx-2" data-id="{{ $location->id }}"
-                                    data-bs-toggle="offcanvas" data-bs-target="#offcanvasAddLocation">
-                                    Edit
-                                </button>
                             </td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
         </div>
-        <!-- Offcanvas to add new location -->
+        {{-- <!-- Offcanvas to add new location -->
         <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasAddLocation"
             aria-labelledby="offcanvasAddLocationLabel">
             <div class="offcanvas-header">
@@ -230,6 +273,113 @@
                     <button type="submit" class="btn btn-primary me-sm-3 me-1 data-submit">Submit</button>
                     <button type="reset" class="btn btn-label-secondary" data-bs-dismiss="offcanvas">Cancel</button>
                 </form>
+            </div>
+        </div> --}}
+    </div>
+
+    {{-- <div class="mt-3">
+        <div class="modal fade" id="modalCenter" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <form action="{{ route('locations.store') }}" method="post" id="addNewLocationForm">
+                        @csrf
+                        <input type="hidden" name="id" id="location_id">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modalCenterTitle">Form Locations</h5>
+                            <button type="reset" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col mb-3">
+                                    <label for="nameWithTitle" class="add-location-company">Company<span
+                                            class="text-danger ps-1 fs-6">*</span></label>
+                                    <select name="company_id" id="add-location-company" class="form-control">
+                                        <option value="" disabled selected>Select Company</option>
+                                        @foreach ($companies as $company)
+                                            <option value="{{ $company->id }}">{{ $company->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="add-location-name">Location Name<span
+                                        class="text-danger ps-1 fs-6">*</span></label>
+                                <input type="text" id="add-location-name" class="form-control"
+                                    placeholder="California" name="location_name" />
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="reset" class="btn btn-label-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div> --}}
+
+    <div class="mt-3">
+        <div class="modal fade" id="modalCenterDetail" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalCenterTitle">Detail Location</h5>
+                        <button type="reset" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row py-2">
+                            <div class="col-4">
+                                Location Id
+                            </div>
+                            <div class="col-8" id="location-id-detail">
+                                : Loading
+                            </div>
+                        </div>
+                        <div class="row py-2">
+                            <div class="col-4">
+                                Location Name
+                            </div>
+                            <div class="col-8" id="location-name-detail">
+                                : Loading
+                            </div>
+                        </div>
+                        <div class="row py-2">
+                            <div class="col-4">
+                                Company Id
+                            </div>
+                            <div class="col-8" id="company-id">
+                                : Loading
+                            </div>
+                        </div>
+                        <div class="row py-2">
+                            <div class="col-4">
+                                Company Name
+                            </div>
+                            <div class="col-8" id="company-name-detail">
+                                : Loading
+                            </div>
+                        </div>
+                        {{-- <div class="row">
+                            <div class="col mb-3">
+                                <label for="nameWithTitle" class="add-location-company">Company<span
+                                        class="text-danger ps-1 fs-6">*</span></label>
+                                <select name="company_id" id="add-location-company" readonly class="form-control">
+                                    <option value="" disabled selected>Select Company</option>
+                                    @foreach ($companies as $company)
+                                        <option value="{{ $company->id }}">{{ $company->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="add-location-name">Location Name<span
+                                    class="text-danger ps-1 fs-6">*</span></label>
+                            <input type="text" id="add-location-name" class="form-control" placeholder="California"
+                                name="location_name" readonly/>
+                        </div> --}}
+                    </div>
+                </div>
             </div>
         </div>
     </div>

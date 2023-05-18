@@ -24,7 +24,7 @@
     $(function () {
       // Variable declaration for table
       var dt_instrument_table = $('.datatables-instruments'),
-        offCanvasForm = $('#offcanvasAddInstrument');
+        modal = $('#modalCenter');
 
       // Facilities datatable
       if (dt_instrument_table.length) {
@@ -34,15 +34,15 @@
             text: '<i class="bx bx-plus me-0 me-sm-2"></i><span class="d-none d-sm-inline-block">Add New Instrument</span>',
             className: 'add-new btn btn-primary ms-2',
             attr: {
-              'data-bs-toggle': 'offcanvas',
-              'data-bs-target': '#offcanvasAddInstrument'
+              'data-bs-toggle': 'modal',
+              'data-bs-target': '#modalCenter'
             }
           }],
         });
       }
 
-      // clearing form data when offcanvas hidden
-      offCanvasForm.on('hidden.bs.offcanvas', function () {
+      // clearing form data when modal hidden
+      modal.on('hidden.bs.modal', function () {
         let fv = $("#addNewInstrumentForm")
         fv[0].reset(true);
         $("#instrument_id").val("");
@@ -79,6 +79,55 @@
         }
       });
     });
+
+    // Menambahkan event listener ke tombol detail
+    $(".detail-button").on("click", function () {
+      // Mendapatkan data-id dari tombol edit yang diklik
+      var id = $(this).data("id");
+
+      let urlEdit = `${baseUrl}/instruments/${id}/edit`;
+
+      $.ajax({
+        url: urlEdit,
+        type: 'GET',
+        success: function (data) {
+          console.log(urlEdit);
+          let instrument = data.data.instrument;
+          console.log(instrument);
+          $('#instrument-id-detail').text(`: ${instrument.id}`);
+          $('#instrument-name-detail').text(`: ${instrument.instrument_name}`);
+          $('#instrument-type-detail').text(`: ${instrument.instrument_type.instrument_type}`);
+          $('#instrument-make-detail').text(`: ${instrument.instrument_make}`);
+          $('#instrument-model-detail').text(`: ${instrument.instrument_model}`);
+          $('#data-storage-detail').text(`: ${instrument.data_storage}`);
+          $('#indirect-impact-detail').text(`: ${instrument.indirect_impact}`);
+          $('#qualification-status-detail').text(`: ${instrument.qualification_status}`);
+          $('#csv-status-detail').text(`: ${instrument.csv_status}`);
+          $('#computer-connected-detail').text(`: ${instrument.computer_connected}`);
+          $('#instrument-asset-code-detail').text(`: ${instrument.instrument_asset_code}`);
+          $('#status-detail').text(instrument.status == 1 ? ": Active" : ": Retired");
+          $('#department-id-detail').text(`: ${instrument.department_id}`);
+          $('#department-name-detail').text(`: ${instrument.department.department}`);
+          // let i = 1
+          // facility.departments.forEach(department => {
+          //   $('#TableBody').append(`
+          //   <tr>
+          //   <td>
+          //   ${i++}
+          //   </td>
+          //   <td>
+          //   ${department.id}
+          //   </td>
+          //   <td>
+          //   ${department.department}
+          //   </td>
+          //   </tr>
+          //   `);
+          // });
+        }
+      });
+    });
+
 
 /******/ 	return __webpack_exports__;
     /******/
