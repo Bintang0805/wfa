@@ -26,6 +26,12 @@
       var dt_instrument_type_table = $('.datatables-instrument-types'),
         modal = $('#modalCenter');
 
+      let hasError = $('#modalCenter').attr('data-errors')
+      // console.log(hasError);
+      if (hasError > 0) {
+        modal.modal('show');
+      }
+
       // Facilities datatable
       if (dt_instrument_type_table.length) {
         var dt_instrument_type = dt_instrument_type_table.DataTable({
@@ -97,13 +103,13 @@
               ]
             },
             {
-            text: '<i class="bx bx-plus me-0 me-sm-2"></i><span class="d-none d-sm-inline-block">Add New Instrument Type</span>',
-            className: 'add-new btn btn-primary ms-2',
-            attr: {
-              'data-bs-toggle': 'modal',
-              'data-bs-target': '#modalCenter'
-            }
-          }],
+              text: '<i class="bx bx-plus me-0 me-sm-2"></i><span class="d-none d-sm-inline-block">Add New Instrument Type</span>',
+              className: 'add-new btn btn-primary ms-2',
+              attr: {
+                'data-bs-toggle': 'modal',
+                'data-bs-target': '#modalCenter'
+              }
+            }],
         });
       }
 

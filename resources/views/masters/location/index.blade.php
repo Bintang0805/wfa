@@ -181,9 +181,11 @@
         </div>
     </div>
     <div class="card">
-        <form action="" class="px-4 pt-3">
+        <form action="{{ route('locations.store') }}" method="post" class="px-4 pt-3">
+            @csrf
             <div class="d-flex align-items-end">
                 <div class="">
+                    <input type="hidden" name="id" id="location_id">
                     <label for="add-location-company" class="form-label">Company<span
                             class="text-danger ps-1 fs-6">*</span></label>
                     <select name="company_id" id="add-location-company" class="form-control">
@@ -200,7 +202,7 @@
                         name="location_name" />
                 </div>
                 <button type="submit" class="btn btn-primary" style="height: min-content;">
-                  + Add New Location
+                    + Add New Location
                 </button>
             </div>
         </form>

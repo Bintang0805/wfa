@@ -26,6 +26,12 @@
       var dt_equipment_table = $('.datatables-equipments'),
         modal = $('#modalCenter');
 
+      let hasError = $('#modalCenter').attr('data-errors')
+      // console.log(hasError);
+      if (hasError > 0) {
+        modal.modal('show');
+      }
+
       // Facilities datatable
       if (dt_equipment_table.length) {
         var dt_equipment = dt_equipment_table.DataTable({

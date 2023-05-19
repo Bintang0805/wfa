@@ -26,6 +26,12 @@
       var dt_it_asset_table = $('.datatables-it-assets'),
         modal = $('#modalCenter');
 
+      let hasError = $('#modalCenter').attr('data-errors')
+      // console.log(hasError);
+      if (hasError > 0) {
+        modal.modal('show');
+      }
+
       // Facilities datatable
       if (dt_it_asset_table.length) {
         var dt_it_asset = dt_it_asset_table.DataTable({

@@ -26,6 +26,12 @@
       var dt_instrument_table = $('.datatables-instruments'),
         modal = $('#modalCenter');
 
+      let hasError = $('#modalCenter').attr('data-errors')
+      // console.log(hasError);
+      if (hasError > 0) {
+        modal.modal('show');
+      }
+
       // Facilities datatable
       if (dt_instrument_table.length) {
         var dt_instrument = dt_instrument_table.DataTable({

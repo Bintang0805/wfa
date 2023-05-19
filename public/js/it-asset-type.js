@@ -26,6 +26,12 @@
       var dt_it_asset_type_table = $('.datatables-it-asset-types'),
         modal = $('#modalCenter');
 
+      let hasError = $('#modalCenter').attr('data-errors')
+      // console.log(hasError);
+      if (hasError > 0) {
+        modal.modal('show');
+      }
+
       // Facilities datatable
       if (dt_it_asset_type_table.length) {
         var dt_it_asset_type = dt_it_asset_type_table.DataTable({
@@ -97,13 +103,13 @@
               ]
             },
             {
-            text: '<i class="bx bx-plus me-0 me-sm-2"></i><span class="d-none d-sm-inline-block">Add New It Asset Type</span>',
-            className: 'add-new btn btn-primary ms-2',
-            attr: {
-              'data-bs-toggle': 'modal',
-              'data-bs-target': '#modalCenter'
-            }
-          }],
+              text: '<i class="bx bx-plus me-0 me-sm-2"></i><span class="d-none d-sm-inline-block">Add New It Asset Type</span>',
+              className: 'add-new btn btn-primary ms-2',
+              attr: {
+                'data-bs-toggle': 'modal',
+                'data-bs-target': '#modalCenter'
+              }
+            }],
         });
       }
 

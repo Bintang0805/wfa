@@ -157,7 +157,7 @@
     </div>
 
     <div class="mt-3">
-        <div class="modal fade" id="modalCenter" tabindex="-1" aria-hidden="true">
+        <div class="modal fade" id="modalCenter" tabindex="-1" aria-hidden="true" data-errors="{{ $errors->any() == true ? true : false }}">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <form action="{{ route('equipment-types.store') }}" method="post" id="addNewEquipmentTypeForm">

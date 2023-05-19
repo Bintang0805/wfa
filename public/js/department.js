@@ -26,6 +26,12 @@
       var dt_department_table = $('.datatables-departments'),
         modal = $('#modalCenter');
 
+      let hasError = $('#modalCenter').attr('data-errors')
+      // console.log(hasError);
+      if (hasError > 0) {
+        modal.modal('show');
+      }
+
       // Facilities datatable
       if (dt_department_table.length) {
         var dt_department = dt_department_table.DataTable({
