@@ -70,8 +70,8 @@
 
 @section('content')
     @if (session('success'))
-        <div class="bs-toast toast fade show bg-primary position-fixed bottom-0 end-0 me-4 mb-4" role="alert"
-            aria-live="assertive" aria-atomic="true">
+        <div class="bs-toast toast fade show bg-primary position-fixed bottom-0 end-0 me-4 mb-4 success-toast"
+            role="alert" aria-live="assertive" aria-atomic="true">
             <div class="toast-header pb-2">
                 {{-- <img src="..." class="rounded me-2" alt="" /> --}}
                 <div class="me-auto fw-semibold">Success Message</div>
@@ -120,21 +120,21 @@
                             <td>{{ $it_asset->oem_sl_no }}</td>
                             <td>{{ $it_asset->asset_status }}</td>
                             <td class="d-flex">
-                                <button class="detail-button btn btn-sm btn-secondary" data-id="{{ $it_asset->id }}"
-                                    data-bs-toggle="modal" data-bs-target="#modalCenterDetail">
-                                    Detail
-                                </button>
-                                <button class="edit-button btn btn-sm btn-primary mx-2" data-id="{{ $it_asset->id }}"
+                                <button class="edit-button btn btn-sm btn-primary" data-id="{{ $it_asset->id }}"
                                     data-bs-toggle="modal" data-bs-target="#modalCenter">
-                                    Edit
+                                    <i class="bx bx-edit"></i>
                                 </button>
                                 <form action="{{ route('it-assets.destroy', ['it_asset' => $it_asset]) }}" id="DeleteForm"
                                     method="POST">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-danger"
-                                        onclick="showPermission()">Delete</button>
+                                    <button type="submit" class="btn btn-sm btn-danger mx-2" onclick="showPermission()"><i
+                                            class="bx bx-trash"></i></button>
                                 </form>
+                                <button class="detail-button btn btn-sm btn-secondary" data-id="{{ $it_asset->id }}"
+                                    data-bs-toggle="modal" data-bs-target="#modalCenterDetail">
+                                    <i class="bx bx-dots-vertical-rounded"></i>
+                                </button>
                             </td>
                         </tr>
                     @endforeach
@@ -232,8 +232,9 @@
     </div>
 
     <div class="mt-3">
-        <div class="modal fade" id="modalCenter" tabindex="-1" aria-hidden="true" data-errors="{{ $errors->any() == true ? true : false }}">
-            <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal fade" id="modalCenter" tabindex="-1" aria-hidden="true"
+            data-errors="{{ $errors->any() == true ? true : false }}">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                 <div class="modal-content">
                     <form action="{{ route('it-assets.store') }}" method="post" id="addNewItAssetForm">
                         @csrf
@@ -250,88 +251,90 @@
                                 @endforeach
                             @endif
                             <input type="hidden" name="id" id="it_asset_id">
-                            <div class="mb-3">
-                                <label class="form-label" for="add-it-asset-department">Department<span
-                                        class="text-danger ps-1 fs-6">*</span></label>
-                                <select name="department_id" id="add-it-asset-department" class="form-control">
-                                    <option value="" disabled selected>Select Department</option>
-                                    @foreach ($departments as $department)
-                                        <option value="{{ $department->id }}">{{ $department->department }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label" for="add-it-asset-type">It Asset Type<span
-                                        class="text-danger ps-1 fs-6">*</span></label>
-                                <select name="it_asset_type_id" id="add-it-asset-type" class="form-control">
-                                    <option value="" disabled selected>Select IT Asset Type</option>
-                                    @foreach ($it_asset_types as $it_asset_type)
-                                        <option value="{{ $it_asset_type->id }}">{{ $it_asset_type->it_asset_type }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label" for="add-make">IT Asset Make<span
-                                        class="text-danger ps-1 fs-6">*</span></label>
-                                <input type="text" id="add-make" class="form-control" placeholder="California"
-                                    name="make" />
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label" for="add-model">IT Asset Model<span
-                                        class="text-danger ps-1 fs-6">*</span></label>
-                                <input type="text" id="add-model" class="form-control" placeholder="California"
-                                    name="model" />
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label" for="add-oem-sl-no">OEM SL No<span
-                                        class="text-danger ps-1 fs-6">*</span></label>
-                                <input type="text" id="add-oem-sl-no" class="form-control" placeholder="California"
-                                    name="oem_sl_no" />
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label" for="add-host-name">Host Name<span
-                                        class="text-danger ps-1 fs-6">*</span></label>
-                                <input type="text" id="add-host-name" class="form-control" placeholder="California"
-                                    name="host_name" />
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label" for="add-ip-address">IP Address<span
-                                        class="text-danger ps-1 fs-6">*</span></label>
-                                <input type="text" id="add-ip-address" class="form-control" placeholder="California"
-                                    name="ip_address" />
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label" for="add-asset-type">Asset Type<span
-                                        class="text-danger ps-1 fs-6">*</span></label>
-                                <select name="asset_type" id="add-asset-type" class="form-control">
-                                    <option value="" disabled selected>Select Asset Type</option>
-                                    @foreach ($asset_types as $asset_type)
-                                        <option value="{{ $asset_type }}">{{ $asset_type }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label" for="add-os-ver">OS Ver<span
-                                        class="text-danger ps-1 fs-6">*</span></label>
-                                <input type="text" id="add-os-ver" class="form-control" placeholder="California"
-                                    name="os_ver" />
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label" for="add-asset-status">Asset Status<span
-                                        class="text-danger ps-1 fs-6">*</span></label>
-                                <select name="asset_status" id="add-asset-status" class="form-control">
-                                    <option value="" disabled selected>Select Status</option>
-                                    <option value="Active">Active</option>
-                                    <option value="Retired">Retired</option>
-                                    <option value="Stock">Stock</option>
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label" for="add-owner-name">Owner Name<span
-                                        class="text-danger ps-1 fs-6">*</span></label>
-                                <input type="text" id="add-owner-name" class="form-control" placeholder="California"
-                                    name="owner_name" />
+                            <div class="row">
+                                <div class="mb-3 col-lg-6 col-12">
+                                    <label class="form-label" for="add-it-asset-department">Department<span
+                                            class="text-danger ps-1 fs-6">*</span></label>
+                                    <select name="department_id" id="add-it-asset-department" class="form-control">
+                                        <option value="" disabled selected>Select Department</option>
+                                        @foreach ($departments as $department)
+                                            <option value="{{ $department->id }}">{{ $department->department }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="mb-3 col-lg-6 col-12">
+                                    <label class="form-label" for="add-it-asset-type">It Asset Type<span
+                                            class="text-danger ps-1 fs-6">*</span></label>
+                                    <select name="it_asset_type_id" id="add-it-asset-type" class="form-control">
+                                        <option value="" disabled selected>Select IT Asset Type</option>
+                                        @foreach ($it_asset_types as $it_asset_type)
+                                            <option value="{{ $it_asset_type->id }}">{{ $it_asset_type->it_asset_type }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="mb-3 col-lg-6 col-12">
+                                    <label class="form-label" for="add-make">IT Asset Make<span
+                                            class="text-danger ps-1 fs-6">*</span></label>
+                                    <input type="text" id="add-make" class="form-control" placeholder="California"
+                                        name="make" />
+                                </div>
+                                <div class="mb-3 col-lg-6 col-12">
+                                    <label class="form-label" for="add-model">IT Asset Model<span
+                                            class="text-danger ps-1 fs-6">*</span></label>
+                                    <input type="text" id="add-model" class="form-control" placeholder="California"
+                                        name="model" />
+                                </div>
+                                <div class="mb-3 col-lg-6 col-12">
+                                    <label class="form-label" for="add-oem-sl-no">OEM SL No<span
+                                            class="text-danger ps-1 fs-6">*</span></label>
+                                    <input type="text" id="add-oem-sl-no" class="form-control"
+                                        placeholder="California" name="oem_sl_no" />
+                                </div>
+                                <div class="mb-3 col-lg-6 col-12">
+                                    <label class="form-label" for="add-host-name">Host Name<span
+                                            class="text-danger ps-1 fs-6">*</span></label>
+                                    <input type="text" id="add-host-name" class="form-control"
+                                        placeholder="California" name="host_name" />
+                                </div>
+                                <div class="mb-3 col-lg-6 col-12">
+                                    <label class="form-label" for="add-ip-address">IP Address<span
+                                            class="text-danger ps-1 fs-6">*</span></label>
+                                    <input type="text" id="add-ip-address" class="form-control"
+                                        placeholder="California" name="ip_address" />
+                                </div>
+                                <div class="mb-3 col-lg-6 col-12">
+                                    <label class="form-label" for="add-asset-type">Asset Type<span
+                                            class="text-danger ps-1 fs-6">*</span></label>
+                                    <select name="asset_type" id="add-asset-type" class="form-control">
+                                        <option value="" disabled selected>Select Asset Type</option>
+                                        @foreach ($asset_types as $asset_type)
+                                            <option value="{{ $asset_type }}">{{ $asset_type }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="mb-3 col-lg-6 col-12">
+                                    <label class="form-label" for="add-os-ver">OS Ver<span
+                                            class="text-danger ps-1 fs-6">*</span></label>
+                                    <input type="text" id="add-os-ver" class="form-control" placeholder="California"
+                                        name="os_ver" />
+                                </div>
+                                <div class="mb-3 col-lg-6 col-12">
+                                    <label class="form-label" for="add-asset-status">Asset Status<span
+                                            class="text-danger ps-1 fs-6">*</span></label>
+                                    <select name="asset_status" id="add-asset-status" class="form-control">
+                                        <option value="" disabled selected>Select Status</option>
+                                        <option value="Active">Active</option>
+                                        <option value="Retired">Retired</option>
+                                        <option value="Stock">Stock</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3 col-lg-6 col-12">
+                                    <label class="form-label" for="add-owner-name">Owner Name<span
+                                            class="text-danger ps-1 fs-6">*</span></label>
+                                    <input type="text" id="add-owner-name" class="form-control"
+                                        placeholder="California" name="owner_name" />
+                                </div>
                             </div>
                         </div>
                         <div class="modal-footer">

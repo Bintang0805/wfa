@@ -19,7 +19,7 @@ return new class extends Migration
             $table->unsignedBigInteger("facility_id")->nullable();
             $table->unsignedBigInteger("department_id");
             $table->unsignedBigInteger("equipment_type_id");
-            $table->string("equipment_name");
+            $table->string("equipment_name")->unique();
             $table->string("equipment_make");
             $table->string("equipment_model");
             $table->enum("data_storage", ["Yes", "No", "NA"]);

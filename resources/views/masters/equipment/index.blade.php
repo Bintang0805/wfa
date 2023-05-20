@@ -70,8 +70,8 @@
 
 @section('content')
     @if (session('success'))
-        <div class="bs-toast toast fade show bg-primary position-fixed bottom-0 end-0 me-4 mb-4" role="alert"
-            aria-live="assertive" aria-atomic="true">
+        <div class="bs-toast toast fade show bg-primary position-fixed bottom-0 end-0 me-4 mb-4 success-toast"
+            role="alert" aria-live="assertive" aria-atomic="true">
             <div class="toast-header pb-2">
                 {{-- <img src="..." class="rounded me-2" alt="" /> --}}
                 <div class="me-auto fw-semibold">Success Message</div>
@@ -118,21 +118,21 @@
                             <td>{{ $equipment->equipment_number }}</td>
                             <td>{{ $equipment->status == 1 ? 'Active' : 'Retired' }}</td>
                             <td class="d-flex">
-                                <button class="detail-button btn btn-sm btn-secondary" data-id="{{ $equipment->id }}"
-                                    data-bs-toggle="modal" data-bs-target="#modalCenterDetail">
-                                    Detail
-                                </button>
-                                <button class="edit-button btn btn-sm btn-primary mx-2" data-id="{{ $equipment->id }}"
+                                <button class="edit-button btn btn-sm btn-primary" data-id="{{ $equipment->id }}"
                                     data-bs-toggle="modal" data-bs-target="#modalCenter">
-                                    Edit
+                                    <i class="bx bx-edit"></i>
                                 </button>
                                 <form action="{{ route('equipments.destroy', ['equipment' => $equipment]) }}"
                                     id="DeleteForm" method="POST">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-danger"
-                                        onclick="showPermission()">Delete</button>
+                                    <button type="submit" class="btn btn-sm btn-danger mx-2" onclick="showPermission()"><i
+                                            class="bx bx-trash"></i></button>
                                 </form>
+                                <button class="detail-button btn btn-sm btn-secondary" data-id="{{ $equipment->id }}"
+                                    data-bs-toggle="modal" data-bs-target="#modalCenterDetail">
+                                    <i class="bx bx-dots-vertical-rounded"></i>
+                                </button>
                             </td>
                         </tr>
                     @endforeach
@@ -243,8 +243,9 @@
     </div>
 
     <div class="mt-3">
-        <div class="modal fade" id="modalCenter" tabindex="-1" aria-hidden="true" data-errors="{{ $errors->any() == true ? true : false }}">
-            <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal fade" id="modalCenter" tabindex="-1" aria-hidden="true"
+            data-errors="{{ $errors->any() == true ? true : false }}">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                 <div class="modal-content">
                     <form action="{{ route('equipments.store') }}" method="post" id="addNewEquipmentForm">
                         @csrf
@@ -261,100 +262,106 @@
                                 @endforeach
                             @endif
                             <input type="hidden" name="id" id="equipment_id">
-                            <div class="mb-3">
-                                <label class="form-label" for="add-equipment-department">Department<span
-                                        class="text-danger ps-1 fs-6">*</span></label>
-                                <select name="department_id" id="add-equipment-department" class="form-control">
-                                    <option value="" disabled selected>Select Department</option>
-                                    @foreach ($departments as $department)
-                                        <option value="{{ $department->id }}">{{ $department->department }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label" for="add-equipment-type">Equipment Type<span
-                                        class="text-danger ps-1 fs-6">*</span></label>
-                                <select name="equipment_type_id" id="add-equipment-type" class="form-control">
-                                    <option value="" disabled selected>Select Equipment Type</option>
-                                    @foreach ($equipment_types as $equipment_type)
-                                        <option value="{{ $equipment_type->id }}">{{ $equipment_type->equipment_type }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label" for="add-equipment-name">Equipment Name<span
-                                        class="text-danger ps-1 fs-6">*</span></label>
-                                <input type="text" id="add-equipment-name" class="form-control"
-                                    placeholder="California" name="equipment_name" />
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label" for="add-equipment-make">Equipment Make<span
-                                        class="text-danger ps-1 fs-6">*</span></label>
-                                <input type="text" id="add-equipment-make" class="form-control"
-                                    placeholder="California" name="equipment_make" />
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label" for="add-equipment-model">Equipment Model<span
-                                        class="text-danger ps-1 fs-6">*</span></label>
-                                <input type="text" id="add-equipment-model" class="form-control"
-                                    placeholder="California" name="equipment_model" />
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label" for="add-data-storage">Data Storage<span
-                                        class="text-danger ps-1 fs-6">*</span></label>
-                                <select name="data_storage" id="add-data-storage" class="form-control">
-                                    <option value="" disabled selected>Select Data Storage</option>
-                                    @foreach ($data_storage_types as $data_storage_type)
-                                        <option value="{{ $data_storage_type }}">{{ $data_storage_type }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label" for="add-indirect-impact">Indirect Impact<span
-                                        class="text-danger ps-1 fs-6">*</span></label>
-                                <select name="indirect_impact" id="add-indirect-impact" class="form-control">
-                                    <option value="" disabled selected>Select Indirect Impact</option>
-                                    @foreach ($indirect_impact_types as $indirect_impact_type)
-                                        <option value="{{ $indirect_impact_type }}">{{ $indirect_impact_type }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label" for="add-qualification-status">Qualification Status<span
-                                        class="text-danger ps-1 fs-6">*</span></label>
-                                <select name="qualification_status" id="add-qualification-status" class="form-control">
-                                    <option value="" disabled selected>Select Qualification Status</option>
-                                    @foreach ($qualification_status_types as $qualification_status_type)
-                                        <option value="{{ $qualification_status_type }}">{{ $qualification_status_type }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label" for="add-csv-status">CSV Status<span
-                                        class="text-danger ps-1 fs-6">*</span></label>
-                                <select name="csv_status" id="add-csv-status" class="form-control">
-                                    <option value="" disabled selected>Select CSV Status</option>
-                                    @foreach ($csv_status_types as $csv_status_type)
-                                        <option value="{{ $csv_status_type }}">{{ $csv_status_type }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label" for="add-equipment-number">Equipment Number<span
-                                        class="text-danger ps-1 fs-6">*</span></label>
-                                <input type="text" id="add-equipment-number" class="form-control"
-                                    placeholder="California" name="equipment_number" />
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label" for="add-status">Status<span
-                                        class="text-danger ps-1 fs-6">*</span></label>
-                                <select name="status" id="add-status" class="form-control">
-                                    <option value="" disabled selected>Select Status</option>
-                                    <option value="1">Active</option>
-                                    <option value="0">Retired</option>
-                                </select>
+                            <div class="row">
+                                <div class="mb-3 col-lg-6 col-12">
+                                    <label class="form-label" for="add-equipment-department">Department<span
+                                            class="text-danger ps-1 fs-6">*</span></label>
+                                    <select name="department_id" id="add-equipment-department" class="form-control">
+                                        <option value="" disabled selected>Select Department</option>
+                                        @foreach ($departments as $department)
+                                            <option value="{{ $department->id }}">{{ $department->department }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="mb-3 col-lg-6 col-12">
+                                    <label class="form-label" for="add-equipment-type">Equipment Type<span
+                                            class="text-danger ps-1 fs-6">*</span></label>
+                                    <select name="equipment_type_id" id="add-equipment-type" class="form-control">
+                                        <option value="" disabled selected>Select Equipment Type</option>
+                                        @foreach ($equipment_types as $equipment_type)
+                                            <option value="{{ $equipment_type->id }}">
+                                                {{ $equipment_type->equipment_type }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="mb-3 col-lg-6 col-12">
+                                    <label class="form-label" for="add-equipment-name">Equipment Name<span
+                                            class="text-danger ps-1 fs-6">*</span></label>
+                                    <input type="text" id="add-equipment-name" class="form-control"
+                                        placeholder="California" name="equipment_name" />
+                                </div>
+                                <div class="mb-3 col-lg-6 col-12">
+                                    <label class="form-label" for="add-equipment-make">Equipment Make<span
+                                            class="text-danger ps-1 fs-6">*</span></label>
+                                    <input type="text" id="add-equipment-make" class="form-control"
+                                        placeholder="California" name="equipment_make" />
+                                </div>
+                                <div class="mb-3 col-lg-6 col-12">
+                                    <label class="form-label" for="add-equipment-model">Equipment Model<span
+                                            class="text-danger ps-1 fs-6">*</span></label>
+                                    <input type="text" id="add-equipment-model" class="form-control"
+                                        placeholder="California" name="equipment_model" />
+                                </div>
+                                <div class="mb-3 col-lg-6 col-12">
+                                    <label class="form-label" for="add-data-storage">Data Storage<span
+                                            class="text-danger ps-1 fs-6">*</span></label>
+                                    <select name="data_storage" id="add-data-storage" class="form-control">
+                                        <option value="" disabled selected>Select Data Storage</option>
+                                        @foreach ($data_storage_types as $data_storage_type)
+                                            <option value="{{ $data_storage_type }}">{{ $data_storage_type }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="mb-3 col-lg-6 col-12">
+                                    <label class="form-label" for="add-indirect-impact">Indirect Impact<span
+                                            class="text-danger ps-1 fs-6">*</span></label>
+                                    <select name="indirect_impact" id="add-indirect-impact" class="form-control">
+                                        <option value="" disabled selected>Select Indirect Impact</option>
+                                        @foreach ($indirect_impact_types as $indirect_impact_type)
+                                            <option value="{{ $indirect_impact_type }}">{{ $indirect_impact_type }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="mb-3 col-lg-6 col-12">
+                                    <label class="form-label" for="add-qualification-status">Qualification Status<span
+                                            class="text-danger ps-1 fs-6">*</span></label>
+                                    <select name="qualification_status" id="add-qualification-status"
+                                        class="form-control">
+                                        <option value="" disabled selected>Select Qualification Status</option>
+                                        @foreach ($qualification_status_types as $qualification_status_type)
+                                            <option value="{{ $qualification_status_type }}">
+                                                {{ $qualification_status_type }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="mb-3 col-lg-6 col-12">
+                                    <label class="form-label" for="add-csv-status">CSV Status<span
+                                            class="text-danger ps-1 fs-6">*</span></label>
+                                    <select name="csv_status" id="add-csv-status" class="form-control">
+                                        <option value="" disabled selected>Select CSV Status</option>
+                                        @foreach ($csv_status_types as $csv_status_type)
+                                            <option value="{{ $csv_status_type }}">{{ $csv_status_type }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="mb-3 col-lg-6 col-12">
+                                    <label class="form-label" for="add-equipment-number">Equipment Number<span
+                                            class="text-danger ps-1 fs-6">*</span></label>
+                                    <input type="text" id="add-equipment-number" class="form-control"
+                                        placeholder="California" name="equipment_number" />
+                                </div>
+                                <div class="mb-3 col-lg-6 col-12">
+                                    <label class="form-label" for="add-status">Status<span
+                                            class="text-danger ps-1 fs-6">*</span></label>
+                                    <select name="status" id="add-status" class="form-control">
+                                        <option value="" disabled selected>Select Status</option>
+                                        <option value="1">Active</option>
+                                        <option value="0">Retired</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
                         <div class="modal-footer">

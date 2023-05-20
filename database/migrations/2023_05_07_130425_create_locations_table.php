@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('locations', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger("company_id");
-            $table->string("location_name");
+            $table->string("location_name")->unique();
             $table->timestamps();
 
             $table->foreign("company_id")->on("companies")->references("id")->cascadeOnDelete()->cascadeOnUpdate();

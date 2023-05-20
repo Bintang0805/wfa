@@ -18,6 +18,11 @@
      * Page User List
      */
 
+    setTimeout(() => {
+      if($(".success-toast")) {
+        $(".success-toast").toast('hide');
+      }
+    }, 10000);
 
 
     // Datatable (jquery)
@@ -140,6 +145,37 @@
         }
       });
     });
+
+    // validating form and updating instrument type's data
+    var addNewInstrumentTypeForm = document.getElementById('addNewInstrumentTypeForm');
+
+    var fv = FormValidation.formValidation(addNewInstrumentTypeForm, {
+      fields: {
+        instrument_type: {
+          validators: {
+            notEmpty: {
+              message: 'this is required'
+            }
+          }
+        },
+      },
+      plugins: {
+        trigger: new FormValidation.plugins.Trigger(),
+        bootstrap5: new FormValidation.plugins.Bootstrap5({
+          // Use this for enabling/changing valid/invalid class
+          eleValidClass: '',
+          rowSelector: function rowSelector(field, ele) {
+            // field is the field name & ele is the field element
+            return '.mb-3';
+          }
+        }),
+        submitButton: new FormValidation.plugins.SubmitButton(),
+        // Submit the form when all fields are valid
+        defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
+        autoFocus: new FormValidation.plugins.AutoFocus()
+      }
+    })
+
 
 /******/ 	return __webpack_exports__;
     /******/

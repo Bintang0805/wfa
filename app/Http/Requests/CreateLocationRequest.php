@@ -25,7 +25,7 @@ class CreateLocationRequest extends FormRequest
   {
     return [
       'company_id' => ['required'],
-      'location_name' => ['required'],
+      'location_name' => ['required', 'unique:locations,location_name,'.$this->request->get("id")],
     ];
   }
 
@@ -34,6 +34,7 @@ class CreateLocationRequest extends FormRequest
     return [
       'company_id.required' => 'the Company is a required',
       'location_name.required' => 'the Location Name is a required',
+      'location_name.unique' => 'the Location Name must unique',
     ];
   }
 }

@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('applications', function (Blueprint $table) {
             $table->id();
-            $table->string("application_name");
+            $table->string("application_name")->unique();
             $table->string("application_ver");
             $table->boolean("connected_to_computer");
             $table->unsignedBigInteger("location_id")->nullable();

@@ -24,7 +24,7 @@ class CreateApplicationRequest extends FormRequest
     public function rules()
     {
       return [
-        'application_name' => ['required'],
+        'application_name' => ['required', 'unique:applications,application_name,'.$this->request->get("id")],
         'application_ver' => ['required'],
         'connected_to_computer' => ['required'],
         'department_id' => ['required'],
@@ -47,23 +47,24 @@ class CreateApplicationRequest extends FormRequest
     public function messages()
     {
       return [
-        'application_name' => "the Application Name is required",
-        'application_ver' => "the Applicaiton Ver is required",
-        'connected_to_computer' => "the Connected To Computer is required",
-        'department_id' => "the Department is required",
-        'connected_to_server' => "the Connected To Server is required",
-        'application_role_type' => "the Application Role Type is required",
-        'privilages' => "the Privilages is required",
-        'manufacturer' => "the Manufacturer is required",
-        'gamp_category' => "the Gamp Category is required",
-        'csv_status' => "the CSV Status is required",
-        'csv_completed_on' => "the CSV Completed On is required",
-        'periodic_review' => "the Periodic Review is required",
-        'gxp_status' => "the GXP Status is required",
-        'backup_mode' => "the Backup Mode is required",
-        'data_type' => "the Data Type is required",
-        'vendor_details' => "the Vendor Details is required",
-        'status' => "the Status is required",
+        'application_name.required' => "the Application Name is required",
+        'application_name.unique' => "the Application Name must unique",
+        'application_ver.required' => "the Applicaiton Ver is required",
+        'connected_to_computer.required' => "the Connected To Computer is required",
+        'department_id.required' => "the Department is required",
+        'connected_to_server.required' => "the Connected To Server is required",
+        'application_role_type.required' => "the Application Role Type is required",
+        'privilages.required' => "the Privilages is required",
+        'manufacturer.required' => "the Manufacturer is required",
+        'gamp_category.required' => "the Gamp Category is required",
+        'csv_status.required' => "the CSV Status is required",
+        'csv_completed_on.required' => "the CSV Completed On is required",
+        'periodic_review.required' => "the Periodic Review is required",
+        'gxp_status.required' => "the GXP Status is required",
+        'backup_mode.required' => "the Backup Mode is required",
+        'data_type.required' => "the Data Type is required",
+        'vendor_details.required' => "the Vendor Details is required",
+        'status.required' => "the Status is required",
       ];
     }
 }

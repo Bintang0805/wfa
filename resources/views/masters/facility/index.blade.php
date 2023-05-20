@@ -70,8 +70,8 @@
 
 @section('content')
     @if (session('success'))
-        <div class="bs-toast toast fade show bg-primary position-fixed bottom-0 end-0 me-4 mb-4" role="alert"
-            aria-live="assertive" aria-atomic="true">
+        <div class="bs-toast toast fade show bg-primary position-fixed bottom-0 end-0 me-4 mb-4 success-toast"
+            role="alert" aria-live="assertive" aria-atomic="true">
             <div class="toast-header pb-2">
                 {{-- <img src="..." class="rounded me-2" alt="" /> --}}
                 <div class="me-auto fw-semibold">Success Message</div>
@@ -163,8 +163,8 @@
                 <thead>
                     <tr>
                         <th>Id</th>
-                        <th>Location Name</th>
                         <th>Facility Name</th>
+                        <th>Location Name</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -172,24 +172,24 @@
                     @foreach ($facilities as $facility)
                         <tr>
                             <td>{{ $facility->id }}</td>
-                            <td>{{ $facility->location->location_name }}</td>
                             <td>{{ $facility->facility_name }}</td>
+                            <td>{{ $facility->location->location_name }}</td>
                             <td class="d-flex">
-                                <button class="detail-button btn btn-sm btn-secondary" data-id="{{ $facility->id }}"
-                                    data-bs-toggle="modal" data-bs-target="#modalCenterDetail">
-                                    Edit
-                                </button>
-                                <button class="edit-button btn btn-sm btn-primary mx-2" data-id="{{ $facility->id }}"
+                                <button class="edit-button btn btn-sm btn-primary" data-id="{{ $facility->id }}"
                                     data-bs-toggle="modal" data-bs-target="#modalCenter">
-                                    Edit
+                                    <i class="bx bx-edit"></i>
                                 </button>
                                 <form action="{{ route('facilities.destroy', ['facility' => $facility]) }}" method="POST"
                                     id="DeleteForm">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-danger"
-                                        onclick="showPermission()">Delete</button>
+                                    <button type="submit" class="btn btn-sm btn-danger mx-2" onclick="showPermission()"><i
+                                            class="bx bx-trash"></i></button>
                                 </form>
+                                <button class="detail-button btn btn-sm btn-secondary" data-id="{{ $facility->id }}"
+                                    data-bs-toggle="modal" data-bs-target="#modalCenterDetail">
+                                    <i class="bx bx-dots-vertical-rounded"></i>
+                                </button>
                             </td>
                         </tr>
                     @endforeach
@@ -230,7 +230,8 @@
     </div>
 
     <div class="mt-3">
-        <div class="modal fade" id="modalCenter" tabindex="-1" aria-hidden="true" data-errors="{{ $errors->any() == true ? true : false }}">
+        <div class="modal fade" id="modalCenter" tabindex="-1" aria-hidden="true"
+            data-errors="{{ $errors->any() == true ? true : false }}">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <form class="add-new-facility pt-0" id="addNewFacilityForm" method="POST"

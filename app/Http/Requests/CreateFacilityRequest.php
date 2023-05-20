@@ -25,7 +25,7 @@ class CreateFacilityRequest extends FormRequest
   {
     return [
       'location_id' => ['required'],
-      'facility_name' => ['required'],
+      'facility_name' => ['required', 'unique:facilities,facility_name,'.$this->request->get("id")],
     ];
   }
 
@@ -34,6 +34,7 @@ class CreateFacilityRequest extends FormRequest
     return [
       'location_id.required' => 'the Location is a required',
       'facility_name.required' => 'the Facility Name is a required',
+      'facility_name.unique' => 'the Facility Name must unique',
     ];
   }
 }

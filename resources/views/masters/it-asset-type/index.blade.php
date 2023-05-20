@@ -70,8 +70,8 @@
 
 @section('content')
     @if (session('success'))
-        <div class="bs-toast toast fade show bg-primary position-fixed bottom-0 end-0 me-4 mb-4" role="alert"
-            aria-live="assertive" aria-atomic="true">
+        <div class="bs-toast toast fade show bg-primary position-fixed bottom-0 end-0 me-4 mb-4 success-toast"
+            role="alert" aria-live="assertive" aria-atomic="true">
             <div class="toast-header pb-2">
                 {{-- <img src="..." class="rounded me-2" alt="" /> --}}
                 <div class="me-auto fw-semibold">Success Message</div>
@@ -116,14 +116,14 @@
                             <td class="d-flex">
                                 <button class="edit-button btn btn-sm btn-primary mx-2" data-id="{{ $it_asset_type->id }}"
                                     data-bs-toggle="modal" data-bs-target="#modalCenter">
-                                    Edit
+                                    <i class="bx bx-edit"></i>
                                 </button>
                                 <form action="{{ route('it-asset-types.destroy', ['it_asset_type' => $it_asset_type]) }}"
                                     id="DeleteForm" method="POST">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-danger"
-                                        onclick="showPermission()">Delete</button>
+                                    <button type="submit" class="btn btn-sm btn-danger" onclick="showPermission()"><i
+                                            class="bx bx-trash"></i></button>
                                 </form>
                             </td>
                         </tr>
@@ -156,7 +156,8 @@
     </div>
 
     <div class="mt-3">
-        <div class="modal fade" id="modalCenter" tabindex="-1" aria-hidden="true" data-errors="{{ $errors->any() == true ? true : false }}">
+        <div class="modal fade" id="modalCenter" tabindex="-1" aria-hidden="true"
+            data-errors="{{ $errors->any() == true ? true : false }}">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <form action="{{ route('it-asset-types.store') }}" method="post" id="addNewItAssetTypeForm">

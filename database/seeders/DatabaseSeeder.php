@@ -17,5 +17,18 @@ class DatabaseSeeder extends Seeder
   {
     \App\Models\User::factory(30)->create();
     \App\Models\masters\Company::factory(1)->create();
+
+    $this->call([
+      LocationSeeder::class,
+      FacilitySeeder::class,
+      DepartmentSeeder::class,
+      EquipmentTypeSeeder::class,
+      InstrumentTypeSeeder::class,
+      ITAssetTypeSeeder::class,
+      InstrumentSeeder::class,
+      EquipmentSeeder::class,
+      ITAssetSeeder::class,
+      ApplicationSeeder::class,
+    ]);
   }
 }

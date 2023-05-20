@@ -26,7 +26,7 @@ class CreateEquipmentRequest extends FormRequest
     return [
       'department_id' => ['required'],
       'equipment_type_id' => ['required'],
-      'equipment_name' => ['required'],
+      'equipment_name' => ['required', 'unique:equipments,equipment_name,'.$this->request->get("id")],
       'equipment_make' => ['required'],
       'equipment_model' => ['required'],
       'data_storage' => ['required'],
@@ -44,6 +44,7 @@ class CreateEquipmentRequest extends FormRequest
       'department_id.required' => 'the Department is required',
       'equipment_type_id.required' => 'the Equipment Type is required',
       'equipment_name.required' => 'the Equipment Name is required',
+      'equipment_name.unique' => 'the Equipment Name must unique',
       'equipment_make.required' => 'the Equipment Make is required',
       'equipment_model.required' => 'the Equipment Model is required',
       'data_storage.required' => 'the Data Storage is required',

@@ -25,7 +25,7 @@ class CreateDepartmentRequest extends FormRequest
   {
     return [
       'facility_id' => ['required'],
-      'department' => ['required'],
+      'department' => ['required', 'unique:departments,department,'.$this->request->get("id")],
     ];
   }
 
@@ -34,6 +34,7 @@ class CreateDepartmentRequest extends FormRequest
     return [
       'facility_id.required' => 'the Facility is a required',
       'department.required' => 'the Department is a required',
+      'department.unique' => 'the Department must unique',
     ];
   }
 }

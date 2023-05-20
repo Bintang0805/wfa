@@ -19,7 +19,7 @@ return new class extends Migration
             $table->unsignedBigInteger("facility_id");
             $table->unsignedBigInteger("department_id");
             $table->unsignedBigInteger("instrument_type_id");
-            $table->string("instrument_name");
+            $table->string("instrument_name")->unique();
             $table->string("instrument_make");
             $table->string("instrument_model");
             $table->enum("data_storage", ["Yes", "No", "NA"]);

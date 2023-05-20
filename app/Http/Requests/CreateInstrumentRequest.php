@@ -26,7 +26,7 @@ class CreateInstrumentRequest extends FormRequest
     return [
       'department_id' => ['required'],
       'instrument_type_id' => ['required'],
-      'instrument_name' => ['required'],
+      'instrument_name' => ['required', 'unique:instruments,instrument_name,'.$this->request->get("id")],
       'instrument_make' => ['required'],
       'instrument_model' => ['required'],
       'data_storage' => ['required'],
@@ -45,6 +45,7 @@ class CreateInstrumentRequest extends FormRequest
       'department_id.required' => 'the Department is required',
       'instrument_type_id.required' => 'the Instrument Type is required',
       'instrument_name.required' => 'the Instrument Name is required',
+      'instrument_name.unique' => 'the Instrument Name must unique',
       'instrument_make.required' => 'the Instrument Make is required',
       'instrument_model.required' => 'the Instrument Model is required',
       'data_storage.required' => 'the Data Storage is required',

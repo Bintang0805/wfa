@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger("location_id")->nullable();
             $table->unsignedBigInteger("facility_id");
-            $table->string("department");
+            $table->string("department")->unique();
             $table->timestamps();
 
             $table->foreign("facility_id")->on("facilities")->references("id")->cascadeOnDelete()->cascadeOnUpdate();

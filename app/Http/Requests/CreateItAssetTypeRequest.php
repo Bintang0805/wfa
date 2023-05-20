@@ -24,7 +24,7 @@ class CreateItAssetTypeRequest extends FormRequest
   public function rules()
   {
     return [
-      'it_asset_type' => ['required'],
+      'it_asset_type' => ['required', 'unique:it_asset_types,it_asset_type,'.$this->request->get("id")],
     ];
   }
 
@@ -32,6 +32,7 @@ class CreateItAssetTypeRequest extends FormRequest
   {
     return [
       'it_asset_type.required' => 'the It Asset Type is a required',
+      'it_asset_type.unique' => 'the It Asset Type must unique',
     ];
   }
 }

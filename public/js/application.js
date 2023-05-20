@@ -19,6 +19,12 @@
      */
 
 
+    setTimeout(() => {
+      if($(".success-toast")) {
+        $(".success-toast").toast('hide');
+      }
+    }, 10000);
+
 
     // Datatable (jquery)
     $(function () {
@@ -145,6 +151,148 @@
         }
       });
     });
+
+    // validating form and updating application's data
+    var addNewApplicationForm = document.getElementById('addNewApplicationForm');
+
+    var fv = FormValidation.formValidation(addNewApplicationForm, {
+      fields: {
+        application_name: {
+          validators: {
+            notEmpty: {
+              message: 'this is required'
+            }
+          }
+        },
+        application_ver: {
+          validators: {
+            notEmpty: {
+              message: 'this is required'
+            },
+          }
+        },
+        connected_to_computer: {
+          validators: {
+            notEmpty: {
+              message: 'this is required'
+            },
+          }
+        },
+        department_id: {
+          validators: {
+            notEmpty: {
+              message: 'this is required'
+            },
+          }
+        },
+        connected_to_server: {
+          validators: {
+            notEmpty: {
+              message: 'this is required'
+            },
+          }
+        },
+        application_role_type: {
+          validators: {
+            notEmpty: {
+              message: 'this is required'
+            },
+          }
+        },
+        privilages: {
+          validators: {
+            notEmpty: {
+              message: 'this is required'
+            },
+          }
+        },
+        manufacturer: {
+          validators: {
+            notEmpty: {
+              message: 'this is required'
+            },
+          }
+        },
+        gamp_category: {
+          validators: {
+            notEmpty: {
+              message: 'this is required'
+            },
+          }
+        },
+        csv_status: {
+          validators: {
+            notEmpty: {
+              message: 'this is required'
+            },
+          }
+        },
+        csv_completed_on: {
+          validators: {
+            notEmpty: {
+              message: 'this is required'
+            },
+          }
+        },
+        periodic_review: {
+          validators: {
+            notEmpty: {
+              message: 'this is required'
+            },
+          }
+        },
+        gxp_status: {
+          validators: {
+            notEmpty: {
+              message: 'this is required'
+            },
+          }
+        },
+        backup_mode: {
+          validators: {
+            notEmpty: {
+              message: 'this is required'
+            },
+          }
+        },
+        data_type: {
+          validators: {
+            notEmpty: {
+              message: 'this is required'
+            },
+          }
+        },
+        vendor_details: {
+          validators: {
+            notEmpty: {
+              message: 'this is required'
+            },
+          }
+        },
+        status: {
+          validators: {
+            notEmpty: {
+              message: 'this is required'
+            },
+          }
+        },
+      },
+      plugins: {
+        trigger: new FormValidation.plugins.Trigger(),
+        bootstrap5: new FormValidation.plugins.Bootstrap5({
+          // Use this for enabling/changing valid/invalid class
+          eleValidClass: '',
+          rowSelector: function rowSelector(field, ele) {
+            // field is the field name & ele is the field element
+            return '.mb-3';
+          }
+        }),
+        submitButton: new FormValidation.plugins.SubmitButton(),
+        // Submit the form when all fields are valid
+        defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
+        autoFocus: new FormValidation.plugins.AutoFocus()
+      }
+    })
 
 /******/ 	return __webpack_exports__;
     /******/

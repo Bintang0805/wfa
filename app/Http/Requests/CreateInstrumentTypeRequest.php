@@ -24,7 +24,7 @@ class CreateInstrumentTypeRequest extends FormRequest
   public function rules()
   {
     return [
-      'instrument_type' => ['required'],
+      'instrument_type' => ['required', 'unique:instrument_types,instrument_type,'.$this->request->get("id")],
     ];
   }
 
@@ -32,6 +32,7 @@ class CreateInstrumentTypeRequest extends FormRequest
   {
     return [
       'instrument_type.required' => 'the Instrument Type is a required',
+      'instrument_type.unique' => 'the Instrument Type must unique',
     ];
   }
 }

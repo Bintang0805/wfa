@@ -18,7 +18,11 @@
      * Page User List
      */
 
-
+    setTimeout(() => {
+      if($(".success-toast")) {
+        $(".success-toast").toast('hide');
+      }
+    }, 10000);
 
     // Datatable (jquery)
     $(function () {
@@ -133,6 +137,113 @@
         }
       });
     });
+
+    // validating form and updating instrument's data
+    var addNewInstrumentForm = document.getElementById('addNewInstrumentForm');
+
+    var fv = FormValidation.formValidation(addNewInstrumentForm, {
+      fields: {
+        department_id: {
+          validators: {
+            notEmpty: {
+              message: 'this is required'
+            }
+          }
+        },
+        instrument_type_id: {
+          validators: {
+            notEmpty: {
+              message: 'this is required'
+            },
+          }
+        },
+        instrument_name: {
+          validators: {
+            notEmpty: {
+              message: 'this is required'
+            },
+          }
+        },
+        instrument_make: {
+          validators: {
+            notEmpty: {
+              message: 'this is required'
+            },
+          }
+        },
+        instrument_model: {
+          validators: {
+            notEmpty: {
+              message: 'this is required'
+            },
+          }
+        },
+        data_storage: {
+          validators: {
+            notEmpty: {
+              message: 'this is required'
+            },
+          }
+        },
+        indirect_impact: {
+          validators: {
+            notEmpty: {
+              message: 'this is required'
+            },
+          }
+        },
+        qualification_status: {
+          validators: {
+            notEmpty: {
+              message: 'this is required'
+            },
+          }
+        },
+        csv_status: {
+          validators: {
+            notEmpty: {
+              message: 'this is required'
+            },
+          }
+        },
+        computer_connected: {
+          validators: {
+            notEmpty: {
+              message: 'this is required'
+            },
+          }
+        },
+        instrument_asset_code: {
+          validators: {
+            notEmpty: {
+              message: 'this is required'
+            },
+          }
+        },
+        status: {
+          validators: {
+            notEmpty: {
+              message: 'this is required'
+            },
+          }
+        },
+      },
+      plugins: {
+        trigger: new FormValidation.plugins.Trigger(),
+        bootstrap5: new FormValidation.plugins.Bootstrap5({
+          // Use this for enabling/changing valid/invalid class
+          eleValidClass: '',
+          rowSelector: function rowSelector(field, ele) {
+            // field is the field name & ele is the field element
+            return '.mb-3';
+          }
+        }),
+        submitButton: new FormValidation.plugins.SubmitButton(),
+        // Submit the form when all fields are valid
+        defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
+        autoFocus: new FormValidation.plugins.AutoFocus()
+      }
+    })
 
 
 /******/ 	return __webpack_exports__;

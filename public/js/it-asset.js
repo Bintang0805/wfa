@@ -19,6 +19,11 @@
      */
 
 
+    setTimeout(() => {
+      if($(".success-toast")) {
+        $(".success-toast").toast('hide');
+      }
+    }, 10000);
 
     // Datatable (jquery)
     $(function () {
@@ -132,6 +137,106 @@
         }
       });
     });
+
+    // validating form and updating it asset's data
+    var addNewItAssetForm = document.getElementById('addNewItAssetForm');
+
+    var fv = FormValidation.formValidation(addNewItAssetForm, {
+      fields: {
+        department_id: {
+          validators: {
+            notEmpty: {
+              message: 'this is required'
+            }
+          }
+        },
+        it_asset_type_id: {
+          validators: {
+            notEmpty: {
+              message: 'this is required'
+            },
+          }
+        },
+        make: {
+          validators: {
+            notEmpty: {
+              message: 'this is required'
+            },
+          }
+        },
+        model: {
+          validators: {
+            notEmpty: {
+              message: 'this is required'
+            },
+          }
+        },
+        oem_sl_no: {
+          validators: {
+            notEmpty: {
+              message: 'this is required'
+            },
+          }
+        },
+        host_name: {
+          validators: {
+            notEmpty: {
+              message: 'this is required'
+            },
+          }
+        },
+        ip_address: {
+          validators: {
+            notEmpty: {
+              message: 'this is required'
+            },
+          }
+        },
+        asset_type: {
+          validators: {
+            notEmpty: {
+              message: 'this is required'
+            },
+          }
+        },
+        os_ver: {
+          validators: {
+            notEmpty: {
+              message: 'this is required'
+            },
+          }
+        },
+        asset_status: {
+          validators: {
+            notEmpty: {
+              message: 'this is required'
+            },
+          }
+        },
+        owner_name: {
+          validators: {
+            notEmpty: {
+              message: 'this is required'
+            },
+          }
+        },
+      },
+      plugins: {
+        trigger: new FormValidation.plugins.Trigger(),
+        bootstrap5: new FormValidation.plugins.Bootstrap5({
+          // Use this for enabling/changing valid/invalid class
+          eleValidClass: '',
+          rowSelector: function rowSelector(field, ele) {
+            // field is the field name & ele is the field element
+            return '.mb-3';
+          }
+        }),
+        submitButton: new FormValidation.plugins.SubmitButton(),
+        // Submit the form when all fields are valid
+        defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
+        autoFocus: new FormValidation.plugins.AutoFocus()
+      }
+    })
 
 /******/ 	return __webpack_exports__;
     /******/

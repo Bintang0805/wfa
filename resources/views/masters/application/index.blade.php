@@ -70,8 +70,8 @@
 
 @section('content')
     @if (session('success'))
-        <div class="bs-toast toast fade show bg-primary position-fixed bottom-0 end-0 me-4 mb-4" role="alert"
-            aria-live="assertive" aria-atomic="true">
+        <div class="bs-toast toast fade show bg-primary position-fixed bottom-0 end-0 me-4 mb-4 success-toast"
+            role="alert" aria-live="assertive" aria-atomic="true">
             <div class="toast-header pb-2">
                 {{-- <img src="..." class="rounded me-2" alt="" /> --}}
                 <div class="me-auto fw-semibold">Success Message</div>
@@ -146,21 +146,21 @@
                             <td>{{ $application->facility->facility_name }}</td>
                             <td>{{ $application->department->department }}</td>
                             <td class="d-flex">
-                                <button class="detail-button btn btn-sm btn-secondary" data-id="{{ $application->id }}"
-                                    data-bs-toggle="modal" data-bs-target="#modalCenterDetail">
-                                    Detail
-                                </button>
-                                <button class="edit-button btn btn-sm btn-primary mx-2" data-id="{{ $application->id }}"
+                                <button class="edit-button btn btn-sm btn-primary" data-id="{{ $application->id }}"
                                     data-bs-toggle="modal" data-bs-target="#modalCenter">
-                                    Edit
+                                    <i class="bx bx-edit"></i>
                                 </button>
                                 <form action="{{ route('applications.destroy', ['application' => $application]) }}"
                                     id="DeleteForm" method="POST">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-danger"
-                                        onclick="showPermission()">Delete</button>
+                                    <button type="submit" class="btn btn-sm btn-danger mx-2" onclick="showPermission()"><i
+                                            class="bx bx-trash"></i></button>
                                 </form>
+                                <button class="detail-button btn btn-sm btn-secondary" data-id="{{ $application->id }}"
+                                    data-bs-toggle="modal" data-bs-target="#modalCenterDetail">
+                                    <i class="bx bx-dots-vertical-rounded"></i>
+                                </button>
                             </td>
                         </tr>
                     @endforeach
@@ -315,8 +315,9 @@
     </div>
 
     <div class="mt-3">
-        <div class="modal fade" id="modalCenter" tabindex="-1" aria-hidden="true" data-errors="{{ $errors->any() == true ? true : false }}">
-            <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal fade" id="modalCenter" tabindex="-1" aria-hidden="true"
+            data-errors="{{ $errors->any() == true ? true : false }}">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                 <div class="modal-content">
                     <form action="{{ route('applications.store') }}" method="post" id="addNewApplicationForm">
                         @csrf
@@ -334,154 +335,158 @@
                                 @endforeach
                             @endif
                             <input type="hidden" name="id" id="application_id">
-                            <div class="mb-3">
-                                <label class="form-label" for="add-application-name">Application Name<span
-                                        class="text-danger ps-1 fs-6">*</span></label>
-                                <input type="text" id="add-application-name" class="form-control"
-                                    placeholder="California" name="application_name" />
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label" for="add-application-name">Application Ver<span
-                                        class="text-danger ps-1 fs-6">*</span></label>
-                                <input type="text" id="add-application-ver" class="form-control"
-                                    placeholder="California" name="application_ver" />
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label" for="add-connected-to-computer">Connected To Computer<span
-                                        class="text-danger ps-1 fs-6">*</span></label>
-                                {{-- <input type="text" id="add-application-ver" class="form-control" placeholder="California"
+                            <div class="row">
+                                <div class="mb-3 col-lg-6 col-12">
+                                    <label class="form-label" for="add-application-name">Application Name<span
+                                            class="text-danger ps-1 fs-6">*</span></label>
+                                    <input type="text" id="add-application-name" class="form-control"
+                                        placeholder="California" name="application_name" />
+                                </div>
+                                <div class="mb-3 col-lg-6 col-12">
+                                    <label class="form-label" for="add-application-name">Application Ver<span
+                                            class="text-danger ps-1 fs-6">*</span></label>
+                                    <input type="text" id="add-application-ver" class="form-control"
+                                        placeholder="California" name="application_ver" />
+                                </div>
+                                <div class="mb-3 col-lg-6 col-12">
+                                    <label class="form-label" for="add-connected-to-computer">Connected To Computer<span
+                                            class="text-danger ps-1 fs-6">*</span></label>
+                                    {{-- <input type="text" id="add-application-ver" class="form-control" placeholder="California"
+                                name="application_ver" /> --}}
+                                    <select name="connected_to_computer" id="add-connected-to-computer"
+                                        class="form-control">
+                                        <option value="" disabled selected> Select Connected To Computer</option>
+                                        <option value="1">Yes</option>
+                                        <option value="0">No</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3 col-lg-6 col-12">
+                                    <label class="form-label" for="add-application-department">Department<span
+                                            class="text-danger ps-1 fs-6">*</span></label>
+                                    <select name="department_id" id="add-application-department" class="form-control">
+                                        <option value="" disabled selected>Select Department</option>
+                                        @foreach ($departments as $department)
+                                            <option value="{{ $department->id }}">{{ $department->department }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="mb-3 col-lg-6 col-12">
+                                    <label class="form-label" for="add-connected-to-server">Connected To Server<span
+                                            class="text-danger ps-1 fs-6">*</span></label>
+                                    {{-- <input type="text" id="add-application-ver" class="form-control" placeholder="California"
                               name="application_ver" /> --}}
-                                <select name="connected_to_computer" id="add-connected-to-computer" class="form-control">
-                                    <option value="" disabled selected> Select Connected To Computer</option>
-                                    <option value="1">Yes</option>
-                                    <option value="0">No</option>
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label" for="add-application-department">Department<span
-                                        class="text-danger ps-1 fs-6">*</span></label>
-                                <select name="department_id" id="add-application-department" class="form-control">
-                                    <option value="" disabled selected>Select Department</option>
-                                    @foreach ($departments as $department)
-                                        <option value="{{ $department->id }}">{{ $department->department }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label" for="add-connected-to-server">Connected To Server<span
-                                        class="text-danger ps-1 fs-6">*</span></label>
-                                {{-- <input type="text" id="add-application-ver" class="form-control" placeholder="California"
-                            name="application_ver" /> --}}
-                                <select name="connected_to_server" id="add-connected-to-server" class="form-control">
-                                    <option value="" disabled selected> Select Connected To Server</option>
-                                    <option value="1">Yes</option>
-                                    <option value="0">No</option>
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label" for="add-application-role-type">Application Role Type<span
-                                        class="text-danger ps-1 fs-6">*</span></label>
-                                <select name="application_role_type" id="add-application-role-type" class="form-control">
-                                    <option value="" disabled selected>Select Application Role Type</option>
-                                    @foreach ($application_role_types as $application_role_type)
-                                        <option value="{{ $application_role_type }}">
-                                            {{ $application_role_type }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label" for="add-privilages">Privilages<span
-                                        class="text-danger ps-1 fs-6">*</span></label>
-                                <input type="text" id="add-privilages" class="form-control" placeholder="California"
-                                    name="privilages" />
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label" for="add-manufacturer">Manufacturer<span
-                                        class="text-danger ps-1 fs-6">*</span></label>
-                                <input type="text" id="add-manufacturer" class="form-control"
-                                    placeholder="California" name="manufacturer" />
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label" for="add-gamp-category">Gamp Category<span
-                                        class="text-danger ps-1 fs-6">*</span></label>
-                                <select name="gamp_category" id="add-gamp-category" class="form-control">
-                                    <option value="" disabled selected>Select Gamp Category</option>
-                                    @foreach ($gamp_category_types as $gamp_category_type)
-                                        <option value="{{ $gamp_category_type }}">{{ $gamp_category_type }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label" for="add-csv-status">CSV Status<span
-                                        class="text-danger ps-1 fs-6">*</span></label>
-                                <select name="csv_status" id="add-csv-status" class="form-control">
-                                    <option value="" disabled selected>Select CSV Status</option>
-                                    @foreach ($csv_status_types as $csv_status_type)
-                                        <option value="{{ $csv_status_type }}">{{ $csv_status_type }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label" for="add-csv-completed-on">CSV Completed On<span
-                                        class="text-danger ps-1 fs-6">*</span></label>
-                                <input type="date" id="add-csv-completed-on" class="form-control"
-                                    name="csv_completed_on" value="now" />
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label" for="add-periodic-review">Periodic Review<span
-                                        class="text-danger ps-1 fs-6">*</span></label>
-                                <input type="text" id="add-periodic-review" class="form-control"
-                                    name="periodic_review" />
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label" for="add-gxp-status">GXP Status<span
-                                        class="text-danger ps-1 fs-6">*</span></label>
-                                <select name="gxp_status" id="add-gxp-status" class="form-control">
-                                    <option value="" disabled selected>Select GXP Status</option>
-                                    @foreach ($gxp_status_types as $gxp_status_type)
-                                        <option value="{{ $gxp_status_type }}">{{ $gxp_status_type }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label" for="add-backup-mode">Backup Mode<span
-                                        class="text-danger ps-1 fs-6">*</span></label>
-                                <select name="backup_mode" id="add-backup-mode" class="form-control">
-                                    <option value="" disabled selected>Select Backup Mode</option>
-                                    @foreach ($backup_mode_types as $backup_mode_type)
-                                        <option value="{{ $backup_mode_type }}">{{ $backup_mode_type }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label" for="add-data-type">Data Type<span
-                                        class="text-danger ps-1 fs-6">*</span></label>
-                                <select name="data_type" id="add-data-type" class="form-control">
-                                    <option value="" disabled selected>Select Data Type</option>
-                                    @foreach ($data_types as $data_type)
-                                        <option value="{{ $data_type }}">{{ $data_type }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label" for="add-vendor-details">Vendor Details<span
-                                        class="text-danger ps-1 fs-6">*</span></label>
-                                <input type="text" id="add-vendor-details" class="form-control"
-                                    placeholder="California" name="vendor_details" />
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label" for="add-status">Status<span
-                                        class="text-danger ps-1 fs-6">*</span></label>
-                                <select name="status" id="add-status" class="form-control">
-                                    <option value="" disabled selected>Select Status</option>
-                                    @foreach ($status_types as $status_type)
-                                        <option value="{{ $status_type }}">{{ $status_type }}
-                                        </option>
-                                    @endforeach
-                                </select>
+                                    <select name="connected_to_server" id="add-connected-to-server" class="form-control">
+                                        <option value="" disabled selected> Select Connected To Server</option>
+                                        <option value="1">Yes</option>
+                                        <option value="0">No</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3 col-lg-6 col-12">
+                                    <label class="form-label" for="add-application-role-type">Application Role Type<span
+                                            class="text-danger ps-1 fs-6">*</span></label>
+                                    <select name="application_role_type" id="add-application-role-type"
+                                        class="form-control">
+                                        <option value="" disabled selected>Select Application Role Type</option>
+                                        @foreach ($application_role_types as $application_role_type)
+                                            <option value="{{ $application_role_type }}">
+                                                {{ $application_role_type }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="mb-3 col-lg-6 col-12">
+                                    <label class="form-label" for="add-privilages">Privilages<span
+                                            class="text-danger ps-1 fs-6">*</span></label>
+                                    <input type="text" id="add-privilages" class="form-control"
+                                        placeholder="California" name="privilages" />
+                                </div>
+                                <div class="mb-3 col-lg-6 col-12">
+                                    <label class="form-label" for="add-manufacturer">Manufacturer<span
+                                            class="text-danger ps-1 fs-6">*</span></label>
+                                    <input type="text" id="add-manufacturer" class="form-control"
+                                        placeholder="California" name="manufacturer" />
+                                </div>
+                                <div class="mb-3 col-lg-6 col-12">
+                                    <label class="form-label" for="add-gamp-category">Gamp Category<span
+                                            class="text-danger ps-1 fs-6">*</span></label>
+                                    <select name="gamp_category" id="add-gamp-category" class="form-control">
+                                        <option value="" disabled selected>Select Gamp Category</option>
+                                        @foreach ($gamp_category_types as $gamp_category_type)
+                                            <option value="{{ $gamp_category_type }}">{{ $gamp_category_type }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="mb-3 col-lg-6 col-12">
+                                    <label class="form-label" for="add-csv-status">CSV Status<span
+                                            class="text-danger ps-1 fs-6">*</span></label>
+                                    <select name="csv_status" id="add-csv-status" class="form-control">
+                                        <option value="" disabled selected>Select CSV Status</option>
+                                        @foreach ($csv_status_types as $csv_status_type)
+                                            <option value="{{ $csv_status_type }}">{{ $csv_status_type }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="mb-3 col-lg-6 col-12">
+                                    <label class="form-label" for="add-csv-completed-on">CSV Completed On<span
+                                            class="text-danger ps-1 fs-6">*</span></label>
+                                    <input type="date" id="add-csv-completed-on" class="form-control"
+                                        name="csv_completed_on" value="now" />
+                                </div>
+                                <div class="mb-3 col-lg-6 col-12">
+                                    <label class="form-label" for="add-periodic-review">Periodic Review<span
+                                            class="text-danger ps-1 fs-6">*</span></label>
+                                    <input type="text" id="add-periodic-review" class="form-control"
+                                        name="periodic_review" />
+                                </div>
+                                <div class="mb-3 col-lg-6 col-12">
+                                    <label class="form-label" for="add-gxp-status">GXP Status<span
+                                            class="text-danger ps-1 fs-6">*</span></label>
+                                    <select name="gxp_status" id="add-gxp-status" class="form-control">
+                                        <option value="" disabled selected>Select GXP Status</option>
+                                        @foreach ($gxp_status_types as $gxp_status_type)
+                                            <option value="{{ $gxp_status_type }}">{{ $gxp_status_type }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="mb-3 col-lg-6 col-12">
+                                    <label class="form-label" for="add-backup-mode">Backup Mode<span
+                                            class="text-danger ps-1 fs-6">*</span></label>
+                                    <select name="backup_mode" id="add-backup-mode" class="form-control">
+                                        <option value="" disabled selected>Select Backup Mode</option>
+                                        @foreach ($backup_mode_types as $backup_mode_type)
+                                            <option value="{{ $backup_mode_type }}">{{ $backup_mode_type }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="mb-3 col-lg-6 col-12">
+                                    <label class="form-label" for="add-data-type">Data Type<span
+                                            class="text-danger ps-1 fs-6">*</span></label>
+                                    <select name="data_type" id="add-data-type" class="form-control">
+                                        <option value="" disabled selected>Select Data Type</option>
+                                        @foreach ($data_types as $data_type)
+                                            <option value="{{ $data_type }}">{{ $data_type }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="mb-3 col-lg-6 col-12">
+                                    <label class="form-label" for="add-vendor-details">Vendor Details<span
+                                            class="text-danger ps-1 fs-6">*</span></label>
+                                    <input type="text" id="add-vendor-details" class="form-control"
+                                        placeholder="California" name="vendor_details" />
+                                </div>
+                                <div class="mb-3 col-lg-6 col-12">
+                                    <label class="form-label" for="add-status">Status<span
+                                            class="text-danger ps-1 fs-6">*</span></label>
+                                    <select name="status" id="add-status" class="form-control">
+                                        <option value="" disabled selected>Select Status</option>
+                                        @foreach ($status_types as $status_type)
+                                            <option value="{{ $status_type }}">{{ $status_type }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>
                         </div>
                         <div class="modal-footer">

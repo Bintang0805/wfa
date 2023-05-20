@@ -24,7 +24,7 @@ class CreateEquipmentTypeRequest extends FormRequest
   public function rules()
   {
     return [
-      'equipment_type' => ['required'],
+      'equipment_type' => ['required', 'unique:equipment_types,equipment_type,'.$this->request->get("id")],
     ];
   }
 
@@ -32,6 +32,7 @@ class CreateEquipmentTypeRequest extends FormRequest
   {
     return [
       'equipment_type.required' => 'the Equipment Type is a required',
+      'equipment_type.unique' => 'the Equipment Type must unique',
     ];
   }
 }

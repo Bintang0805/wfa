@@ -70,8 +70,8 @@
 
 @section('content')
     @if (session('success'))
-        <div class="bs-toast toast fade show bg-primary position-fixed bottom-0 end-0 me-4 mb-4" role="alert"
-            aria-live="assertive" aria-atomic="true">
+        <div class="bs-toast toast fade show bg-primary position-fixed bottom-0 end-0 me-4 mb-4 success-toast"
+            role="alert" aria-live="assertive" aria-atomic="true">
             <div class="toast-header pb-2">
                 {{-- <img src="..." class="rounded me-2" alt="" /> --}}
                 <div class="me-auto fw-semibold">Success Message</div>
@@ -163,9 +163,9 @@
                 <thead>
                     <tr>
                         <th>Id</th>
+                        <th>Department</th>
                         <th>Location</th>
                         <th>Facility Name</th>
-                        <th>Department</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -173,26 +173,26 @@
                     @foreach ($departments as $department)
                         <tr>
                             <td>{{ $department->id }}</td>
+                            <td>{{ $department->department }}</td>
                             <td>{{ $department->location != null ? $department->location->location_name : $department->facility->location->location_name }}
                             </td>
                             <td>{{ $department->facility->facility_name }}</td>
-                            <td>{{ $department->department }}</td>
                             <td class="d-flex">
-                                <button class="detail-button btn btn-sm btn-secondary" data-id="{{ $department->id }}"
-                                    data-bs-toggle="modal" data-bs-target="#modalCenterDetail">
-                                    Detail
-                                </button>
-                                <button class="edit-button btn btn-sm btn-primary mx-2" data-id="{{ $department->id }}"
+                                <button class="edit-button btn btn-sm btn-primary" data-id="{{ $department->id }}"
                                     data-bs-toggle="modal" data-bs-target="#modalCenter">
-                                    Edit
+                                    <i class="bx bx-edit"></i>
                                 </button>
                                 <form action="{{ route('departments.destroy', ['department' => $department]) }}"
                                     id="DeleteForm" method="POST">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-danger"
-                                        onclick="showPermission()">Delete</button>
+                                    <button type="submit" class="btn btn-sm btn-danger mx-2" onclick="showPermission()"><i
+                                            class="bx bx-trash"></i></button>
                                 </form>
+                                <button class="detail-button btn btn-sm btn-secondary" data-id="{{ $department->id }}"
+                                    data-bs-toggle="modal" data-bs-target="#modalCenterDetail">
+                                    <i class="bx bx-dots-vertical-rounded"></i>
+                                </button>
                             </td>
                         </tr>
                     @endforeach
@@ -233,7 +233,8 @@
     </div>
 
     <div class="mt-3">
-        <div class="modal fade" id="modalCenter" tabindex="-1" aria-hidden="true" data-errors="{{ $errors->any() == true ? true : false }}">
+        <div class="modal fade" id="modalCenter" tabindex="-1" aria-hidden="true"
+            data-errors="{{ $errors->any() == true ? true : false }}">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <form class="add-new-department pt-0" id="addNewDepartmentForm" method="POST"
@@ -254,8 +255,7 @@
                             @endif
                             <input type="hidden" name="id" id="department_id">
                             <div class="mb-3">
-                                <label class="form-label" for="add-department-location">Location<span
-                                        class="text-danger ps-1 fs-6">*</span></label>
+                                <label class="form-label" for="add-department-location">Location</label>
                                 <select name="location_id" id="add-department-location" class="form-control">
                                     <option value="" disabled selected>Select Location</option>
                                     @foreach ($locations as $location)

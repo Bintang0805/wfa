@@ -70,7 +70,7 @@
 
 @section('content')
     @if (session('success'))
-        <div class="bs-toast toast fade show bg-primary position-fixed bottom-0 end-0 me-4 mb-4" role="alert"
+        <div class="bs-toast toast fade show bg-primary position-fixed bottom-0 end-0 me-4 mb-4 success-toast" role="alert"
             aria-live="assertive" aria-atomic="true">
             <div class="toast-header pb-2">
                 {{-- <img src="..." class="rounded me-2" alt="" /> --}}
@@ -116,7 +116,7 @@
                             <td class="d-flex">
                                 <button class="edit-button btn btn-sm btn-primary mx-2" data-id="{{ $equipment_type->id }}"
                                     data-bs-toggle="modal" data-bs-target="#modalCenter">
-                                    Edit
+                                    <i class="bx bx-edit"></i>
                                 </button>
                                 <form
                                     action="{{ route('equipment-types.destroy', ['equipment_type' => $equipment_type]) }}"
@@ -124,7 +124,7 @@
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-sm btn-danger"
-                                        onclick="showPermission()"ss>Delete</button>
+                                        onclick="showPermission()"><i class="bx bx-trash"></i></button>
                                 </form>
                             </td>
                         </tr>
