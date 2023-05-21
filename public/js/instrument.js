@@ -22,7 +22,13 @@
       if($(".success-toast")) {
         $(".success-toast").toast('hide');
       }
-    }, 10000);
+    }, 5000);
+
+    setTimeout(() => {
+      if($(".error-message")) {
+        $(".error-message").toast('hide');
+      }
+    }, 5000);
 
     // Datatable (jquery)
     $(function () {

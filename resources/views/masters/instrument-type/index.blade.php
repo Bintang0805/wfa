@@ -42,36 +42,38 @@
     <script>
         function showPermission() {
             event.preventDefault();
-            let form = document.getElementById('DeleteForm');
-            Swal.fire({
-                title: 'Are you sure?',
-                text: "You won't to delete this?",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    form.submit(); // <--- submit form programmatically
-                } else if (
-                    result.dismiss === Swal.DismissReason.cancel
-                ) {
-                    swalWithBootstrapButtons.fire(
-                        'Cancelled',
-                        'Your data is safe :)',
-                        'error'
-                    )
-                }
-            })
+            let form = document.querySelectorAll('.DeleteForm');
+            for (let i = 0; i < form.length; i++) {
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't to delete this?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form[i].submit(); // <--- submit form programmatically
+                    } else if (
+                        result.dismiss === Swal.DismissReason.cancel
+                    ) {
+                        swalWithBootstrapButtons.fire(
+                            'Cancelled',
+                            'Your data is safe :)',
+                            'error'
+                        )
+                    }
+                })
+            }
         }
     </script>
 @endsection
 
 @section('content')
     @if (session('success'))
-        <div class="bs-toast toast fade show bg-primary position-fixed bottom-0 end-0 me-4 mb-4 success-toast" role="alert"
-            aria-live="assertive" aria-atomic="true">
+        <div class="bs-toast toast fade show bg-primary position-fixed bottom-0 end-0 me-4 mb-4 success-toast"
+            role="alert" aria-live="assertive" aria-atomic="true">
             <div class="toast-header pb-2">
                 {{-- <img src="..." class="rounded me-2" alt="" /> --}}
                 <div class="me-auto fw-semibold">Success Message</div>
@@ -83,7 +85,7 @@
         </div>
     @endif
     @if ($errors->any())
-        <div class="bs-toast toast fade show bg-danger position-fixed bottom-0 end-0 me-4 mb-4" role="alert"
+        <div class="bs-toast toast fade show bg-danger position-fixed bottom-0 end-0 me-4 mb-4 error-message" role="alert"
             aria-live="assertive" aria-atomic="true">
             <div class="toast-header pb-2">
                 {{-- <img src="..." class="rounded me-2" alt="" /> --}}
@@ -121,11 +123,11 @@
                                 </button>
                                 <form
                                     action="{{ route('instrument-types.destroy', ['instrument_type' => $instrument_type]) }}"
-                                    id="DeleteForm" method="POST">
+                                    class="DeleteForm" method="POST">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-danger"
-                                        onclick="showPermission()"><i class="bx bx-trash"></i></button>
+                                    <button type="submit" class="btn btn-sm btn-danger" onclick="showPermission()"><i
+                                            class="bx bx-trash"></i></button>
                                 </form>
                             </td>
                         </tr>
@@ -158,7 +160,8 @@
     </div>
 
     <div class="mt-3">
-        <div class="modal fade" id="modalCenter" tabindex="-1" aria-hidden="true" data-errors="{{ $errors->any() == true ? true : false }}">
+        <div class="modal fade" id="modalCenter" tabindex="-1" aria-hidden="true"
+            data-errors="{{ $errors->any() == true ? true : false }}">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <form action="{{ route('instrument-types.store') }}" method="post" id="addNewInstrumentTypeForm">

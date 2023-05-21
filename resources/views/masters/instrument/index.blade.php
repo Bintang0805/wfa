@@ -42,28 +42,30 @@
     <script>
         function showPermission() {
             event.preventDefault();
-            let form = document.getElementById('DeleteForm');
-            Swal.fire({
-                title: 'Are you sure?',
-                text: "You won't to delete this?",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    form.submit(); // <--- submit form programmatically
-                } else if (
-                    result.dismiss === Swal.DismissReason.cancel
-                ) {
-                    swalWithBootstrapButtons.fire(
-                        'Cancelled',
-                        'Your data is safe :)',
-                        'error'
-                    )
-                }
-            })
+            let form = document.querySelectorAll('.DeleteForm');
+            for (let i = 0; i < form.length; i++) {
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't to delete this?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form[i].submit(); // <--- submit form programmatically
+                    } else if (
+                        result.dismiss === Swal.DismissReason.cancel
+                    ) {
+                        swalWithBootstrapButtons.fire(
+                            'Cancelled',
+                            'Your data is safe :)',
+                            'error'
+                        )
+                    }
+                })
+            }
         }
     </script>
 @endsection
@@ -83,7 +85,7 @@
         </div>
     @endif
     @if ($errors->any())
-        <div class="bs-toast toast fade show bg-danger position-fixed bottom-0 end-0 me-4 mb-4" role="alert"
+        <div class="bs-toast toast fade show bg-danger position-fixed bottom-0 end-0 me-4 mb-4 error-message" role="alert"
             aria-live="assertive" aria-atomic="true">
             <div class="toast-header pb-2">
                 {{-- <img src="..." class="rounded me-2" alt="" /> --}}
@@ -125,7 +127,7 @@
                                     <i class="bx bx-edit"></i>
                                 </button>
                                 <form action="{{ route('instruments.destroy', ['instrument' => $instrument]) }}"
-                                    id="DeleteForm" method="POST">
+                                    class="DeleteForm" method="POST">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-sm btn-danger mx-2" onclick="showPermission()"><i

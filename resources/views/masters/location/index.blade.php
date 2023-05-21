@@ -55,36 +55,38 @@
     <script>
         function showPermission() {
             event.preventDefault();
-            let form = document.getElementById('DeleteForm');
-            Swal.fire({
-                title: 'Are you sure?',
-                text: "You won't to delete this?",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    form.submit(); // <--- submit form programmatically
-                } else if (
-                    result.dismiss === Swal.DismissReason.cancel
-                ) {
-                    swalWithBootstrapButtons.fire(
-                        'Cancelled',
-                        'Your data is safe :)',
-                        'error'
-                    )
-                }
-            })
+            let form = document.querySelectorAll('.DeleteForm');
+            for (let i = 0; i < form.length; i++) {
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't to delete this?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form[i].submit(); // <--- submit form programmatically
+                    } else if (
+                        result.dismiss === Swal.DismissReason.cancel
+                    ) {
+                        swalWithBootstrapButtons.fire(
+                            'Cancelled',
+                            'Your data is safe :)',
+                            'error'
+                        )
+                    }
+                })
+            }
         }
     </script>
 @endsection
 
 @section('content')
     @if (session('success'))
-        <div class="bs-toast toast fade show bg-primary position-fixed bottom-0 end-0 me-4 mb-4 success-toast" role="alert"
-            aria-live="assertive" aria-atomic="true">
+        <div class="bs-toast toast fade show bg-primary position-fixed bottom-0 end-0 me-4 mb-4 success-toast"
+            role="alert" aria-live="assertive" aria-atomic="true">
             <div class="toast-header pb-2">
                 {{-- <img src="..." class="rounded me-2" alt="" /> --}}
                 <div class="me-auto fw-semibold">Success Message</div>
@@ -97,7 +99,7 @@
     @endif
     @if ($errors->any())
         @foreach ($errors->all() as $error)
-            <div class="alert alert-danger" role="alert">
+            <div class="alert alert-danger error-message" role="alert">
                 {{ $error }}
             </div>
         @endforeach
@@ -183,11 +185,10 @@
     <div class="card">
         <form action="{{ route('locations.store') }}" method="post" class="px-4 pt-3" id="addNewLocationForm">
             @csrf
-            <div class="d-flex align-items-end">
+            <div class="d-flex align-items-stretch">
                 <div class="form-input">
                     {{-- <input type="hidden" name="id" id="location_id"> --}}
-                    <label for="add-location" class="form-label">Company<span
-                            class="text-danger ps-1 fs-6">*</span></label>
+                    <label for="add-location" class="form-label">Company<span class="text-danger ps-1 fs-6">*</span></label>
                     <select name="company_id" id="add-location" class="form-control">
                         <option value="" disabled selected>Select Company</option>
                         @foreach ($companies as $company)
@@ -199,11 +200,11 @@
                     <label class="form-label" for="add-location">Location Name<span
                             class="text-danger ps-1 fs-6">*</span></label>
                     <input type="text" id="add-location" class="form-control" placeholder="California"
-                        name="location_name"/>
+                        name="location_name" />
                 </div>
-                <button type="submit" class="btn btn-primary data-submit" style="height: min-content;">
-                    + Add New Location
-                </button>
+                  <button type="submit" class="btn btn-primary data-submit">
+                      + Add New Location
+                  </button>
             </div>
         </form>
         <div class="card-header">
@@ -226,21 +227,21 @@
                             <td>{{ $location->company->name }}</td>
                             <td class="location-name">{{ $location->location_name }}</td>
                             <td class="d-flex">
-                              <button class="edit-button btn-sm btn btn-primary" data-id="{{ $location->id }}"
-                                data-bs-toggle="modal" data-bs-target="#modalCenter">
-                                <i class="bx bx-edit"></i>
-                              </button>
-                              <form action="{{ route('locations.destroy', ['location' => $location]) }}" method="POST"
-                                id="DeleteForm">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-sm btn-danger mx-2"
-                                onclick="showPermission()"><i class="bx bx-trash"></i></button>
-                              </form>
-                              <button class="detail-button btn btn-sm btn-secondary" data-id="{{ $location->id }}"
-                                  data-bs-toggle="modal" data-bs-target="#modalCenterDetail">
-                                  <i class="bx bx-dots-vertical-rounded"></i>
-                              </button>
+                                <button class="edit-button btn-sm btn btn-primary" data-id="{{ $location->id }}"
+                                    data-bs-toggle="modal" data-bs-target="#modalCenter">
+                                    <i class="bx bx-edit"></i>
+                                </button>
+                                <form action="{{ route('locations.destroy', ['location' => $location]) }}" method="POST"
+                                    class="DeleteForm">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-sm btn-danger mx-2"
+                                        onclick="showPermission()"><i class="bx bx-trash"></i></button>
+                                </form>
+                                <button class="detail-button btn btn-sm btn-secondary" data-id="{{ $location->id }}"
+                                    data-bs-toggle="modal" data-bs-target="#modalCenterDetail">
+                                    <i class="bx bx-dots-vertical-rounded"></i>
+                                </button>
                             </td>
                         </tr>
                     @endforeach
