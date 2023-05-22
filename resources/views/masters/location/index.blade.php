@@ -185,7 +185,7 @@
     <div class="card">
         <form action="{{ route('locations.store') }}" method="post" class="px-4 pt-3" id="addNewLocationForm">
             @csrf
-            <div class="d-flex align-items-stretch">
+            <div class="d-flex align-items-start">
                 <div class="form-input">
                     {{-- <input type="hidden" name="id" id="location_id"> --}}
                     <label for="add-location" class="form-label">Company<span class="text-danger ps-1 fs-6">*</span></label>
@@ -202,9 +202,9 @@
                     <input type="text" id="add-location" class="form-control" placeholder="California"
                         name="location_name" />
                 </div>
-                  <button type="submit" class="btn btn-primary data-submit">
-                      + Add New Location
-                  </button>
+                <button type="submit" class="btn btn-primary data-submit" style="margin-top: 2rem">
+                    + Add New Location
+                </button>
             </div>
         </form>
         <div class="card-header">
