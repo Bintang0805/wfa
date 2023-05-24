@@ -92,7 +92,9 @@ class LocationController extends Controller
    */
   public function edit($id)
   {
-    $location = Location::with('company')->where('id', $id)->first();
+    $location = Location::with('company')
+      ->where('id', $id)
+      ->first();
 
     $data = [
       'location' => $location,
@@ -144,5 +146,21 @@ class LocationController extends Controller
     return redirect()
       ->route('locations.index')
       ->with('success', 'Location Deleted Successfully');
+  }
+
+  public function checkLocationNameUniqueness(Request $request)
+  {
+    $locationName = $request->input('locationName');
+
+    // Mengecek keunikan "location_name" dalam database
+    $exists = Location::where('location_name', $locationName)->exists();
+
+    return response()->json(['exists' => $exists]);
+  }
+
+  public function AJAXGetAll() {
+    $data = Location::all();
+
+    return response()->json(["data" => $data]);
   }
 }

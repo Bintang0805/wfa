@@ -11,6 +11,13 @@ use App\Http\Controllers\masters\InstrumentTypeController;
 use App\Http\Controllers\masters\ItAssetController;
 use App\Http\Controllers\masters\ItAssetTypeController;
 use App\Http\Controllers\masters\LocationController;
+use App\Models\masters\Application;
+use App\Models\masters\Department;
+use App\Models\masters\Equipment;
+use App\Models\masters\EquipmentType;
+use App\Models\masters\Facility;
+use App\Models\masters\InstrumentType;
+use App\Models\masters\ItAssetType;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -48,3 +55,15 @@ Route::resource('instruments', InstrumentController::class);
 Route::resource('it-asset-types', ItAssetTypeController::class);
 Route::resource('it-assets', ItAssetController::class);
 Route::resource('applications', ApplicationController::class);
+
+// AJAX
+Route::get('AJAX/locations/AJAXGetAll', [LocationController::class, "AJAXGetAll"]);
+Route::get('AJAX/facilities/AJAXGetAll', [FacilityController::class, "AJAXGetAll"]);
+Route::get('AJAX/departments/AJAXGetAll', [DepartmentController::class, "AJAXGetAll"]);
+Route::get('AJAX/equipment-types/AJAXGetAll', [EquipmentTypeController::class, "AJAXGetAll"]);
+Route::get('AJAX/instrument-types/AJAXGetAll', [InstrumentTypeController::class, "AJAXGetAll"]);
+Route::get('AJAX/instruments/AJAXGetAll', [InstrumentController::class, "AJAXGetAll"]);
+Route::get('AJAX/equipments/AJAXGetAll', [EquipmentController::class, "AJAXGetAll"]);
+Route::get('AJAX/it-asset-types/AJAXGetAll', [ItAssetTypeController::class, "AJAXGetAll"]);
+Route::get('AJAX/it-assets/AJAXGetAll', [ItAssetController::class, "AJAXGetAll"]);
+Route::get('AJAX/applications/AJAXGetAll', [ApplicationController::class, "AJAXGetAll"]);

@@ -18,6 +18,22 @@
      * Page User List
      */
 
+    // Get All Data With Ajax
+    let AJAXGetAllURL = `${window.location.origin}/AJAX/applications/AJAXGetAll`;
+    let GetAllData = null;
+    let oldValue = null;
+
+    $.ajax({
+      url: AJAXGetAllURL,
+      type: 'GET',
+      success: function (data) {
+        GetAllData = data.data;
+        return true;
+      },
+      error: function () {
+        return false;
+      }
+    });
 
     setTimeout(() => {
       if ($(".success-toast")) {
@@ -61,7 +77,8 @@
 
       // clearing form data when modal hidden
       modal.on('hidden.bs.modal', function () {
-        let fv = $("#addNewApplicationForm")
+        let fv = $("#addNewApplicationForm");
+        oldValue = null;
         fv[0].reset(true);
         $("#application_id").val("");
       });
@@ -83,6 +100,7 @@
         type: 'GET',
         success: function (data) {
           let application = data.data.application;
+          oldValue = application.application_name;
           $('#application_id').val(application.id);
           $('#add-application-name').val(application.application_name);
           $('#add-application-ver').val(application.application_ver);
@@ -166,6 +184,23 @@
           validators: {
             notEmpty: {
               message: 'this is required'
+            },
+            callback: {
+              message: "This field must be unique",
+              callback: (input) => {
+                if (GetAllData != null) {
+                  let unique = GetAllData.find(function (data) {
+                    return data.application_name === input.value;
+                  });
+                  if(oldValue != null) {
+                    return unique.application_name == oldValue ? true : false;
+                  } else {
+                    return unique != null ? false : true;
+                  }
+                } else {
+                  return true;
+                }
+              }
             }
           }
         },

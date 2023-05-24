@@ -129,4 +129,10 @@ class ItAssetTypeController extends Controller
       ->route('it-asset-types.index')
       ->with('success', 'IT Asset Type Deleted Succesfully');
   }
+
+  public function AJAXGetAll() {
+    $data = ItAssetType::all();
+
+    return response()->json(["data" => $data]);
+  }
 }

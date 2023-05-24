@@ -128,4 +128,10 @@ class EquipmentTypeController extends Controller
       ->route('equipment-types.index')
       ->with('success', 'Equipment Type Deleted Successfully');
   }
+
+  public function AJAXGetAll() {
+    $data = EquipmentType::all();
+
+    return response()->json(["data" => $data]);
+  }
 }

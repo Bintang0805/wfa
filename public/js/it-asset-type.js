@@ -18,6 +18,23 @@
      * Page User List
      */
 
+    // Get All Data With Ajax
+    let AJAXGetAllURL = `${window.location.origin}/AJAX/it-asset-types/AJAXGetAll`;
+    let GetAllData = null;
+    let oldValue = null;
+
+    $.ajax({
+      url: AJAXGetAllURL,
+      type: 'GET',
+      success: function (data) {
+        GetAllData = data.data;
+        return true;
+      },
+      error: function () {
+        return false;
+      }
+    });
+
     setTimeout(() => {
       if($(".success-toast")) {
         $(".success-toast").toast('hide');
@@ -126,6 +143,7 @@
       // clearing form data when offcanvas hidden
       modal.on('hidden.bs.offcanvas', function () {
         let fv = $("#addNewItAssetTypeForm")
+        oldValue = null;
         fv[0].reset(true);
         $("#it_asset_type_id").val("");
       });
@@ -145,6 +163,7 @@
         type: 'GET',
         success: function (data) {
           let it_asset_type = data.data.it_asset_type;
+          oldValue = it_asset_type.it_asset_type;
           $('#it_asset_type_id').val(it_asset_type.id);
           $('#add-it-asset-type').val(it_asset_type.it_asset_type);
         }
@@ -160,6 +179,23 @@
           validators: {
             notEmpty: {
               message: 'this is required'
+            },
+            callback: {
+              message: "This field must be unique",
+              callback: (input) => {
+                if (GetAllData != null) {
+                  let unique = GetAllData.find(function (data) {
+                    return data.it_asset_type === input.value;
+                  });
+                  if(oldValue != null) {
+                    return unique.it_asset_type == oldValue ? true : false;
+                  } else {
+                    return unique != null ? false : true;
+                  }
+                } else {
+                  return true;
+                }
+              }
             }
           }
         },
@@ -180,6 +216,37 @@
         autoFocus: new FormValidation.plugins.AutoFocus()
       }
     })
+
+    function uniqueValidate(value) {
+      let url = `${baseUrl}/it-asset-types/validation-unique`;
+      let result;
+      $.ajaxSetup({
+        headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+      });
+
+      $.ajax({
+        url: url,
+        type: 'POST',
+        data: {
+          input: value,
+        },
+        async: false,
+        success: function (data) {
+          if(data.exists == true) {
+            result = false;
+          } else {
+            result = true
+          }
+        },
+        error: function() {
+          return false;
+        }
+      });
+
+      return result
+    }
 
 
 /******/ 	return __webpack_exports__;

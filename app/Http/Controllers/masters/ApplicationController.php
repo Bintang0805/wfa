@@ -146,4 +146,10 @@ class ApplicationController extends Controller
       ->route('applications.index')
       ->with('success', 'Application Deleted Successfully');
   }
+
+  public function AJAXGetAll() {
+    $data = Application::all();
+
+    return response()->json(["data" => $data]);
+  }
 }

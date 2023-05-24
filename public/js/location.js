@@ -18,14 +18,29 @@
      * Page User List
      */
 
+    let AJAXGetAllURL = `${window.location.origin}/AJAX/locations/AJAXGetAll`;
+    let GetAllData = null;
+
+    $.ajax({
+      url: AJAXGetAllURL,
+      type: 'GET',
+      success: function (data) {
+        GetAllData = data.data;
+        return true;
+      },
+      error: function () {
+        return false;
+      }
+    });
+
     setTimeout(() => {
-      if($(".success-toast")) {
+      if ($(".success-toast")) {
         $(".success-toast").toast('hide');
       }
     }, 5000);
 
     setTimeout(() => {
-      if($(".error-message")) {
+      if ($(".error-message")) {
         $(".error-message").alert('close');
       }
     }, 5000);
@@ -179,6 +194,19 @@
             notEmpty: {
               message: 'this is required'
             },
+            callback: {
+              message: "This field must be unique",
+              callback: (input) => {
+                if (GetAllData != null) {
+                  let unique = GetAllData.find(function (data) {
+                    return data.location_name === input.value;
+                  });
+                  return unique != null ? false : true;
+                } else {
+                  return true;
+                }
+              }
+            }
           }
         },
       },

@@ -18,6 +18,23 @@
      * Page User List
      */
 
+    // Get All Data With Ajax
+    let AJAXGetAllURL = `${window.location.origin}/AJAX/equipment-types/AJAXGetAll`;
+    let GetAllData = null;
+    let oldValue = null;
+
+    $.ajax({
+      url: AJAXGetAllURL,
+      type: 'GET',
+      success: function (data) {
+        GetAllData = data.data;
+        return true;
+      },
+      error: function () {
+        return false;
+      }
+    });
+
     setTimeout(() => {
       if($(".success-toast")) {
         $(".success-toast").toast('hide');
@@ -127,6 +144,7 @@
       // clearing form data when modal hidden
       modal.on('hidden.bs.modal', function () {
         let fv = $("#addNewEquipmentTypeForm")
+        oldValue = null;
         fv[0].reset(true);
         $("#equipment_type_id").val("");
       });
@@ -146,6 +164,7 @@
         type: 'GET',
         success: function (data) {
           let equipment_type = data.data.equipment_type;
+          oldValue = equipment_type.equipment_type;
           $('#equipment_type_id').val(equipment_type.id);
           $('#add-equipment-type').val(equipment_type.equipment_type);
         }
@@ -161,6 +180,23 @@
           validators: {
             notEmpty: {
               message: 'this is required'
+            },
+            callback: {
+              message: "This field must be unique",
+              callback: (input) => {
+                if (GetAllData != null) {
+                  let unique = GetAllData.find(function (data) {
+                    return data.equipment_type === input.value;
+                  });
+                  if(oldValue != null) {
+                    return unique.equipment_type == oldValue ? true : false;
+                  } else {
+                    return unique != null ? false : true;
+                  }
+                } else {
+                  return true;
+                }
+              }
             }
           }
         },
@@ -182,6 +218,36 @@
       }
     })
 
+    function uniqueValidate(value) {
+      let url = `${baseUrl}/equipment-types/validation-unique`;
+      let result;
+      $.ajaxSetup({
+        headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+      });
+
+      $.ajax({
+        url: url,
+        type: 'POST',
+        data: {
+          input: value,
+        },
+        async: false,
+        success: function (data) {
+          if(data.exists == true) {
+            result = false;
+          } else {
+            result = true
+          }
+        },
+        error: function() {
+          return false;
+        }
+      });
+
+      return result
+    }
 
 /******/ 	return __webpack_exports__;
     /******/

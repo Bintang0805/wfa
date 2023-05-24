@@ -26,7 +26,7 @@ class FacilityController extends Controller
     $data = [
       'facilities' => Facility::with('location')->get(),
       'locations' => Location::all(),
-      'departmentCount' => $departmentCount
+      'departmentCount' => $departmentCount,
     ];
     return view('masters.facility.index', $data);
   }
@@ -85,7 +85,9 @@ class FacilityController extends Controller
    */
   public function edit($id)
   {
-    $facility = Facility::with("departments", "location")->where('id', $id)->first();
+    $facility = Facility::with('departments', 'location')
+      ->where('id', $id)
+      ->first();
 
     $data = [
       'facility' => $facility,
@@ -137,5 +139,11 @@ class FacilityController extends Controller
     return redirect()
       ->route('facilities.index')
       ->with('success', 'Facility Deleted Successfully');
+  }
+
+  public function AJAXGetAll() {
+    $data = Facility::all();
+
+    return response()->json(["data" => $data]);
   }
 }

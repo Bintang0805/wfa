@@ -129,4 +129,10 @@ class InstrumentTypeController extends Controller
       ->route('instrument-types.index')
       ->with('success', 'Instrument Type Deleted Successfully');
   }
+
+  public function AJAXGetAll() {
+    $data = InstrumentType::all();
+
+    return response()->json(["data" => $data]);
+  }
 }

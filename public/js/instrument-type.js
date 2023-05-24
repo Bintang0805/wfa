@@ -18,6 +18,23 @@
      * Page User List
      */
 
+    // Get All Data With Ajax
+    let AJAXGetAllURL = `${window.location.origin}/AJAX/instrument-types/AJAXGetAll`;
+    let GetAllData = null;
+    let oldValue = null;
+
+    $.ajax({
+      url: AJAXGetAllURL,
+      type: 'GET',
+      success: function (data) {
+        GetAllData = data.data;
+        return true;
+      },
+      error: function () {
+        return false;
+      }
+    });
+
     setTimeout(() => {
       if($(".success-toast")) {
         $(".success-toast").toast('hide');
@@ -127,6 +144,7 @@
       // clearing form data when modal hidden
       modal.on('hidden.bs.modal', function () {
         let fv = $("#addNewInstrumentTypeForm")
+        oldValue = null;
         fv[0].reset(true);
         $("#instrument_type_id").val("");
       });
@@ -146,6 +164,7 @@
         type: 'GET',
         success: function (data) {
           let instrument_type = data.data.instrument_type;
+          oldValue = instrument_type.instrument_type;
           $('#instrument_type_id').val(instrument_type.id);
           $('#add-instrument-type').val(instrument_type.instrument_type);
         }
@@ -161,6 +180,23 @@
           validators: {
             notEmpty: {
               message: 'this is required'
+            },
+            callback: {
+              message: "This field must be unique",
+              callback: (input) => {
+                if (GetAllData != null) {
+                  let unique = GetAllData.find(function (data) {
+                    return data.instrument_type === input.value;
+                  });
+                  if(oldValue != null) {
+                    return unique.instrument_type == oldValue ? true : false;
+                  } else {
+                    return unique != null ? false : true;
+                  }
+                } else {
+                  return true;
+                }
+              }
             }
           }
         },

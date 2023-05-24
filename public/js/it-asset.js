@@ -18,15 +18,32 @@
      * Page User List
      */
 
+    // Get All Data With Ajax
+    let AJAXGetAllURL = `${window.location.origin}/AJAX/it-assets/AJAXGetAll`;
+    let GetAllData = null;
+    let oldValueHost = null;
+    let oldValueIp = null;
+
+    $.ajax({
+      url: AJAXGetAllURL,
+      type: 'GET',
+      success: function (data) {
+        GetAllData = data.data;
+        return true;
+      },
+      error: function () {
+        return false;
+      }
+    });
 
     setTimeout(() => {
-      if($(".success-toast")) {
+      if ($(".success-toast")) {
         $(".success-toast").toast('hide');
       }
     }, 5000);
 
     setTimeout(() => {
-      if($(".error-message")) {
+      if ($(".error-message")) {
         $(".error-message").toast('hide');
       }
     }, 5000);
@@ -60,7 +77,9 @@
 
       // clearing form data when modal hidden
       modal.on('hidden.bs.modal', function () {
-        let fv = $("#addNewItAssetForm")
+        let fv = $("#addNewItAssetForm");
+        oldValueHost = null;
+        oldValueIp = null;
         fv[0].reset(true);
         $("#it_asset_id").val("");
       });
@@ -80,6 +99,8 @@
         type: 'GET',
         success: function (data) {
           let it_asset = data.data.it_asset;
+          oldValueHost = it_asset.host_name;
+          oldValueIp = it_asset.ip_address;
           $('#it_asset_id').val(it_asset.id);
           $('#add-it-asset-department').val(it_asset.department.id);
           $('#add-it-asset-type').val(it_asset.it_asset_type_id);
@@ -189,6 +210,23 @@
             notEmpty: {
               message: 'this is required'
             },
+            callback: {
+              message: "This field must be unique",
+              callback: function (input) {
+                if (GetAllData != null) {
+                  let unique = GetAllData.find(function (data) {
+                    return data.host_name === input.value;
+                  });
+                  if(oldValueHost != null) {
+                    return unique.host_name == oldValueHost ? true : false;
+                  } else {
+                    return unique != null ? false : true;
+                  }
+                } else {
+                  return true;
+                }
+              }
+            }
           }
         },
         ip_address: {
@@ -196,6 +234,23 @@
             notEmpty: {
               message: 'this is required'
             },
+            callback: {
+              message: "This field must be unique",
+              callback: function () {
+                if (GetAllData != null) {
+                  let unique = GetAllData.find(function (data) {
+                    return data.ip_address === input.value;
+                  });
+                  if(oldValueIp != null) {
+                    return unique.ip_address == oldValueIp ? true : false;
+                  } else {
+                    return unique != null ? false : true;
+                  }
+                } else {
+                  return true;
+                }
+              }
+            }
           }
         },
         asset_type: {

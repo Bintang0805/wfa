@@ -143,4 +143,10 @@ class EquipmentController extends Controller
     $equipment->delete();
     return redirect()->route('equipments.index')->with("success", "Equipment Deleted Successfully");
   }
+
+  public function AJAXGetAll() {
+    $data = Equipment::all();
+
+    return response()->json(["data" => $data]);
+  }
 }

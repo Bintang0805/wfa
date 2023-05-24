@@ -150,4 +150,10 @@ class ItAssetController extends Controller
     $itAsset->delete();
     return redirect()->route('it-assets.index')->with("success", "IT Asset Deleted Successfully");
   }
+
+  public function AJAXGetAll() {
+    $data = ItAsset::all();
+
+    return response()->json(["data" => $data]);
+  }
 }

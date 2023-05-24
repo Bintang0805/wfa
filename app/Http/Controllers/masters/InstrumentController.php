@@ -142,4 +142,10 @@ class InstrumentController extends Controller
     $instrument->delete();
     return redirect()->route('instruments.index')->with("success", "Intrument Deleted Successfully");
   }
+
+  public function AJAXGetAll() {
+    $data = Instrument::all();
+
+    return response()->json(["data" => $data]);
+  }
 }

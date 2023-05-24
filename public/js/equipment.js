@@ -18,6 +18,23 @@
      * Page User List
      */
 
+    // Get All Data With Ajax
+    let AJAXGetAllURL = `${window.location.origin}/AJAX/equipments/AJAXGetAll`;
+    let GetAllData = null;
+    let oldValue = null;
+
+    $.ajax({
+      url: AJAXGetAllURL,
+      type: 'GET',
+      success: function (data) {
+        GetAllData = data.data;
+        return true;
+      },
+      error: function () {
+        return false;
+      }
+    });
+
 
     setTimeout(() => {
       if($(".success-toast")) {
@@ -62,6 +79,7 @@
       // clearing form data when modal hidden
       modal.on('hidden.bs.modal', function () {
         let fv = $("#addNewEquipmentForm")
+        oldValue = null;
         fv[0].reset(true);
         $("#equipment_id").val("");
       });
@@ -81,6 +99,7 @@
         type: 'GET',
         success: function (data) {
           let equipment = data.data.equipment;
+          oldValue = equipment.equipment_name;
           $('#equipment_id').val(equipment.id);
           $('#add-equipment-department').val(equipment.department.id);
           $('#add-equipment-type').val(equipment.equipment_type_id);
@@ -168,6 +187,23 @@
             notEmpty: {
               message: 'this is required'
             },
+            callback: {
+              message: "This field must be unique",
+              callback: (input) => {
+                if (GetAllData != null) {
+                  let unique = GetAllData.find(function (data) {
+                    return data.equipment_name === input.value;
+                  });
+                  if(oldValue != null) {
+                    return unique.equipment_name == oldValue ? true : false;
+                  } else {
+                    return unique != null ? false : true;
+                  }
+                } else {
+                  return true;
+                }
+              }
+            }
           }
         },
         equipment_make: {

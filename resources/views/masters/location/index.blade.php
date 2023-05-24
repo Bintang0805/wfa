@@ -199,10 +199,10 @@
                 <div class="form-input mx-2">
                     <label class="form-label" for="add-location">Location Name<span
                             class="text-danger ps-1 fs-6">*</span></label>
-                    <input type="text" id="add-location" class="form-control" placeholder="California"
+                    <input type="text" id="add-location" class="form-control unique-field" placeholder="California"
                         name="location_name" />
                 </div>
-                <button type="submit" class="btn btn-primary data-submit" style="margin-top: 2rem">
+                <button type="submit" class="btn btn-primary data-submit button-create" style="margin-top: 2rem">
                     + Add New Location
                 </button>
             </div>

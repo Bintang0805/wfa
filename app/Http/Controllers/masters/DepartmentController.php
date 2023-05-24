@@ -144,4 +144,10 @@ class DepartmentController extends Controller
       ->route('departments.index')
       ->with('success', 'Department Deleted Successfully');
   }
+
+  public function AJAXGetAll() {
+    $data = Department::all();
+
+    return response()->json(["data" => $data]);
+  }
 }
