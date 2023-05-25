@@ -53,14 +53,11 @@ class ApplicationController extends Controller
    */
   public function store(CreateApplicationRequest $request)
   {
-
     $department = Department::where('id', $request->department_id)->first();
-    $facility = Facility::where('id', $department->facility_id)->first();
-    $location = Location::where('id', $facility->location_id)->first();
 
     $credentials = $request->validated();
-    $credentials['location_id'] = $location->id;
-    $credentials['facility_id'] = $facility->id;
+    $credentials['location_id'] = $department->location_id;
+    $credentials['facility_id'] = $department->facility_id;
     Application::updateOrCreate(['id' => $request->id], $credentials);
 
     if ($request->id == null) {
@@ -141,6 +138,7 @@ class ApplicationController extends Controller
    */
   public function destroy(Application $application)
   {
+    if($application == null) return redirect()->route('applicatoins.index')->withErrors("Data with Id" . $application->id . "Not found");
     $application->delete();
     return redirect()
       ->route('applications.index')

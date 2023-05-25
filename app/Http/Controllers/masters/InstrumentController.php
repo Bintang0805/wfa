@@ -55,12 +55,10 @@ class InstrumentController extends Controller
   {
     // dd($request->all());
     $department = Department::where('id', $request->department_id)->first();
-    $facility = Facility::where('id', $department->id)->first();
-    $location = Location::where('id', $facility->id)->first();
 
     $credentials = $request->validated();
-    $credentials['location_id'] = $location->id;
-    $credentials['facility_id'] = $facility->id;
+    $credentials['location_id'] = $department->location_id;
+    $credentials['facility_id'] = $department->facility_id;
     Instrument::updateOrCreate(['id' => $request->id], $credentials);
 
     if ($request->id == null) {
@@ -139,6 +137,8 @@ class InstrumentController extends Controller
    */
   public function destroy(Instrument $instrument)
   {
+    if($instrument == null) return redirect()->route('instruments.index')->withErrors("Data with Id" . $instrument->id . "Not found");
+
     $instrument->delete();
     return redirect()->route('instruments.index')->with("success", "Intrument Deleted Successfully");
   }

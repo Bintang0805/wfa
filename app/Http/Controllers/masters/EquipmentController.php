@@ -54,12 +54,13 @@ class EquipmentController extends Controller
   {
     // dd($request->all());
     $department = Department::where('id', $request->department_id)->first();
-    $facility = Facility::where('id', $department->id)->first();
-    $location = Location::where('id', $facility->id)->first();
+    // $facility = Facility::where('id', $department->id)->first();
+    // $location = Location::where('id', $facility->id)->first();
 
     $credentials = $request->validated();
-    $credentials['location_id'] = $location->id;
-    $credentials['facility_id'] = $facility->id;
+    $credentials['location_id'] = $department->location_id;
+    $credentials['facility_id'] = $department->facility_id;
+
     Equipment::updateOrCreate(['id' => $request->id], $credentials);
 
     if ($request->id == null) {
@@ -140,6 +141,8 @@ class EquipmentController extends Controller
    */
   public function destroy(Equipment $equipment)
   {
+    if($equipment == null) return redirect()->route('equipments.index')->withErrors("Data with Id" . $equipment->id . "Not found");
+
     $equipment->delete();
     return redirect()->route('equipments.index')->with("success", "Equipment Deleted Successfully");
   }

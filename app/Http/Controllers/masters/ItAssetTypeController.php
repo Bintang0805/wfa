@@ -124,6 +124,8 @@ class ItAssetTypeController extends Controller
    */
   public function destroy(ItAssetType $it_asset_type)
   {
+    if($it_asset_type == null) return redirect()->route('it-asset-types.index')->withErrors("Data with Id" . $it_asset_type->id . "Not found");
+
     $it_asset_type->delete();
     return redirect()
       ->route('it-asset-types.index')

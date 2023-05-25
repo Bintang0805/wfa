@@ -27,7 +27,7 @@ return new class extends Migration
             $table->string("manufacturer");
             $table->enum("gamp_category", ["1", "2", "3", "4", "5"]);
             $table->enum("csv_status", ["Completed", "On Going", "Pending", "NA"]);
-            $table->dateTime("csv_completed_on");
+            $table->date("csv_completed_on");
             $table->string("periodic_review");
             $table->enum("gxp_status", ["Yes", "No", "NA"]);
             $table->enum("backup_mode", ["Automatic", "Manual"]);

@@ -139,6 +139,8 @@ class DepartmentController extends Controller
    */
   public function destroy(Department $department)
   {
+    if($department == null) return redirect()->route('departments.index')->withErrors("Data with Id" . $department->id . "Not found");
+
     $department->delete();
     return redirect()
       ->route('departments.index')

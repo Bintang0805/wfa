@@ -123,6 +123,8 @@ class EquipmentTypeController extends Controller
    */
   public function destroy(EquipmentType $equipment_type)
   {
+    if($equipment_type == null) return redirect()->route('equipment-types.index')->withErrors("Data with Id" . $equipment_type->id . "Not found");
+
     $equipment_type->delete();
     return redirect()
       ->route('equipment-types.index')

@@ -40,10 +40,8 @@
 @section('page-script')
     <script src="{{ asset('js/equipment.js') }}"></script>
     <script>
-        function showPermission() {
+        function showPermission(form) {
             event.preventDefault();
-            let form = document.querySelectorAll('.DeleteForm');
-            for (let i = 0; i < form.length; i++) {
                 Swal.fire({
                     title: 'Are you sure?',
                     text: "You won't to delete this?",
@@ -54,7 +52,7 @@
                     confirmButtonText: 'Yes'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        form[i].submit(); // <--- submit form programmatically
+                        form.submit(); // <--- submit form programmatically
                     } else if (
                         result.dismiss === Swal.DismissReason.cancel
                     ) {
@@ -66,7 +64,6 @@
                     }
                 })
             }
-        }
     </script>
 @endsection
 
@@ -128,7 +125,7 @@
                                     class="DeleteForm" method="POST">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-danger mx-2" onclick="showPermission()"><i
+                                    <button type="submit" class="btn btn-sm btn-danger mx-2" onclick="showPermission(this.parentNode)"><i
                                             class="bx bx-trash"></i></button>
                                 </form>
                                 <button class="detail-button btn btn-sm btn-secondary" data-id="{{ $equipment->id }}"

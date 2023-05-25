@@ -17,14 +17,14 @@ class FacilityController extends Controller
    */
   public function index()
   {
-    $facilities = Facility::with('departments')->get();
+    $facilities = Facility::with('location', 'departments')->get();
     $departmentCount = 0;
     foreach ($facilities as $f) {
       $departmentCount += $f->departments->count();
     }
 
     $data = [
-      'facilities' => Facility::with('location')->get(),
+      'facilities' => $facilities,
       'locations' => Location::all(),
       'departmentCount' => $departmentCount,
     ];
@@ -135,6 +135,8 @@ class FacilityController extends Controller
    */
   public function destroy(Facility $facility)
   {
+    if($facility == null) return redirect()->route('facilities.index')->withErrors("Data with Id" . $facility->id . "Not found");
+
     $facility->delete();
     return redirect()
       ->route('facilities.index')

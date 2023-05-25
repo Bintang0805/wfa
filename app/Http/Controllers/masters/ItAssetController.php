@@ -50,24 +50,22 @@ class ItAssetController extends Controller
    */
   public function store(CreateItAssetRequest $request)
   {
-    if($request->id != null) {
-      unset($request["ip_address"]);
-      unset($request["host_name"]);
-    } else {
-      $request->validate([
-        "ip_address" => ["unique:it_assets,ip_address"],
-        "host_name" => ["unique:it_assets,host_name"],
-      ]);
-    }
+    // if($request->id != null) {
+    //   unset($request["ip_address"]);
+    //   unset($request["host_name"]);
+    // } else {
+    //   $request->validate([
+    //     "ip_address" => ["unique:it_assets,ip_address"],
+    //     "host_name" => ["unique:it_assets,host_name"],
+    //   ]);
+    // }
     // dd($request->all());
     $department = Department::where('id', $request->department_id)->first();
-    $facility = Facility::where('id', $department->id)->first();
-    $location = Location::where('id', $facility->id)->first();
 
 
     $credentials = $request->validated();
-    $credentials['location_id'] = $location->id;
-    $credentials['facility_id'] = $facility->id;
+    $credentials['location_id'] = $department->location_id;
+    $credentials['facility_id'] = $department->facility_id;
 
     ItAsset::updateOrCreate(['id' => $request->id], $credentials);
 
@@ -147,6 +145,8 @@ class ItAssetController extends Controller
    */
   public function destroy(ItAsset $itAsset)
   {
+    if($itAsset == null) return redirect()->route('it-assets.index')->withErrors("Data with Id" . $itAsset->id . "Not found");
+
     $itAsset->delete();
     return redirect()->route('it-assets.index')->with("success", "IT Asset Deleted Successfully");
   }

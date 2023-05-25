@@ -124,6 +124,8 @@ class InstrumentTypeController extends Controller
    */
   public function destroy(InstrumentType $instrument_type)
   {
+    if($instrument_type == null) return redirect()->route('instrument-types.index')->withErrors("Data with Id" . $instrument_type->id . "Not found");
+
     $instrument_type->delete();
     return redirect()
       ->route('instrument-types.index')

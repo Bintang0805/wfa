@@ -18,20 +18,16 @@ class LocationController extends Controller
    */
   public function index()
   {
-    $locations = Location::with('facilities')->get();
+    $locations = Location::with('company', 'facilities', 'departments')->get();
     $facilityCount = 0;
-    foreach ($locations as $l) {
-      $facilityCount += $l->facilities->count();
-    }
-
-    $locations = Location::with('departments')->get();
     $departmentCount = 0;
     foreach ($locations as $l) {
-      $departmentCount += $l->facilities->count();
+      $facilityCount += $l->facilities->count();
+      $departmentCount += $l->departments->count();
     }
 
     $data = [
-      'locations' => Location::with('company', 'facilities', 'departments')->get(),
+      'locations' => $locations,
       'facilityCount' => $facilityCount,
       'departmentCount' => $departmentCount,
       'companies' => Company::all(),
@@ -142,20 +138,12 @@ class LocationController extends Controller
    */
   public function destroy(Location $location)
   {
+    if($location == null) return redirect()->route('location.index')->withErrors("Data with Id" . $location->id . "Not found");
+
     $location->delete();
     return redirect()
       ->route('locations.index')
       ->with('success', 'Location Deleted Successfully');
-  }
-
-  public function checkLocationNameUniqueness(Request $request)
-  {
-    $locationName = $request->input('locationName');
-
-    // Mengecek keunikan "location_name" dalam database
-    $exists = Location::where('location_name', $locationName)->exists();
-
-    return response()->json(['exists' => $exists]);
   }
 
   public function AJAXGetAll() {
