@@ -237,7 +237,7 @@
                   let unique = GetAllData.find(function (data) {
                     return data.facility_name === input.value;
                   });
-                  if(oldValue != null) {
+                  if (oldValue != null) {
                     return unique.facility_name == oldValue ? true : false;
                   } else {
                     return unique != null ? false : true;
@@ -303,3 +303,28 @@
   })()
     ;
 });
+
+function showPermission(form) {
+  event.preventDefault();
+  Swal.fire({
+    title: 'Are you sure?',
+    text: "You won't to delete this?",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Yes'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      form.submit(); // <--- submit form programmatically
+    } else if (
+      result.dismiss === Swal.DismissReason.cancel
+    ) {
+      swalWithBootstrapButtons.fire(
+        'Cancelled',
+        'Your data is safe :)',
+        'error'
+      )
+    }
+  })
+}

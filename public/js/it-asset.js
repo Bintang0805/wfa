@@ -217,7 +217,7 @@
                   let unique = GetAllData.find(function (data) {
                     return data.host_name === input.value;
                   });
-                  if(oldValueHost != null) {
+                  if (oldValueHost != null) {
                     return unique.host_name == oldValueHost ? true : false;
                   } else {
                     return unique != null ? false : true;
@@ -241,7 +241,7 @@
                   let unique = GetAllData.find(function (data) {
                     return data.ip_address === input.value;
                   });
-                  if(oldValueIp != null) {
+                  if (oldValueIp != null) {
                     return unique.ip_address == oldValueIp ? true : false;
                   } else {
                     return unique != null ? false : true;
@@ -304,3 +304,29 @@
   })()
     ;
 });
+
+
+function showPermission(form) {
+  event.preventDefault();
+  Swal.fire({
+    title: 'Are you sure?',
+    text: "You won't to delete this?",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Yes'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      form.submit(); // <--- submit form programmatically
+    } else if (
+      result.dismiss === Swal.DismissReason.cancel
+    ) {
+      swalWithBootstrapButtons.fire(
+        'Cancelled',
+        'Your data is safe :)',
+        'error'
+      )
+    }
+  })
+}

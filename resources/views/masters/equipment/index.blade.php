@@ -39,32 +39,6 @@
 
 @section('page-script')
     <script src="{{ asset('js/equipment.js') }}"></script>
-    <script>
-        function showPermission(form) {
-            event.preventDefault();
-                Swal.fire({
-                    title: 'Are you sure?',
-                    text: "You won't to delete this?",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        form.submit(); // <--- submit form programmatically
-                    } else if (
-                        result.dismiss === Swal.DismissReason.cancel
-                    ) {
-                        swalWithBootstrapButtons.fire(
-                            'Cancelled',
-                            'Your data is safe :)',
-                            'error'
-                        )
-                    }
-                })
-            }
-    </script>
 @endsection
 
 @section('content')
@@ -125,8 +99,8 @@
                                     class="DeleteForm" method="POST">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-danger mx-2" onclick="showPermission(this.parentNode)"><i
-                                            class="bx bx-trash"></i></button>
+                                    <button type="submit" class="btn btn-sm btn-danger mx-2"
+                                        onclick="showPermission(this.parentNode)"><i class="bx bx-trash"></i></button>
                                 </form>
                                 <button class="detail-button btn btn-sm btn-secondary" data-id="{{ $equipment->id }}"
                                     data-bs-toggle="modal" data-bs-target="#modalCenterDetail">

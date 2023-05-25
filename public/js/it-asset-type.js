@@ -36,13 +36,13 @@
     });
 
     setTimeout(() => {
-      if($(".success-toast")) {
+      if ($(".success-toast")) {
         $(".success-toast").toast('hide');
       }
     }, 5000);
 
     setTimeout(() => {
-      if($(".error-message")) {
+      if ($(".error-message")) {
         $(".error-message").toast('hide');
       }
     }, 5000);
@@ -187,7 +187,7 @@
                   let unique = GetAllData.find(function (data) {
                     return data.it_asset_type === input.value;
                   });
-                  if(oldValue != null) {
+                  if (oldValue != null) {
                     return unique.it_asset_type == oldValue ? true : false;
                   } else {
                     return unique != null ? false : true;
@@ -217,40 +217,34 @@
       }
     })
 
-    function uniqueValidate(value) {
-      let url = `${baseUrl}/it-asset-types/validation-unique`;
-      let result;
-      $.ajaxSetup({
-        headers: {
-          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-      });
-
-      $.ajax({
-        url: url,
-        type: 'POST',
-        data: {
-          input: value,
-        },
-        async: false,
-        success: function (data) {
-          if(data.exists == true) {
-            result = false;
-          } else {
-            result = true
-          }
-        },
-        error: function() {
-          return false;
-        }
-      });
-
-      return result
-    }
-
 
 /******/ 	return __webpack_exports__;
     /******/
   })()
     ;
 });
+
+function showPermission(form) {
+  event.preventDefault();
+  Swal.fire({
+    title: 'Are you sure?',
+    text: "You won't to delete this?",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Yes'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      form.submit(); // <--- submit form programmatically
+    } else if (
+      result.dismiss === Swal.DismissReason.cancel
+    ) {
+      swalWithBootstrapButtons.fire(
+        'Cancelled',
+        'Your data is safe :)',
+        'error'
+      )
+    }
+  })
+}
