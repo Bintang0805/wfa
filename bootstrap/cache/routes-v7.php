@@ -84,7 +84,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::5ThNUg4Yvy81T4kW',
+            '_route' => 'generated::QQW9XqyzGxMofMOA',
           ),
           1 => NULL,
           2 => 
@@ -162,7 +162,159 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::VSIiGGrfc6gF96Ul',
+            '_route' => 'generated::tuffrHD2VOzPcFr0',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      '/auth/login' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'generated::IbiM88LUQhwpg97L',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      '/auth/register' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'generated::QAuGr3yH19SnAfFd',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      '/role-and-permission/permissions' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'permissions.index',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+        1 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'permissions.store',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'POST' => 0,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      '/role-and-permission/permissions/create' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'permissions.create',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      '/user/roles' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'roles.index',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+        1 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'roles.store',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'POST' => 0,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      '/user/roles/create' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'roles.create',
           ),
           1 => NULL,
           2 => 
@@ -354,7 +506,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::0mUhhaTCfpVb624O',
+            '_route' => 'generated::4N2AdlV1EFFK9PAo',
           ),
           1 => NULL,
           2 => 
@@ -872,13 +1024,181 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
+      '/form-fields' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'form-fields.index',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+        1 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'form-fields.store',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'POST' => 0,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      '/form-fields/create' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'form-fields.create',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      '/request-forms' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'request-forms.index',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+        1 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'request-forms.store',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'POST' => 0,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      '/request-forms/create' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'request-forms.create',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      '/workflows' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'workflows.index',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+        1 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'workflows.store',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'POST' => 0,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      '/workflows/create' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'workflows.create',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
       '/AJAX/locations/AJAXGetAll' => 
       array (
         0 => 
         array (
           0 => 
           array (
-            '_route' => 'generated::Eiy0EUrBZCghOUxN',
+            '_route' => 'generated::WBybChr6YJqEETYj',
           ),
           1 => NULL,
           2 => 
@@ -898,7 +1218,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::s5rDqGK9K0S7kqqL',
+            '_route' => 'generated::BvlzAZXMkemdi9J6',
           ),
           1 => NULL,
           2 => 
@@ -918,7 +1238,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::hsg4eGXS20oNBgvi',
+            '_route' => 'generated::Gn6u1OfG79kKTj4y',
           ),
           1 => NULL,
           2 => 
@@ -938,7 +1258,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::XJSi3nbGvCCnPIRO',
+            '_route' => 'generated::EZlSN1YbLuQ0WpSI',
           ),
           1 => NULL,
           2 => 
@@ -958,7 +1278,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::lgqdBY1c0tRQ2T9A',
+            '_route' => 'generated::0z9GoslzoqdREvoN',
           ),
           1 => NULL,
           2 => 
@@ -978,7 +1298,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::P1Tk3sEAXfXkZS7a',
+            '_route' => 'generated::a4JiD2CKfD5xRlKB',
           ),
           1 => NULL,
           2 => 
@@ -998,7 +1318,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::2i5noYiO1Cbc1UPU',
+            '_route' => 'generated::hODUjhABfAkArYSa',
           ),
           1 => NULL,
           2 => 
@@ -1018,7 +1338,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::IBTJTIWbvmZne3DD',
+            '_route' => 'generated::5Wq6prKkt7laHeL8',
           ),
           1 => NULL,
           2 => 
@@ -1038,7 +1358,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::HM4fH4PAglMYWmAJ',
+            '_route' => 'generated::cBGCGsJnfBd49EW3',
           ),
           1 => NULL,
           2 => 
@@ -1058,7 +1378,47 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::cghomsZetatGzlin',
+            '_route' => 'generated::UuEHbUp0xBwinL7n',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      '/AJAX/request-forms/AJAXGetAll' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'generated::GZDOdz6ItZ1lCBiE',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      '/AJAX/roles/AJAXGetAll' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'generated::vFvROTylPD4k8fnn',
           ),
           1 => NULL,
           2 => 
@@ -1075,7 +1435,7 @@ app('router')->setCompiledRoutes(
     ),
     2 => 
     array (
-      0 => '{^(?|/_debugbar/c(?|lockwork/([^/]++)(*:39)|ache/([^/]++)(?:/([^/]++))?(*:73))|/companies/([^/]++)(?|(*:103)|/edit(*:116)|(*:124))|/locations/([^/]++)(?|(*:155)|/edit(*:168)|(*:176))|/departments/([^/]++)(?|(*:209)|/edit(*:222)|(*:230))|/facilities/([^/]++)(?|(*:262)|/edit(*:275)|(*:283))|/equipment(?|\\-types/([^/]++)(?|(*:324)|/edit(*:337)|(*:345))|s/([^/]++)(?|(*:367)|/edit(*:380)|(*:388)))|/i(?|nstrument(?|\\-types/([^/]++)(?|(*:434)|/edit(*:447)|(*:455))|s/([^/]++)(?|(*:477)|/edit(*:490)|(*:498)))|t\\-asset(?|\\-types/([^/]++)(?|(*:538)|/edit(*:551)|(*:559))|s/([^/]++)(?|(*:581)|/edit(*:594)|(*:602))))|/applications/([^/]++)(?|(*:638)|/edit(*:651)|(*:659)))/?$}sDu',
+      0 => '{^(?|/_debugbar/c(?|lockwork/([^/]++)(*:39)|ache/([^/]++)(?:/([^/]++))?(*:73))|/r(?|ole\\-and\\-permission/permissions/([^/]++)(?|(*:130)|/edit(*:143)|(*:151))|equest\\-forms/(?|([^/]++)(?|(*:188)|/edit(*:201)|(*:209))|create/([^/]++)(*:233)))|/user/roles/([^/]++)(?|(*:266)|/edit(*:279)|(*:287))|/companies/([^/]++)(?|(*:318)|/edit(*:331)|(*:339))|/locations/([^/]++)(?|(*:370)|/edit(*:383)|(*:391))|/departments/([^/]++)(?|(*:424)|/edit(*:437)|(*:445))|/f(?|acilities/([^/]++)(?|(*:480)|/edit(*:493)|(*:501))|orm\\-fields/([^/]++)(?|(*:533)|/edit(*:546)|(*:554)))|/equipment(?|\\-types/([^/]++)(?|(*:596)|/edit(*:609)|(*:617))|s/([^/]++)(?|(*:639)|/edit(*:652)|(*:660)))|/i(?|nstrument(?|\\-types/([^/]++)(?|(*:706)|/edit(*:719)|(*:727))|s/([^/]++)(?|(*:749)|/edit(*:762)|(*:770)))|t\\-asset(?|\\-types/([^/]++)(?|(*:810)|/edit(*:823)|(*:831))|s/([^/]++)(?|(*:853)|/edit(*:866)|(*:874))))|/applications/([^/]++)(?|(*:910)|/edit(*:923)|(*:931))|/workflows/([^/]++)(?|(*:962)|/edit(*:975)|(*:983)))/?$}sDu',
     ),
     3 => 
     array (
@@ -1126,7 +1486,294 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      103 => 
+      130 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'permissions.show',
+          ),
+          1 => 
+          array (
+            0 => 'permission',
+          ),
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => true,
+          6 => NULL,
+        ),
+      ),
+      143 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'permissions.edit',
+          ),
+          1 => 
+          array (
+            0 => 'permission',
+          ),
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      151 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'permissions.update',
+          ),
+          1 => 
+          array (
+            0 => 'permission',
+          ),
+          2 => 
+          array (
+            'PUT' => 0,
+            'PATCH' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => true,
+          6 => NULL,
+        ),
+        1 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'permissions.destroy',
+          ),
+          1 => 
+          array (
+            0 => 'permission',
+          ),
+          2 => 
+          array (
+            'DELETE' => 0,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => true,
+          6 => NULL,
+        ),
+      ),
+      188 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'request-forms.show',
+          ),
+          1 => 
+          array (
+            0 => 'request_form',
+          ),
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => true,
+          6 => NULL,
+        ),
+      ),
+      201 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'request-forms.edit',
+          ),
+          1 => 
+          array (
+            0 => 'request_form',
+          ),
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      209 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'request-forms.update',
+          ),
+          1 => 
+          array (
+            0 => 'request_form',
+          ),
+          2 => 
+          array (
+            'PUT' => 0,
+            'PATCH' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => true,
+          6 => NULL,
+        ),
+        1 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'request-forms.destroy',
+          ),
+          1 => 
+          array (
+            0 => 'request_form',
+          ),
+          2 => 
+          array (
+            'DELETE' => 0,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => true,
+          6 => NULL,
+        ),
+      ),
+      233 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'request-forms.create-custom',
+          ),
+          1 => 
+          array (
+            0 => 'workflow_id',
+          ),
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => true,
+          6 => NULL,
+        ),
+      ),
+      266 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'roles.show',
+          ),
+          1 => 
+          array (
+            0 => 'role',
+          ),
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => true,
+          6 => NULL,
+        ),
+      ),
+      279 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'roles.edit',
+          ),
+          1 => 
+          array (
+            0 => 'role',
+          ),
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      287 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'roles.update',
+          ),
+          1 => 
+          array (
+            0 => 'role',
+          ),
+          2 => 
+          array (
+            'PUT' => 0,
+            'PATCH' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => true,
+          6 => NULL,
+        ),
+        1 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'roles.destroy',
+          ),
+          1 => 
+          array (
+            0 => 'role',
+          ),
+          2 => 
+          array (
+            'DELETE' => 0,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => true,
+          6 => NULL,
+        ),
+      ),
+      318 => 
       array (
         0 => 
         array (
@@ -1149,7 +1796,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      116 => 
+      331 => 
       array (
         0 => 
         array (
@@ -1172,7 +1819,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      124 => 
+      339 => 
       array (
         0 => 
         array (
@@ -1214,7 +1861,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      155 => 
+      370 => 
       array (
         0 => 
         array (
@@ -1237,7 +1884,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      168 => 
+      383 => 
       array (
         0 => 
         array (
@@ -1260,7 +1907,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      176 => 
+      391 => 
       array (
         0 => 
         array (
@@ -1302,7 +1949,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      209 => 
+      424 => 
       array (
         0 => 
         array (
@@ -1325,7 +1972,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      222 => 
+      437 => 
       array (
         0 => 
         array (
@@ -1348,7 +1995,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      230 => 
+      445 => 
       array (
         0 => 
         array (
@@ -1390,7 +2037,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      262 => 
+      480 => 
       array (
         0 => 
         array (
@@ -1413,7 +2060,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      275 => 
+      493 => 
       array (
         0 => 
         array (
@@ -1436,7 +2083,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      283 => 
+      501 => 
       array (
         0 => 
         array (
@@ -1478,7 +2125,95 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      324 => 
+      533 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'form-fields.show',
+          ),
+          1 => 
+          array (
+            0 => 'form_field',
+          ),
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => true,
+          6 => NULL,
+        ),
+      ),
+      546 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'form-fields.edit',
+          ),
+          1 => 
+          array (
+            0 => 'form_field',
+          ),
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      554 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'form-fields.update',
+          ),
+          1 => 
+          array (
+            0 => 'form_field',
+          ),
+          2 => 
+          array (
+            'PUT' => 0,
+            'PATCH' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => true,
+          6 => NULL,
+        ),
+        1 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'form-fields.destroy',
+          ),
+          1 => 
+          array (
+            0 => 'form_field',
+          ),
+          2 => 
+          array (
+            'DELETE' => 0,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => true,
+          6 => NULL,
+        ),
+      ),
+      596 => 
       array (
         0 => 
         array (
@@ -1501,7 +2236,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      337 => 
+      609 => 
       array (
         0 => 
         array (
@@ -1524,7 +2259,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      345 => 
+      617 => 
       array (
         0 => 
         array (
@@ -1566,7 +2301,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      367 => 
+      639 => 
       array (
         0 => 
         array (
@@ -1589,7 +2324,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      380 => 
+      652 => 
       array (
         0 => 
         array (
@@ -1612,7 +2347,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      388 => 
+      660 => 
       array (
         0 => 
         array (
@@ -1654,7 +2389,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      434 => 
+      706 => 
       array (
         0 => 
         array (
@@ -1677,7 +2412,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      447 => 
+      719 => 
       array (
         0 => 
         array (
@@ -1700,7 +2435,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      455 => 
+      727 => 
       array (
         0 => 
         array (
@@ -1742,7 +2477,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      477 => 
+      749 => 
       array (
         0 => 
         array (
@@ -1765,7 +2500,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      490 => 
+      762 => 
       array (
         0 => 
         array (
@@ -1788,7 +2523,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      498 => 
+      770 => 
       array (
         0 => 
         array (
@@ -1830,7 +2565,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      538 => 
+      810 => 
       array (
         0 => 
         array (
@@ -1853,7 +2588,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      551 => 
+      823 => 
       array (
         0 => 
         array (
@@ -1876,7 +2611,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      559 => 
+      831 => 
       array (
         0 => 
         array (
@@ -1918,7 +2653,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      581 => 
+      853 => 
       array (
         0 => 
         array (
@@ -1941,7 +2676,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      594 => 
+      866 => 
       array (
         0 => 
         array (
@@ -1964,7 +2699,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      602 => 
+      874 => 
       array (
         0 => 
         array (
@@ -2006,7 +2741,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      638 => 
+      910 => 
       array (
         0 => 
         array (
@@ -2029,7 +2764,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      651 => 
+      923 => 
       array (
         0 => 
         array (
@@ -2052,7 +2787,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      659 => 
+      931 => 
       array (
         0 => 
         array (
@@ -2083,6 +2818,94 @@ app('router')->setCompiledRoutes(
           1 => 
           array (
             0 => 'application',
+          ),
+          2 => 
+          array (
+            'DELETE' => 0,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => true,
+          6 => NULL,
+        ),
+      ),
+      962 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'workflows.show',
+          ),
+          1 => 
+          array (
+            0 => 'workflow',
+          ),
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => true,
+          6 => NULL,
+        ),
+      ),
+      975 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'workflows.edit',
+          ),
+          1 => 
+          array (
+            0 => 'workflow',
+          ),
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      983 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'workflows.update',
+          ),
+          1 => 
+          array (
+            0 => 'workflow',
+          ),
+          2 => 
+          array (
+            'PUT' => 0,
+            'PATCH' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => true,
+          6 => NULL,
+        ),
+        1 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'workflows.destroy',
+          ),
+          1 => 
+          array (
+            0 => 'workflow',
           ),
           2 => 
           array (
@@ -2298,7 +3121,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::5ThNUg4Yvy81T4kW' => 
+    'generated::QQW9XqyzGxMofMOA' => 
     array (
       'methods' => 
       array (
@@ -2319,7 +3142,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 'web',
         ),
-        'as' => 'generated::5ThNUg4Yvy81T4kW',
+        'as' => 'generated::QQW9XqyzGxMofMOA',
       ),
       'fallback' => false,
       'defaults' => 
@@ -2444,7 +3267,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::VSIiGGrfc6gF96Ul' => 
+    'generated::tuffrHD2VOzPcFr0' => 
     array (
       'methods' => 
       array (
@@ -2461,13 +3284,601 @@ app('router')->setCompiledRoutes(
         ),
         'uses' => 'O:47:"Laravel\\SerializableClosure\\SerializableClosure":1:{s:12:"serializable";O:46:"Laravel\\SerializableClosure\\Serializers\\Signed":2:{s:12:"serializable";s:297:"O:46:"Laravel\\SerializableClosure\\Serializers\\Native":5:{s:3:"use";a:0:{}s:8:"function";s:79:"function (\\Illuminate\\Http\\Request $request) {
     return $request->user();
-}";s:5:"scope";s:37:"Illuminate\\Routing\\RouteFileRegistrar";s:4:"this";N;s:4:"self";s:32:"00000000000005500000000000000000";}";s:4:"hash";s:44:"9V0w4CIdGfhOC+j6Zdyi0rX0GsfVb9NTSMTlejlzLHk=";}}',
+}";s:5:"scope";s:37:"Illuminate\\Routing\\RouteFileRegistrar";s:4:"this";N;s:4:"self";s:32:"0000000000000a200000000000000000";}";s:4:"hash";s:44:"UUUMJ0Dbj01t8iIbW6q8L3Ipq3Sw3axiuosNNzLuXzc=";}}',
         'namespace' => NULL,
         'prefix' => 'api',
         'where' => 
         array (
         ),
-        'as' => 'generated::VSIiGGrfc6gF96Ul',
+        'as' => 'generated::tuffrHD2VOzPcFr0',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'generated::IbiM88LUQhwpg97L' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'auth/login',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+        ),
+        'uses' => 'App\\Http\\Controllers\\auth\\AuthController@login',
+        'controller' => 'App\\Http\\Controllers\\auth\\AuthController@login',
+        'namespace' => NULL,
+        'prefix' => '',
+        'where' => 
+        array (
+        ),
+        'as' => 'generated::IbiM88LUQhwpg97L',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'generated::QAuGr3yH19SnAfFd' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'auth/register',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+        ),
+        'uses' => 'App\\Http\\Controllers\\auth\\AuthController@register',
+        'controller' => 'App\\Http\\Controllers\\auth\\AuthController@register',
+        'namespace' => NULL,
+        'prefix' => '',
+        'where' => 
+        array (
+        ),
+        'as' => 'generated::QAuGr3yH19SnAfFd',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'permissions.index' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'role-and-permission/permissions',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+        ),
+        'as' => 'permissions.index',
+        'uses' => 'App\\Http\\Controllers\\RoleAndPermission\\PermissionController@index',
+        'controller' => 'App\\Http\\Controllers\\RoleAndPermission\\PermissionController@index',
+        'namespace' => NULL,
+        'prefix' => '/role-and-permission',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'permissions.create' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'role-and-permission/permissions/create',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+        ),
+        'as' => 'permissions.create',
+        'uses' => 'App\\Http\\Controllers\\RoleAndPermission\\PermissionController@create',
+        'controller' => 'App\\Http\\Controllers\\RoleAndPermission\\PermissionController@create',
+        'namespace' => NULL,
+        'prefix' => '/role-and-permission',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'permissions.store' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'POST',
+      ),
+      'uri' => 'role-and-permission/permissions',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+        ),
+        'as' => 'permissions.store',
+        'uses' => 'App\\Http\\Controllers\\RoleAndPermission\\PermissionController@store',
+        'controller' => 'App\\Http\\Controllers\\RoleAndPermission\\PermissionController@store',
+        'namespace' => NULL,
+        'prefix' => '/role-and-permission',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'permissions.show' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'role-and-permission/permissions/{permission}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+        ),
+        'as' => 'permissions.show',
+        'uses' => 'App\\Http\\Controllers\\RoleAndPermission\\PermissionController@show',
+        'controller' => 'App\\Http\\Controllers\\RoleAndPermission\\PermissionController@show',
+        'namespace' => NULL,
+        'prefix' => '/role-and-permission',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'permissions.edit' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'role-and-permission/permissions/{permission}/edit',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+        ),
+        'as' => 'permissions.edit',
+        'uses' => 'App\\Http\\Controllers\\RoleAndPermission\\PermissionController@edit',
+        'controller' => 'App\\Http\\Controllers\\RoleAndPermission\\PermissionController@edit',
+        'namespace' => NULL,
+        'prefix' => '/role-and-permission',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'permissions.update' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'PUT',
+        1 => 'PATCH',
+      ),
+      'uri' => 'role-and-permission/permissions/{permission}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+        ),
+        'as' => 'permissions.update',
+        'uses' => 'App\\Http\\Controllers\\RoleAndPermission\\PermissionController@update',
+        'controller' => 'App\\Http\\Controllers\\RoleAndPermission\\PermissionController@update',
+        'namespace' => NULL,
+        'prefix' => '/role-and-permission',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'permissions.destroy' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'DELETE',
+      ),
+      'uri' => 'role-and-permission/permissions/{permission}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+        ),
+        'as' => 'permissions.destroy',
+        'uses' => 'App\\Http\\Controllers\\RoleAndPermission\\PermissionController@destroy',
+        'controller' => 'App\\Http\\Controllers\\RoleAndPermission\\PermissionController@destroy',
+        'namespace' => NULL,
+        'prefix' => '/role-and-permission',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'roles.index' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'user/roles',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+        ),
+        'as' => 'roles.index',
+        'uses' => 'App\\Http\\Controllers\\User\\RoleController@index',
+        'controller' => 'App\\Http\\Controllers\\User\\RoleController@index',
+        'namespace' => NULL,
+        'prefix' => '/user',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'roles.create' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'user/roles/create',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+        ),
+        'as' => 'roles.create',
+        'uses' => 'App\\Http\\Controllers\\User\\RoleController@create',
+        'controller' => 'App\\Http\\Controllers\\User\\RoleController@create',
+        'namespace' => NULL,
+        'prefix' => '/user',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'roles.store' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'POST',
+      ),
+      'uri' => 'user/roles',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+        ),
+        'as' => 'roles.store',
+        'uses' => 'App\\Http\\Controllers\\User\\RoleController@store',
+        'controller' => 'App\\Http\\Controllers\\User\\RoleController@store',
+        'namespace' => NULL,
+        'prefix' => '/user',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'roles.show' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'user/roles/{role}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+        ),
+        'as' => 'roles.show',
+        'uses' => 'App\\Http\\Controllers\\User\\RoleController@show',
+        'controller' => 'App\\Http\\Controllers\\User\\RoleController@show',
+        'namespace' => NULL,
+        'prefix' => '/user',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'roles.edit' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'user/roles/{role}/edit',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+        ),
+        'as' => 'roles.edit',
+        'uses' => 'App\\Http\\Controllers\\User\\RoleController@edit',
+        'controller' => 'App\\Http\\Controllers\\User\\RoleController@edit',
+        'namespace' => NULL,
+        'prefix' => '/user',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'roles.update' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'PUT',
+        1 => 'PATCH',
+      ),
+      'uri' => 'user/roles/{role}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+        ),
+        'as' => 'roles.update',
+        'uses' => 'App\\Http\\Controllers\\User\\RoleController@update',
+        'controller' => 'App\\Http\\Controllers\\User\\RoleController@update',
+        'namespace' => NULL,
+        'prefix' => '/user',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'roles.destroy' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'DELETE',
+      ),
+      'uri' => 'user/roles/{role}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+        ),
+        'as' => 'roles.destroy',
+        'uses' => 'App\\Http\\Controllers\\User\\RoleController@destroy',
+        'controller' => 'App\\Http\\Controllers\\User\\RoleController@destroy',
+        'namespace' => NULL,
+        'prefix' => '/user',
+        'where' => 
+        array (
+        ),
       ),
       'fallback' => false,
       'defaults' => 
@@ -3108,7 +4519,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::0mUhhaTCfpVb624O' => 
+    'generated::4N2AdlV1EFFK9PAo' => 
     array (
       'methods' => 
       array (
@@ -3129,7 +4540,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::0mUhhaTCfpVb624O',
+        'as' => 'generated::4N2AdlV1EFFK9PAo',
       ),
       'fallback' => false,
       'defaults' => 
@@ -5458,7 +6869,815 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::Eiy0EUrBZCghOUxN' => 
+    'form-fields.index' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'form-fields',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+        ),
+        'as' => 'form-fields.index',
+        'uses' => 'App\\Http\\Controllers\\masters\\FormFieldController@index',
+        'controller' => 'App\\Http\\Controllers\\masters\\FormFieldController@index',
+        'namespace' => NULL,
+        'prefix' => '',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'form-fields.create' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'form-fields/create',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+        ),
+        'as' => 'form-fields.create',
+        'uses' => 'App\\Http\\Controllers\\masters\\FormFieldController@create',
+        'controller' => 'App\\Http\\Controllers\\masters\\FormFieldController@create',
+        'namespace' => NULL,
+        'prefix' => '',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'form-fields.store' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'POST',
+      ),
+      'uri' => 'form-fields',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+        ),
+        'as' => 'form-fields.store',
+        'uses' => 'App\\Http\\Controllers\\masters\\FormFieldController@store',
+        'controller' => 'App\\Http\\Controllers\\masters\\FormFieldController@store',
+        'namespace' => NULL,
+        'prefix' => '',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'form-fields.show' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'form-fields/{form_field}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+        ),
+        'as' => 'form-fields.show',
+        'uses' => 'App\\Http\\Controllers\\masters\\FormFieldController@show',
+        'controller' => 'App\\Http\\Controllers\\masters\\FormFieldController@show',
+        'namespace' => NULL,
+        'prefix' => '',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'form-fields.edit' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'form-fields/{form_field}/edit',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+        ),
+        'as' => 'form-fields.edit',
+        'uses' => 'App\\Http\\Controllers\\masters\\FormFieldController@edit',
+        'controller' => 'App\\Http\\Controllers\\masters\\FormFieldController@edit',
+        'namespace' => NULL,
+        'prefix' => '',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'form-fields.update' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'PUT',
+        1 => 'PATCH',
+      ),
+      'uri' => 'form-fields/{form_field}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+        ),
+        'as' => 'form-fields.update',
+        'uses' => 'App\\Http\\Controllers\\masters\\FormFieldController@update',
+        'controller' => 'App\\Http\\Controllers\\masters\\FormFieldController@update',
+        'namespace' => NULL,
+        'prefix' => '',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'form-fields.destroy' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'DELETE',
+      ),
+      'uri' => 'form-fields/{form_field}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+        ),
+        'as' => 'form-fields.destroy',
+        'uses' => 'App\\Http\\Controllers\\masters\\FormFieldController@destroy',
+        'controller' => 'App\\Http\\Controllers\\masters\\FormFieldController@destroy',
+        'namespace' => NULL,
+        'prefix' => '',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'request-forms.index' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'request-forms',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+        ),
+        'as' => 'request-forms.index',
+        'uses' => 'App\\Http\\Controllers\\Workflow\\RequestFormController@index',
+        'controller' => 'App\\Http\\Controllers\\Workflow\\RequestFormController@index',
+        'namespace' => NULL,
+        'prefix' => '',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'request-forms.create' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'request-forms/create',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+        ),
+        'as' => 'request-forms.create',
+        'uses' => 'App\\Http\\Controllers\\Workflow\\RequestFormController@create',
+        'controller' => 'App\\Http\\Controllers\\Workflow\\RequestFormController@create',
+        'namespace' => NULL,
+        'prefix' => '',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'request-forms.store' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'POST',
+      ),
+      'uri' => 'request-forms',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+        ),
+        'as' => 'request-forms.store',
+        'uses' => 'App\\Http\\Controllers\\Workflow\\RequestFormController@store',
+        'controller' => 'App\\Http\\Controllers\\Workflow\\RequestFormController@store',
+        'namespace' => NULL,
+        'prefix' => '',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'request-forms.show' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'request-forms/{request_form}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+        ),
+        'as' => 'request-forms.show',
+        'uses' => 'App\\Http\\Controllers\\Workflow\\RequestFormController@show',
+        'controller' => 'App\\Http\\Controllers\\Workflow\\RequestFormController@show',
+        'namespace' => NULL,
+        'prefix' => '',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'request-forms.edit' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'request-forms/{request_form}/edit',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+        ),
+        'as' => 'request-forms.edit',
+        'uses' => 'App\\Http\\Controllers\\Workflow\\RequestFormController@edit',
+        'controller' => 'App\\Http\\Controllers\\Workflow\\RequestFormController@edit',
+        'namespace' => NULL,
+        'prefix' => '',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'request-forms.update' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'PUT',
+        1 => 'PATCH',
+      ),
+      'uri' => 'request-forms/{request_form}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+        ),
+        'as' => 'request-forms.update',
+        'uses' => 'App\\Http\\Controllers\\Workflow\\RequestFormController@update',
+        'controller' => 'App\\Http\\Controllers\\Workflow\\RequestFormController@update',
+        'namespace' => NULL,
+        'prefix' => '',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'request-forms.destroy' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'DELETE',
+      ),
+      'uri' => 'request-forms/{request_form}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+        ),
+        'as' => 'request-forms.destroy',
+        'uses' => 'App\\Http\\Controllers\\Workflow\\RequestFormController@destroy',
+        'controller' => 'App\\Http\\Controllers\\Workflow\\RequestFormController@destroy',
+        'namespace' => NULL,
+        'prefix' => '',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'workflows.index' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'workflows',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+        ),
+        'as' => 'workflows.index',
+        'uses' => 'App\\Http\\Controllers\\Workflow\\WorkflowController@index',
+        'controller' => 'App\\Http\\Controllers\\Workflow\\WorkflowController@index',
+        'namespace' => NULL,
+        'prefix' => '',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'workflows.create' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'workflows/create',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+        ),
+        'as' => 'workflows.create',
+        'uses' => 'App\\Http\\Controllers\\Workflow\\WorkflowController@create',
+        'controller' => 'App\\Http\\Controllers\\Workflow\\WorkflowController@create',
+        'namespace' => NULL,
+        'prefix' => '',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'workflows.store' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'POST',
+      ),
+      'uri' => 'workflows',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+        ),
+        'as' => 'workflows.store',
+        'uses' => 'App\\Http\\Controllers\\Workflow\\WorkflowController@store',
+        'controller' => 'App\\Http\\Controllers\\Workflow\\WorkflowController@store',
+        'namespace' => NULL,
+        'prefix' => '',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'workflows.show' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'workflows/{workflow}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+        ),
+        'as' => 'workflows.show',
+        'uses' => 'App\\Http\\Controllers\\Workflow\\WorkflowController@show',
+        'controller' => 'App\\Http\\Controllers\\Workflow\\WorkflowController@show',
+        'namespace' => NULL,
+        'prefix' => '',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'workflows.edit' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'workflows/{workflow}/edit',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+        ),
+        'as' => 'workflows.edit',
+        'uses' => 'App\\Http\\Controllers\\Workflow\\WorkflowController@edit',
+        'controller' => 'App\\Http\\Controllers\\Workflow\\WorkflowController@edit',
+        'namespace' => NULL,
+        'prefix' => '',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'workflows.update' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'PUT',
+        1 => 'PATCH',
+      ),
+      'uri' => 'workflows/{workflow}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+        ),
+        'as' => 'workflows.update',
+        'uses' => 'App\\Http\\Controllers\\Workflow\\WorkflowController@update',
+        'controller' => 'App\\Http\\Controllers\\Workflow\\WorkflowController@update',
+        'namespace' => NULL,
+        'prefix' => '',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'workflows.destroy' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'DELETE',
+      ),
+      'uri' => 'workflows/{workflow}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+        ),
+        'as' => 'workflows.destroy',
+        'uses' => 'App\\Http\\Controllers\\Workflow\\WorkflowController@destroy',
+        'controller' => 'App\\Http\\Controllers\\Workflow\\WorkflowController@destroy',
+        'namespace' => NULL,
+        'prefix' => '',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'request-forms.create-custom' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'request-forms/create/{workflow_id}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+        ),
+        'uses' => 'App\\Http\\Controllers\\Workflow\\RequestFormController@create',
+        'controller' => 'App\\Http\\Controllers\\Workflow\\RequestFormController@create',
+        'namespace' => NULL,
+        'prefix' => '',
+        'where' => 
+        array (
+        ),
+        'as' => 'request-forms.create-custom',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'generated::WBybChr6YJqEETYj' => 
     array (
       'methods' => 
       array (
@@ -5479,7 +7698,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::Eiy0EUrBZCghOUxN',
+        'as' => 'generated::WBybChr6YJqEETYj',
       ),
       'fallback' => false,
       'defaults' => 
@@ -5495,7 +7714,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::s5rDqGK9K0S7kqqL' => 
+    'generated::BvlzAZXMkemdi9J6' => 
     array (
       'methods' => 
       array (
@@ -5516,7 +7735,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::s5rDqGK9K0S7kqqL',
+        'as' => 'generated::BvlzAZXMkemdi9J6',
       ),
       'fallback' => false,
       'defaults' => 
@@ -5532,7 +7751,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::hsg4eGXS20oNBgvi' => 
+    'generated::Gn6u1OfG79kKTj4y' => 
     array (
       'methods' => 
       array (
@@ -5553,7 +7772,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::hsg4eGXS20oNBgvi',
+        'as' => 'generated::Gn6u1OfG79kKTj4y',
       ),
       'fallback' => false,
       'defaults' => 
@@ -5569,7 +7788,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::XJSi3nbGvCCnPIRO' => 
+    'generated::EZlSN1YbLuQ0WpSI' => 
     array (
       'methods' => 
       array (
@@ -5590,7 +7809,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::XJSi3nbGvCCnPIRO',
+        'as' => 'generated::EZlSN1YbLuQ0WpSI',
       ),
       'fallback' => false,
       'defaults' => 
@@ -5606,7 +7825,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::lgqdBY1c0tRQ2T9A' => 
+    'generated::0z9GoslzoqdREvoN' => 
     array (
       'methods' => 
       array (
@@ -5627,7 +7846,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::lgqdBY1c0tRQ2T9A',
+        'as' => 'generated::0z9GoslzoqdREvoN',
       ),
       'fallback' => false,
       'defaults' => 
@@ -5643,7 +7862,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::P1Tk3sEAXfXkZS7a' => 
+    'generated::a4JiD2CKfD5xRlKB' => 
     array (
       'methods' => 
       array (
@@ -5664,7 +7883,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::P1Tk3sEAXfXkZS7a',
+        'as' => 'generated::a4JiD2CKfD5xRlKB',
       ),
       'fallback' => false,
       'defaults' => 
@@ -5680,7 +7899,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::2i5noYiO1Cbc1UPU' => 
+    'generated::hODUjhABfAkArYSa' => 
     array (
       'methods' => 
       array (
@@ -5701,7 +7920,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::2i5noYiO1Cbc1UPU',
+        'as' => 'generated::hODUjhABfAkArYSa',
       ),
       'fallback' => false,
       'defaults' => 
@@ -5717,7 +7936,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::IBTJTIWbvmZne3DD' => 
+    'generated::5Wq6prKkt7laHeL8' => 
     array (
       'methods' => 
       array (
@@ -5738,7 +7957,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::IBTJTIWbvmZne3DD',
+        'as' => 'generated::5Wq6prKkt7laHeL8',
       ),
       'fallback' => false,
       'defaults' => 
@@ -5754,7 +7973,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::HM4fH4PAglMYWmAJ' => 
+    'generated::cBGCGsJnfBd49EW3' => 
     array (
       'methods' => 
       array (
@@ -5775,7 +7994,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::HM4fH4PAglMYWmAJ',
+        'as' => 'generated::cBGCGsJnfBd49EW3',
       ),
       'fallback' => false,
       'defaults' => 
@@ -5791,7 +8010,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::cghomsZetatGzlin' => 
+    'generated::UuEHbUp0xBwinL7n' => 
     array (
       'methods' => 
       array (
@@ -5812,7 +8031,81 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::cghomsZetatGzlin',
+        'as' => 'generated::UuEHbUp0xBwinL7n',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'generated::GZDOdz6ItZ1lCBiE' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'AJAX/request-forms/AJAXGetAll',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+        ),
+        'uses' => 'App\\Http\\Controllers\\Workflow\\RequestFormController@AJAXGetAll',
+        'controller' => 'App\\Http\\Controllers\\Workflow\\RequestFormController@AJAXGetAll',
+        'namespace' => NULL,
+        'prefix' => '',
+        'where' => 
+        array (
+        ),
+        'as' => 'generated::GZDOdz6ItZ1lCBiE',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'generated::vFvROTylPD4k8fnn' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'AJAX/roles/AJAXGetAll',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+        ),
+        'uses' => 'App\\Http\\Controllers\\User\\RoleController@AJAXGetAll',
+        'controller' => 'App\\Http\\Controllers\\User\\RoleController@AJAXGetAll',
+        'namespace' => NULL,
+        'prefix' => '',
+        'where' => 
+        array (
+        ),
+        'as' => 'generated::vFvROTylPD4k8fnn',
       ),
       'fallback' => false,
       'defaults' => 

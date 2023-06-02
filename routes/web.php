@@ -1,23 +1,22 @@
 <?php
 
+use App\Http\Controllers\auth\AuthController;
 use App\Http\Controllers\masters\ApplicationController;
 use App\Http\Controllers\masters\CompanyController;
 use App\Http\Controllers\masters\DepartmentController;
 use App\Http\Controllers\masters\EquipmentController;
 use App\Http\Controllers\masters\EquipmentTypeController;
 use App\Http\Controllers\masters\FacilityController;
+use App\Http\Controllers\masters\FormFieldController;
 use App\Http\Controllers\masters\InstrumentController;
 use App\Http\Controllers\masters\InstrumentTypeController;
 use App\Http\Controllers\masters\ItAssetController;
 use App\Http\Controllers\masters\ItAssetTypeController;
 use App\Http\Controllers\masters\LocationController;
-use App\Models\masters\Application;
-use App\Models\masters\Department;
-use App\Models\masters\Equipment;
-use App\Models\masters\EquipmentType;
-use App\Models\masters\Facility;
-use App\Models\masters\InstrumentType;
-use App\Models\masters\ItAssetType;
+use App\Http\Controllers\RoleAndPermission\PermissionController;
+use App\Http\Controllers\User\RoleController;
+use App\Http\Controllers\Workflow\RequestFormController;
+use App\Http\Controllers\Workflow\WorkflowController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,6 +31,16 @@ use Illuminate\Support\Facades\Route;
 */
 
 $controller_path = 'App\Http\Controllers';
+
+// Auth
+Route::get("auth/login", [AuthController::class, "login"]);
+Route::get("auth/register", [AuthController::class, "register"]);
+
+// Role And Permission
+// Route::resource("role-and-permission/roles", RoleController::class);
+Route::resource("role-and-permission/permissions", PermissionController::class);
+
+Route::resource("user/roles", RoleController::class);
 
 // Main Page Route
 Route::get('/', $controller_path . '\pages\HomePage@index')->name('pages-home');
@@ -55,6 +64,10 @@ Route::resource('instruments', InstrumentController::class);
 Route::resource('it-asset-types', ItAssetTypeController::class);
 Route::resource('it-assets', ItAssetController::class);
 Route::resource('applications', ApplicationController::class);
+Route::resource("form-fields", FormFieldController::class);
+Route::resource("request-forms", RequestFormController::class);
+Route::resource("workflows", WorkflowController::class);
+Route::get("request-forms/create/{workflow_id}", [RequestFormController::class, "create"])->name("request-forms.create-custom");
 
 // AJAX
 Route::get('AJAX/locations/AJAXGetAll', [LocationController::class, "AJAXGetAll"]);
@@ -67,3 +80,5 @@ Route::get('AJAX/equipments/AJAXGetAll', [EquipmentController::class, "AJAXGetAl
 Route::get('AJAX/it-asset-types/AJAXGetAll', [ItAssetTypeController::class, "AJAXGetAll"]);
 Route::get('AJAX/it-assets/AJAXGetAll', [ItAssetController::class, "AJAXGetAll"]);
 Route::get('AJAX/applications/AJAXGetAll', [ApplicationController::class, "AJAXGetAll"]);
+Route::get('AJAX/request-forms/AJAXGetAll', [RequestFormController::class, "AJAXGetAll"]);
+Route::get('AJAX/roles/AJAXGetAll', [RoleController::class, "AJAXGetAll"]);

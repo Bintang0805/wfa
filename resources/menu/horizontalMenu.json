@@ -104,6 +104,20 @@
           "icon": "menu-icon tf-icons bx bx-cube",
           "slug": "master-application",
           "target": "_blank"
+        },
+        {
+          "url": "/workflow",
+          "name": "Workflow",
+          "icon": "menu-icon tf-icons bx bx-cube",
+          "slug": "master-workflow",
+          "target": "_blank"
+        },
+        {
+          "url": "/request-form",
+          "name": "Request Form",
+          "icon": "menu-icon tf-icons bx bx-cube",
+          "slug": "master-request-form",
+          "target": "_blank"
         }
       ]
     }

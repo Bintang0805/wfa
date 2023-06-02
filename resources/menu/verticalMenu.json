@@ -7,17 +7,21 @@
       "slug": "pages-home"
     },
     {
-      "url": "/page-2",
-      "icon": "menu-icon tf-icons bx bx-file",
-      "name": "Page 2",
-      "slug": "pages-page-2"
-    },
-    {
-      "url": "/pages/misc-error",
-      "name": "Error",
-      "icon": "menu-icon tf-icons bx bx-error",
-      "slug": "pages-misc-error",
-      "target": "_blank"
+      "name": "Users",
+      "icon": "menu-icon tf-icons bx bx-home-circle",
+      "slug": "user",
+      "badge": [
+        "primary",
+        "3"
+      ],
+      "submenu": [
+        {
+          "url": "/user/roles",
+          "name": "Roles",
+          "icon": "menu-icon tf-icons bx bx-cube",
+          "slug": "role"
+        }
+      ]
     },
     {
       "name": "Masters",
@@ -93,6 +97,29 @@
           "name": "Applications",
           "icon": "menu-icon tf-icons bx bx-cube",
           "slug": "master-application"
+        }
+      ]
+    },
+    {
+      "name": "Workflows",
+      "icon": "menu-icon tf-icons bx bx-home-circle",
+      "slug": "workflow",
+      "badge": [
+        "primary",
+        "3"
+      ],
+      "submenu": [
+        {
+          "url": "/workflows",
+          "name": "Workflows",
+          "icon": "menu-icon tf-icons bx bx-cube",
+          "slug": "workflow-workflow"
+        },
+        {
+          "url": "/request-forms",
+          "name": "Request Forms",
+          "icon": "menu-icon tf-icons bx bx-cube",
+          "slug": "workflow-request-form"
         }
       ]
     }

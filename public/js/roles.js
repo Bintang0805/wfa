@@ -18,7 +18,7 @@
      * Page User List
      */
 
-    let AJAXGetAllURL = `${window.location.origin}/AJAX/locations/AJAXGetAll`;
+    let AJAXGetAllURL = `${window.location.origin}/AJAX/roles/AJAXGetAll`;
     let GetAllData = null;
 
     $.ajax({
@@ -49,12 +49,12 @@
     // Datatable (jquery)
     $(function () {
       // Variable declaration for table
-      var dt_location_table = $('.datatables-locations'),
+      var dt_role_table = $('.datatables-roles'),
         modal = $('#modalCenter');
 
       // Locations datatable
-      if (dt_location_table.length) {
-        var dt_location = dt_location_table.DataTable({
+      if (dt_role_table.length) {
+        var dt_role = dt_role_table.DataTable({
           dom: '<"row mx-2"' + '<"col-md-2"<"me-3"l>>' + '<"col-md-10"<"dt-action-buttons text-xl-end text-lg-start text-md-end text-start d-flex align-items-center justify-content-end flex-md-row flex-column mb-3 mb-md-0"fB>>' + '>t' + '<"row mx-2"' + '<"col-sm-12 col-md-6"i>' + '<"col-sm-12 col-md-6"p>' + '>',
           buttons: [
             {
@@ -127,9 +127,9 @@
 
       // clearing form data when offcanvas hidden
       modal.on('hidden.bs.modal', function () {
-        let fv = $("#addNewLocationForm")
+        let fv = $("#addNewRoleForm")
         fv[0].reset(true);
-        $("#location_id").val("");
+        $("#role_id").val("");
       });
     });
 
@@ -140,72 +140,51 @@
       // Mendapatkan data-id dari tombol edit yang diklik
       var id = $(this).data("id");
 
-      let urlEdit = `${baseUrl}/locations/${id}/edit`;
+      let urlEdit = `${baseUrl}/user/roles/${id}/edit`;
 
       $.ajax({
         url: urlEdit,
         type: 'GET',
         success: function (data) {
           console.log(urlEdit);
-          let location = data.data.location;
-          $('#location_id').val(location.id);
-          $('#add-location-name').val(location.location_name);
-          $('#add-location-company').val(location.company_id);
+          let role = data.data.role;
+          $('#role_id').val(role.id);
+          $('#role_name').val(role.role_name);
         }
       });
     });
 
     // Menambahkan event listener ke tombol detail
-    $(".detail-button").on("click", function () {
-      // Mendapatkan data-id dari tombol edit yang diklik
-      var id = $(this).data("id");
+    // $(".detail-button").on("click", function () {
+    //   // Mendapatkan data-id dari tombol edit yang diklik
+    //   var id = $(this).data("id");
 
-      let urlEdit = `${baseUrl}/locations/${id}/edit`;
+    //   let urlEdit = `${baseUrl}/roles/${id}/edit`;
 
-      $.ajax({
-        url: urlEdit,
-        type: 'GET',
-        success: function (data) {
-          console.log(urlEdit);
-          let location = data.data.location;
-          console.log(location);
-          $('#location-id-detail').text(`: ${location.id}`);
-          $('#location-name-detail').text(`: ${location.location_name}`);
-          $('#company-id').text(`: ${location.company_id}`);
-          $('#company-name-detail').text(`: ${location.company.name}`);
-        }
-      });
-    });
+    //   $.ajax({
+    //     url: urlEdit,
+    //     type: 'GET',
+    //     success: function (data) {
+    //       console.log(urlEdit);
+    //       let location = data.data.location;
+    //       console.log(location);
+    //       $('#location-id-detail').text(`: ${location.id}`);
+    //       $('#location-name-detail').text(`: ${location.location_name}`);
+    //       $('#company-id').text(`: ${location.company_id}`);
+    //       $('#company-name-detail').text(`: ${location.company.name}`);
+    //     }
+    //   });
+    // });
 
     // validating form and updating user's data
-    var addNewLocationForm = document.getElementById('addNewLocationForm');
+    var addNewRoleForm = document.getElementById('addNewRoleForm');
 
-    var fv = FormValidation.formValidation(addNewLocationForm, {
+    var fv = FormValidation.formValidation(addNewRoleForm, {
       fields: {
-        company_id: {
+        role_name: {
           validators: {
             notEmpty: {
               message: 'this is required'
-            }
-          }
-        },
-        location_name: {
-          validators: {
-            notEmpty: {
-              message: 'this is required'
-            },
-            callback: {
-              message: "This field must be unique",
-              callback: (input) => {
-                if (GetAllData != null) {
-                  let unique = GetAllData.find(function (data) {
-                    return data.location_name === input.value;
-                  });
-                  return unique != null ? false : true;
-                } else {
-                  return true;
-                }
-              }
             }
           }
         },
@@ -228,41 +207,41 @@
     })
 
     // validating form and updating location's data
-    var addNewLocationFormEdit = document.getElementById('addNewLocationFormEdit');
+    // var addNewLocationFormEdit = document.getElementById('addNewLocationFormEdit');
 
-    var fv = FormValidation.formValidation(addNewLocationFormEdit, {
-      fields: {
-        company_id: {
-          validators: {
-            notEmpty: {
-              message: 'this is required'
-            }
-          }
-        },
-        location_name: {
-          validators: {
-            notEmpty: {
-              message: 'this is required'
-            },
-          }
-        },
-      },
-      plugins: {
-        trigger: new FormValidation.plugins.Trigger(),
-        bootstrap5: new FormValidation.plugins.Bootstrap5({
-          // Use this for enabling/changing valid/invalid class
-          eleValidClass: '',
-          rowSelector: function rowSelector(field, ele) {
-            // field is the field name & ele is the field element
-            return '.form-input';
-          }
-        }),
-        submitButton: new FormValidation.plugins.SubmitButton(),
-        // Submit the form when all fields are valid
-        defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
-        autoFocus: new FormValidation.plugins.AutoFocus()
-      }
-    })
+    // var fv = FormValidation.formValidation(addNewLocationFormEdit, {
+    //   fields: {
+    //     company_id: {
+    //       validators: {
+    //         notEmpty: {
+    //           message: 'this is required'
+    //         }
+    //       }
+    //     },
+    //     location_name: {
+    //       validators: {
+    //         notEmpty: {
+    //           message: 'this is required'
+    //         },
+    //       }
+    //     },
+    //   },
+    //   plugins: {
+    //     trigger: new FormValidation.plugins.Trigger(),
+    //     bootstrap5: new FormValidation.plugins.Bootstrap5({
+    //       // Use this for enabling/changing valid/invalid class
+    //       eleValidClass: '',
+    //       rowSelector: function rowSelector(field, ele) {
+    //         // field is the field name & ele is the field element
+    //         return '.form-input';
+    //       }
+    //     }),
+    //     submitButton: new FormValidation.plugins.SubmitButton(),
+    //     // Submit the form when all fields are valid
+    //     defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
+    //     autoFocus: new FormValidation.plugins.AutoFocus()
+    //   }
+    // })
 
 /******/ 	return __webpack_exports__;
     /******/
