@@ -16,6 +16,12 @@
       ],
       "submenu": [
         {
+          "url": "/user/user-managements",
+          "name": "Users",
+          "icon": "menu-icon tf-icons bx bx-cube",
+          "slug": "user"
+        },
+        {
           "url": "/user/roles",
           "name": "Roles",
           "icon": "menu-icon tf-icons bx bx-cube",
@@ -120,6 +126,12 @@
           "name": "Request Forms",
           "icon": "menu-icon tf-icons bx bx-cube",
           "slug": "workflow-request-form"
+        },
+        {
+          "url": "/workflow-approvers",
+          "name": "Workflow Approver",
+          "icon": "menu-icon tf-icons bx bx-cube",
+          "slug": "workflow-approvers"
         }
       ]
     }

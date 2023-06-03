@@ -8,6 +8,7 @@ use App\Models\masters\Company;
 use App\Models\masters\Location;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LocationController extends Controller
 {

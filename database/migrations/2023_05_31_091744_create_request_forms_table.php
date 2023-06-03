@@ -23,10 +23,6 @@ return new class extends Migration
 
       $table->foreign("workflow_id")->on("workflows")->references("id")->cascadeOnDelete()->cascadeOnUpdate();
     });
-
-    Schema::table('workflows', function (Blueprint $table) {
-      $table->foreign("associated_form")->references("id")->on("request_forms")->nullOnDelete()->cascadeOnUpdate();
-  });
   }
 
   /**

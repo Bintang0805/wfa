@@ -17,10 +17,17 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
+            $table->string('contact')->unique();
+            $table->unsignedBigInteger('company_id')->nullable();
+            $table->string('country');
+            $table->unsignedBigInteger('user_role')->nullable();
+            $table->boolean('verified')->default(false);
+            // $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
+
+            $table->foreign('company_id')->references("id")->on("companies")->nullOnDelete()->cascadeOnUpdate();
         });
     }
 

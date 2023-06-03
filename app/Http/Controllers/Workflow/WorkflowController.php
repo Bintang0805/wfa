@@ -48,7 +48,7 @@ class WorkflowController extends Controller
     $request->validated();
 
     $credentials = $request->all();
-    workflow::updateOrCreate(['id' => $request->id], $credentials);
+    Workflow::updateOrCreate(['id' => $request->id], $credentials);
     if ($request->id == null) {
       $successMessage = 'Workflow Created Successfully';
     } else {
