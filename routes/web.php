@@ -73,6 +73,7 @@ Route::middleware("auth")->group(function () {
   Route::resource("workflows", WorkflowController::class);
   Route::resource("workflow-approvers", WorkflowApproverController::class);
   Route::get("request-forms/create/{workflow_id}", [RequestFormController::class, "create"])->name("request-forms.create-custom");
+  
 });
 
 
