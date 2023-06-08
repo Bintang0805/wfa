@@ -73,12 +73,12 @@ Route::middleware("auth")->group(function () {
   Route::resource("workflows", WorkflowController::class);
   Route::resource("workflow-approvers", WorkflowApproverController::class);
   Route::get("request-forms/create/{workflow_id}", [RequestFormController::class, "create"])->name("request-forms.create-custom");
-  
+
 });
 
 
 // Main Page Route
-Route::get('/', $controller_path . '\pages\HomePage@index')->name('pages-home');
+// Route::get('/', $controller_path . '\pages\HomePage@index')->name('pages-home');
 Route::get('/page-2', $controller_path . '\pages\Page2@index')->name('pages-page-2');
 
 // pages
