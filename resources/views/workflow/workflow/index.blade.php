@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/sweetalert2/sweetalert2.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/toastr/toastr.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/animate-css/animate.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/bs-stepper/bs-stepper.css') }}" />
 @endsection
 
 @section('vendor-script')
@@ -30,6 +31,7 @@
     <script src="{{ asset('assets/vendor/libs/cleavejs/cleave-phone.js') }}"></script>
     <script src="{{ asset('assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
     <script src="{{ asset('assets/vendor/libs/toastr/toastr.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/bs-stepper/bs-stepper.js') }}"></script>
 @endsection
 
 <!-- Page -->
@@ -38,7 +40,24 @@
 @endsection
 
 @section('page-script')
+    <script src="{{ asset('js/modal-create-workflow.js') }}"></script>
     <script src="{{ asset('js/workflow.js') }}"></script>
+    <script>
+        $(function() {
+            const select2 = $('.select2');
+
+            // Select2 Country
+            if (select2.length) {
+                select2.each(function() {
+                    var $this = $(this);
+                    $this.wrap('<div class="position-relative"></div>').select2({
+                        placeholder: 'Select value',
+                        dropdownParent: $this.parent()
+                    });
+                });
+            }
+        });
+    </script>
 @endsection
 
 @section('content')
@@ -68,7 +87,7 @@
         </div>
         <div class="card-datatable table-responsive">
             <div class="button d-flex w-100 justify-content-end pe-3">
-                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCenter">Add New
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createApp">Add New
                     Workflow</button>
             </div>
             <table class="datatables-workflows table border-top">
@@ -85,7 +104,9 @@
                         <tr>
                             <td>{{ $workflow->id }}</td>
                             <td>{{ $workflow->name }}</td>\
-                            <td><span class="badge {{ $workflow->status == "active" ? "bg-success" : "bg-warning" }}">{{ $workflow->status }}</span></td>
+                            <td><span
+                                    class="badge {{ $workflow->status == 'active' ? 'bg-success' : 'bg-warning' }}">{{ $workflow->status }}</span>
+                            </td>
                             <td class="d-flex">
                                 <button class="edit-button btn-sm btn btn-primary" data-id="{{ $workflow->id }}"
                                     data-bs-toggle="modal" data-bs-target="#modalCenter">
@@ -108,40 +129,9 @@
                 </tbody>
             </table>
         </div>
-        {{-- <!-- Offcanvas to add new location -->
-        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasAddLocation"
-            aria-labelledby="offcanvasAddLocationLabel">
-            <div class="offcanvas-header">
-                <h5 id="offcanvasAddLocationLabel" class="offcanvas-title">Add Location</h5>
-                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-            </div>
-            <div class="offcanvas-body mx-0 flex-grow-0">
-                <form class="add-new-location pt-0" id="addNewLocationForm" method="POST"
-                    action="{{ route('locations.store') }}">
-                    @csrf
-                    <input type="hidden" name="id" id="location_id">
-                    <div class="mb-3">
-                        <label class="form-label" for="add-location-company">Company</label>
-                        <select name="company_id" id="add-location-company" class="form-control">
-                            <option value="" disabled selected>Select Company</option>
-                            @foreach ($companies as $company)
-                                <option value="{{ $company->id }}">{{ $company->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label" for="add-location-name">Location Name</label>
-                        <input type="text" id="add-location-name" class="form-control" placeholder="California"
-                            name="location_name" />
-                    </div>
-                    <button type="submit" class="btn btn-primary me-sm-3 me-1 data-submit">Submit</button>
-                    <button type="reset" class="btn btn-label-secondary" data-bs-dismiss="offcanvas">Cancel</button>
-                </form>
-            </div>
-        </div> --}}
     </div>
 
-    <div class="mt-3">
+    {{-- <div class="mt-3">
         <div class="modal fade" id="modalCenter" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                 <div class="modal-content">
@@ -222,7 +212,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
     <div class="mt-3">
         <div class="modal fade" id="modalCenterDetail" tabindex="-1" aria-hidden="true">
@@ -318,4 +308,210 @@
             </div>
         </div>
     </div>
+
+    <!-- Create App Modal -->
+    <div class="modal fade" id="createApp" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-simple modal-upgrade-plan">
+            <div class="modal-content p-3 p-md-5">
+                <div class="modal-body p-2">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div class="text-center">
+                        <h3 class="mb-2">Create Workflow</h3>
+                        <p>Provide data with this form to create your workflow.</p>
+                    </div>
+                    <!-- Property Listing Wizard -->
+                    <div id="wizard-create-app" class="bs-stepper vertical mt-2 shadow-none border-0">
+                        <div class="bs-stepper-header border-0 p-1">
+                            <div class="step" data-target="#details">
+                                <button type="button" class="step-trigger">
+                                    <span class="bs-stepper-circle"><i class="bx bx-file fs-5"></i></span>
+                                    <span class="bs-stepper-label">
+                                        <span class="bs-stepper-title text-uppercase">Workflow</span>
+                                        <span class="bs-stepper-subtitle">Enter the workflow details</span>
+                                    </span>
+                                </button>
+                            </div>
+                            <div class="line"></div>
+                            <div class="step" data-target="#frameworks">
+                                <button type="button" class="step-trigger">
+                                    <span class="bs-stepper-circle"><i class="bx bx-box fs-5"></i></span>
+                                    <span class="bs-stepper-label">
+                                        <span class="bs-stepper-title text-uppercase">Initiator</span>
+                                        <span class="bs-stepper-subtitle">Select the initiator role</span>
+                                    </span>
+                                </button>
+                            </div>
+                            <div class="line"></div>
+                            <div class="step" data-target="#database">
+                                <button type="button" class="step-trigger">
+                                    <span class="bs-stepper-circle"><i class="bx bx-data fs-5"></i></span>
+                                    <span class="bs-stepper-label">
+                                        <span class="bs-stepper-title text-uppercase">Worker</span>
+                                        <span class="bs-stepper-subtitle">Select the worker role</span>
+                                    </span>
+                                </button>
+                            </div>
+                            <div class="line"></div>
+                            <div class="step" data-target="#billing">
+                                <button type="button" class="step-trigger">
+                                    <span class="bs-stepper-circle"><i class="bx bx-credit-card fs-5"></i></span>
+                                    <span class="bs-stepper-label">
+                                        <span class="bs-stepper-title text-uppercase">Approvers</span>
+                                        <span class="bs-stepper-subtitle">Select the approvers</span>
+                                    </span>
+                                </button>
+                            </div>
+                            <div class="line"></div>
+                            <div class="step" data-target="#submit">
+                                <button type="button" class="step-trigger">
+                                    <span class="bs-stepper-circle"><i class="bx bx-check fs-5"></i></span>
+                                    <span class="bs-stepper-label">
+                                        <span class="bs-stepper-title text-uppercase">Submit</span>
+                                        <span class="bs-stepper-subtitle">Submit</span>
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="bs-stepper-content p-1">
+                            <form action="{{ route('workflows.store') }}" method="post" id="addNewWorkflowForm">
+                                @csrf
+                                <input type="hidden" name="id" id="workflow-id">
+                                <!-- Details -->
+                                <div id="details" class="content pt-3 pt-lg-0">
+                                    <div class="mb-3 form-input">
+                                        <label class="pb-1" for="add-workflow-name">Workflow Name</label>
+                                        <input type="text" class="form-control form-control-lg" id="add-workflow-name"
+                                            placeholder="Enter the Workflow Name" name="name">
+                                    </div>
+                                    <div class="mb-3 form-input">
+                                        <label class="pb-1" for="add-workflow-description">Workflow Description</label>
+                                        <input type="text" class="form-control form-control-lg"
+                                            id="add-workflow-description" placeholder="Enter the Workflow Description"
+                                            name="description">
+                                    </div>
+                                    <div class="col-12 d-flex justify-content-between mt-4">
+                                        <button type="button" class="btn btn-label-secondary btn-prev" disabled> <i
+                                                class="bx bx-left-arrow-alt bx-xs me-sm-1 me-0"></i>
+                                            <span class="align-middle d-sm-inline-block d-none">Previous</span>
+                                        </button>
+                                        <button type="button" class="btn btn-primary btn-next"> <span
+                                                class="align-middle d-sm-inline-block d-none me-sm-1">Next</span> <i
+                                                class="bx bx-right-arrow-alt bx-xs"></i></button>
+                                    </div>
+                                </div>
+
+                                <!-- Frameworks -->
+                                <div id="frameworks" class="content pt-3 pt-lg-0">
+                                    <h5>Initiator Role</h5>
+                                    <ul class="p-0 m-0">
+                                        @foreach ($roles as $role)
+                                            <li class="d-flex align-items-start mb-3">
+                                                <div class="badge bg-label-info p-2 me-3 rounded"><i
+                                                        class="bx bxl-react bx-sm"></i></div>
+                                                <div class="d-flex justify-content-between w-100 flex-wrap gap-2">
+                                                    <div class="me-2">
+                                                        <h6 class="mb-0">{{ $role->role_name }}</h6>
+                                                    </div>
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="form-check form-check-inline form-input">
+                                                            <input name="initiation_role" class="form-check-input"
+                                                                type="radio" value="{{ $role->id }}" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+
+                                    <div class="col-12 d-flex justify-content-between mt-4">
+                                        <button type="button" class="btn btn-label-secondary btn-prev"> <i
+                                                class="bx bx-left-arrow-alt bx-xs me-sm-1 me-0"></i> <span
+                                                class="align-middle d-sm-inline-block d-none">Previous</span> </button>
+                                        <button type="button" class="btn btn-primary btn-next"> <span
+                                                class="align-middle d-sm-inline-block d-none me-sm-1">Next</span> <i
+                                                class="bx bx-right-arrow-alt bx-xs"></i></button>
+                                    </div>
+                                </div>
+
+                                <!-- Database -->
+                                <div id="database" class="content pt-3 pt-lg-0">
+                                    <h5>Select Worker Role</h5>
+                                    <ul class="p-0 m-0">
+                                        @foreach ($roles as $role)
+                                            <li class="d-flex align-items-start mb-3">
+                                                <div class="badge bg-label-info p-2 me-3 rounded"><i
+                                                        class="bx bxl-react bx-sm"></i></div>
+                                                <div class="d-flex justify-content-between w-100 flex-wrap gap-2">
+                                                    <div class="me-2">
+                                                        <h6 class="mb-0">{{ $role->role_name }}</h6>
+                                                    </div>
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="form-check form-check-inline form-input">
+                                                            <input name="worker_roles" class="form-check-input"
+                                                                type="radio" value="{{ $role->id }}" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                    <div class="col-12 d-flex justify-content-between mt-4">
+                                        <button type="button" class="btn btn-label-secondary btn-prev"> <i
+                                                class="bx bx-left-arrow-alt bx-xs me-sm-1 me-0"></i> <span
+                                                class="align-middle d-sm-inline-block d-none">Previous</span> </button>
+                                        <button type="button" class="btn btn-primary btn-next"> <span
+                                                class="align-middle d-sm-inline-block d-none me-sm-1">Next</span> <i
+                                                class="bx bx-right-arrow-alt bx-xs"></i></button>
+                                    </div>
+                                </div>
+
+                                <!-- billing -->
+                                <div id="billing" class="content">
+                                    <div id="AppNewCCForm" class="row g-3 pt-3 pt-lg-0 mb-5 form-input" onsubmit="return false">
+                                        <label class="form-label" for="modalEditUserLanguage">Select the approvers</label>
+                                        <select id="add-approver-roles" name="approver_roles" class="select2 form-select"
+                                            multiple>
+                                            <option value="">Select</option>
+                                            @foreach ($roles as $role)
+                                            <option value="{{ $role->id }}">{{ $role->role_name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-12 d-flex justify-content-between mt-4">
+                                        <button type="button" class="btn btn-label-secondary btn-prev"> <i
+                                                class="bx bx-left-arrow-alt bx-xs me-sm-1 me-0"></i> <span
+                                                class="align-middle d-sm-inline-block d-none">Previous</span> </button>
+                                        <button type="button" class="btn btn-primary btn-next"> <span
+                                                class="align-middle d-sm-inline-block d-none me-sm-1">Next</span> <i
+                                                class="bx bx-right-arrow-alt bx-xs"></i></button>
+                                    </div>
+                                </div>
+
+                                <!-- submit -->
+                                <div id="submit" class="content text-center pt-3 pt-lg-0">
+                                    <h5 class="mb-2 mt-3">Submit</h5>
+                                    <p>Submit to kick start your project.</p>
+                                    <!-- image -->
+                                    <img src="{{ asset('assets/img/illustrations/girl-doing-yoga-' . $configData['style'] . '.png') }}"
+                                        alt="Create App img" width="300" class="img-fluid"
+                                        data-app-light-img="illustrations/girl-doing-yoga-light.png"
+                                        data-app-dark-img="illustrations/girl-doing-yoga-dark.png">
+                                    <div class="col-12 d-flex justify-content-between mt-4 pt-2">
+                                        <button type="button" class="btn btn-label-secondary btn-prev"> <i
+                                                class="bx bx-left-arrow-alt bx-xs me-sm-1 me-0"></i> <span
+                                                class="align-middle d-sm-inline-block d-none">Previous</span> </button>
+                                        <button type="submit" class="btn btn-success btn-next btn-submit"> <span
+                                                class="align-middle d-sm-inline-block d-none">Submit</span></button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!--/ Property Listing Wizard -->
+            </div>
+        </div>
+    </div>
+    <!--/ Create App Modal -->
+
 @endsection

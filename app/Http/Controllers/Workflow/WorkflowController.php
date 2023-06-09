@@ -111,7 +111,7 @@ class WorkflowController extends Controller
    * @param  \App\Models\workflow  $workflow
    * @return \Illuminate\Http\Response
    */
-  public function update(Request $request, workflow $workflow)
+  public function update(Request $request, Workflow $workflow)
   {
     //
   }
@@ -122,7 +122,7 @@ class WorkflowController extends Controller
    * @param  \App\Models\workflow  $workflow
    * @return \Illuminate\Http\Response
    */
-  public function destroy(workflow $workflow)
+  public function destroy(Workflow $workflow)
   {
     if ($workflow == null) return redirect()->route('workflows.index')->withErrors("Data with Id" . $workflow->id . "Not found");
 
@@ -130,5 +130,11 @@ class WorkflowController extends Controller
     return redirect()
       ->route('workflows.index')
       ->with('success', 'Workflow Deleted Successfully');
+  }
+
+  public function getLastId(Workflow $workflow) {
+    $result = $workflow->orderBy("id", "desc")->first();
+
+    dd($result);
   }
 }

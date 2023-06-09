@@ -99,3 +99,6 @@ Route::get('AJAX/it-assets/AJAXGetAll', [ItAssetController::class, "AJAXGetAll"]
 Route::get('AJAX/applications/AJAXGetAll', [ApplicationController::class, "AJAXGetAll"]);
 Route::get('AJAX/request-forms/AJAXGetAll', [RequestFormController::class, "AJAXGetAll"]);
 Route::get('AJAX/roles/AJAXGetAll', [RoleController::class, "AJAXGetAll"]);
+
+
+Route::get("get-last-id-workflow", [WorkflowController::class, "getLastId"]);
