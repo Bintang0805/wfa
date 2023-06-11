@@ -25,14 +25,10 @@ class CreateWorkflowRequest extends FormRequest
   {
     return [
       "name" => ["required"],
-      "description" => ["required"],
-      // "initiation_role",
-      // "leave_of_approvers",
-      // "worker_roles",
-      // "status",
-      // "email_reminder",
-      // "web_notification",
-      // "associated_form",
+      "initiation_role" => ["required"],
+      "worker_roles" => ["required"],
+      // "email_reminder" => ["required"],
+      // "web_notification" => ["required"],
     ];
   }
 
@@ -40,7 +36,10 @@ class CreateWorkflowRequest extends FormRequest
   {
     return [
       "name.required" => "the Name is required",
-      "description.required" => "the Description is required",
+      "initiation_role.required" => "the Initiation Role is required",
+      "worker_roles.required" => "the Worker Roles is required",
+      // "email_reminder.required" => "the Email Reminder is required",
+      // "web_notification.required" => "the Web Notification is required",
     ];
   }
 }

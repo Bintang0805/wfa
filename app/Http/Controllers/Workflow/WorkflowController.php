@@ -48,16 +48,23 @@ class WorkflowController extends Controller
     $request->validated();
 
     $credentials = $request->all();
-    Workflow::updateOrCreate(['id' => $request->id], $credentials);
+    $result = Workflow::updateOrCreate(['id' => $request->id], $credentials);
     if ($request->id == null) {
       $successMessage = 'Workflow Created Successfully';
     } else {
       $successMessage = 'Workflow Updated Successfully';
     }
 
-    return redirect()
-      ->route('workflows.index')
-      ->with('success', $successMessage);
+    $response = [
+      'status' => 'success',
+      'message' => $successMessage,
+      'data' => $result,
+    ];
+
+    return response()->json($response);
+    // return redirect()
+    //   ->route('workflows.index')
+    //   ->with('success', $successMessage);
   }
 
   /**
@@ -132,7 +139,8 @@ class WorkflowController extends Controller
       ->with('success', 'Workflow Deleted Successfully');
   }
 
-  public function getLastId(Workflow $workflow) {
+  public function getLastId(Workflow $workflow)
+  {
     $result = $workflow->orderBy("id", "desc")->first();
 
     dd($result);

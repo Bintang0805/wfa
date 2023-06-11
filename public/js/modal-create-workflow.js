@@ -8,45 +8,6 @@ $(function () {
   // Modal id
   const appModal = document.getElementById('createApp');
 
-  // Credit Card
-  const creditCardMask1 = document.querySelector('.app-credit-card-mask'),
-    expiryDateMask1 = document.querySelector('.app-expiry-date-mask'),
-    cvvMask1 = document.querySelector('.app-cvv-code-mask');
-  let cleave;
-
-  // Cleave JS card Mask
-  function initCleave() {
-    if (creditCardMask1) {
-      cleave = new Cleave(creditCardMask1, {
-        creditCard: true,
-        onCreditCardTypeChanged: function (type) {
-          if (type != '' && type != 'unknown') {
-            document.querySelector('.app-card-type').innerHTML =
-              '<img src="' + assetsPath + 'img/icons/payments/' + type + '-cc.png" class="cc-icon-image" height="28"/>';
-          } else {
-            document.querySelector('.app-card-type').innerHTML = '';
-          }
-        }
-      });
-    }
-  }
-
-  // Expiry Date Mask
-  if (expiryDateMask1) {
-    new Cleave(expiryDateMask1, {
-      date: true,
-      delimiter: '/',
-      datePattern: ['m', 'y']
-    });
-  }
-
-  // CVV
-  if (cvvMask1) {
-    new Cleave(cvvMask1, {
-      numeral: true,
-      numeralPositiveOnly: true
-    });
-  }
   appModal.addEventListener('show.bs.modal', function (event) {
     const wizardCreateApp = document.querySelector('#wizard-create-app');
     if (typeof wizardCreateApp !== undefined && wizardCreateApp !== null) {
@@ -63,7 +24,6 @@ $(function () {
         wizardCreateAppNextList.forEach(wizardCreateAppNext => {
           wizardCreateAppNext.addEventListener('click', event => {
             createAppStepper.next();
-            initCleave();
           });
         });
       }
@@ -71,77 +31,111 @@ $(function () {
         wizardCreateAppPrevList.forEach(wizardCreateAppPrev => {
           wizardCreateAppPrev.addEventListener('click', event => {
             createAppStepper.previous();
-            initCleave();
           });
         });
       }
 
       if (wizardCreateAppBtnSubmit) {
         wizardCreateAppBtnSubmit.addEventListener('click', event => {
-          let GetApproverRoles = $(event.target.parentNode.parentNode.parentNode.parentNode).serializeArray();
-          GetApproverRoles = GetApproverRoles.filter(f => f.name == "approver_roles");
-          console.log(GetApproverRoles);
+          var addNewWorkflow = document.getElementById('addNewWorkflowForm');
+
+          var fv = FormValidation.formValidation(addNewWorkflow, {
+            fields: {
+              name: {
+                validators: {
+                  notEmpty: {
+                    message: 'this is required'
+                  }
+                }
+              },
+              // initiation_role: {
+              //   validators: {
+              //     notEmpty: {
+              //       message: 'this is required'
+              //     },
+              //   }
+              // },
+              // worker_roles: {
+              //   validators: {
+              //     notEmpty: {
+              //       message: 'this is required'
+              //     },
+              //   }
+              // },
+              approver_roles: {
+                validators: {
+                  notEmpty: {
+                    message: 'this is required'
+                  },
+                }
+              },
+            },
+            plugins: {
+              trigger: new FormValidation.plugins.Trigger(),
+              bootstrap5: new FormValidation.plugins.Bootstrap5({
+                // Use this for enabling/changing valid/invalid class
+                eleValidClass: '',
+                rowSelector: function rowSelector(field, ele) {
+                  // field is the field name & ele is the field element
+                  return '.form-input';
+                }
+              }),
+              submitButton: new FormValidation.plugins.SubmitButton(),
+              // // Submit the form when all fields are valid
+              // defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
+              // autoFocus: new FormValidation.plugins.AutoFocus()
+            }
+          })
+
+          let formData = $(event.target.parentNode.parentNode.parentNode.parentNode).serializeArray();
+          let getApproverRoles = formData.filter(f => f.name == "approver_roles");
+          let getWorkflow = formData.filter(f => f.name != "approver_roles");
+
+          let worfklowStoreURL = `${window.location.origin}/workflows`;
+          let worfklowApproverStoreURL = `${window.location.origin}/workflow-approvers`;
+
+          fv.validate().then((status) => {
+            if (status == "Valid") {
+              $.ajaxSetup({
+                headers: {
+                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+              });
+
+              $.ajax({
+                url: worfklowStoreURL,
+                type: 'POST',
+                data: getWorkflow,
+                success: function (data) {
+                  getApproverRoles.forEach(approverRole => {
+                    $.ajax({
+                      url: worfklowApproverStoreURL,
+                      type: 'POST',
+                      data: {
+                        workflow_id: data.data.id,
+                        approver_roles: approverRole.value
+                      },
+                      success: function (data) {
+                        console.log(data);
+                        return true;
+                      },
+                      error: function () {
+                        return false;
+                      }
+                    });
+                  });
+                  return true;
+                },
+                error: function () {
+                  return false;
+                }
+              });
+            }
+          })
         });
       }
     }
   });
-
-  var addNewWorkflow = document.getElementById('addNewWorkflowForm');
-
-  var fv = FormValidation.formValidation(addNewWorkflow, {
-    fields: {
-      name: {
-        validators: {
-          notEmpty: {
-            message: 'this is required'
-          }
-        }
-      },
-      description: {
-        validators: {
-          notEmpty: {
-            message: 'this is required'
-          },
-        }
-      },
-      initiation_role: {
-        validators: {
-          notEmpty: {
-            message: 'this is required'
-          },
-        }
-      },
-      worker_role: {
-        validators: {
-          notEmpty: {
-            message: 'this is required'
-          },
-        }
-      },
-      approver_roles: {
-        validators: {
-          notEmpty: {
-            message: 'this is required'
-          },
-        }
-      },
-    },
-    plugins: {
-      trigger: new FormValidation.plugins.Trigger(),
-      bootstrap5: new FormValidation.plugins.Bootstrap5({
-        // Use this for enabling/changing valid/invalid class
-        eleValidClass: '',
-        rowSelector: function rowSelector(field, ele) {
-          // field is the field name & ele is the field element
-          return '.form-input';
-        }
-      }),
-      submitButton: new FormValidation.plugins.SubmitButton(),
-      // Submit the form when all fields are valid
-      defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
-      autoFocus: new FormValidation.plugins.AutoFocus()
-    }
-  })
 });
 
 

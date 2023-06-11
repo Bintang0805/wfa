@@ -366,20 +366,21 @@
                                 <button type="button" class="step-trigger">
                                     <span class="bs-stepper-circle"><i class="bx bx-check fs-5"></i></span>
                                     <span class="bs-stepper-label">
-                                        <span class="bs-stepper-title text-uppercase">Submit</span>
-                                        <span class="bs-stepper-subtitle">Submit</span>
+                                        <span class="bs-stepper-title text-uppercase">Reminder</span>
+                                        <span class="bs-stepper-subtitle">Reminder</span>
                                     </span>
                                 </button>
                             </div>
                         </div>
                         <div class="bs-stepper-content p-1">
-                            <form action="{{ route('workflows.store') }}" method="post" id="addNewWorkflowForm">
+                            <form method="post" id="addNewWorkflowForm">
                                 @csrf
                                 <input type="hidden" name="id" id="workflow-id">
                                 <!-- Details -->
                                 <div id="details" class="content pt-3 pt-lg-0">
                                     <div class="mb-3 form-input">
-                                        <label class="pb-1" for="add-workflow-name">Workflow Name</label>
+                                        <label class="pb-1" for="add-workflow-name">Workflow Name<span
+                                          class="text-danger ps-1 fs-6">*</span></label>
                                         <input type="text" class="form-control form-control-lg" id="add-workflow-name"
                                             placeholder="Enter the Workflow Name" name="name">
                                     </div>
@@ -402,18 +403,20 @@
 
                                 <!-- Frameworks -->
                                 <div id="frameworks" class="content pt-3 pt-lg-0">
-                                    <h5>Initiator Role</h5>
-                                    <ul class="p-0 m-0">
+                                    <h5 class="form-input">Initiator Role<span
+                                      class="text-danger ps-1 fs-6">*</span></h5>
+                                    <ul class="p-0 m-0" style="max-height: 13rem; overflow-y: auto;">
                                         @foreach ($roles as $role)
-                                            <li class="d-flex align-items-start mb-3">
-                                                <div class="badge bg-label-info p-2 me-3 rounded"><i
-                                                        class="bx bxl-react bx-sm"></i></div>
+                                            <li class="d-flex align-items-center mb-3">
+                                                <div class="badge bg-label-info p-2 me-3 rounded">
+                                                    <i class="fa-solid fa-user"></i>
+                                                </div>
                                                 <div class="d-flex justify-content-between w-100 flex-wrap gap-2">
                                                     <div class="me-2">
                                                         <h6 class="mb-0">{{ $role->role_name }}</h6>
                                                     </div>
                                                     <div class="d-flex align-items-center">
-                                                        <div class="form-check form-check-inline form-input">
+                                                        <div class="form-check form-check-inline">
                                                             <input name="initiation_role" class="form-check-input"
                                                                 type="radio" value="{{ $role->id }}" />
                                                         </div>
@@ -435,18 +438,20 @@
 
                                 <!-- Database -->
                                 <div id="database" class="content pt-3 pt-lg-0">
-                                    <h5>Select Worker Role</h5>
-                                    <ul class="p-0 m-0">
+                                    <h5 class="form-input">Select Worker Role<span
+                                      class="text-danger ps-1 fs-6">*</span></h5>
+                                    <ul class="p-0 m-0" style="max-height: 13rem; overflow-y: auto;">
                                         @foreach ($roles as $role)
-                                            <li class="d-flex align-items-start mb-3">
-                                                <div class="badge bg-label-info p-2 me-3 rounded"><i
-                                                        class="bx bxl-react bx-sm"></i></div>
+                                            <li class="d-flex align-items-center mb-3">
+                                                <div class="badge bg-label-info p-2 me-3 rounded">
+                                                  <i class="fa-solid fa-user"></i>
+                                                </div>
                                                 <div class="d-flex justify-content-between w-100 flex-wrap gap-2">
                                                     <div class="me-2">
                                                         <h6 class="mb-0">{{ $role->role_name }}</h6>
                                                     </div>
                                                     <div class="d-flex align-items-center">
-                                                        <div class="form-check form-check-inline form-input">
+                                                        <div class="form-check form-check-inline">
                                                             <input name="worker_roles" class="form-check-input"
                                                                 type="radio" value="{{ $role->id }}" />
                                                         </div>
@@ -467,13 +472,14 @@
 
                                 <!-- billing -->
                                 <div id="billing" class="content">
-                                    <div id="AppNewCCForm" class="row g-3 pt-3 pt-lg-0 mb-5 form-input" onsubmit="return false">
+                                    <div id="AppNewCCForm" class="row g-3 pt-3 pt-lg-0 mb-5 form-input"
+                                        onsubmit="return false">
                                         <label class="form-label" for="modalEditUserLanguage">Select the approvers</label>
                                         <select id="add-approver-roles" name="approver_roles" class="select2 form-select"
                                             multiple>
                                             <option value="">Select</option>
                                             @foreach ($roles as $role)
-                                            <option value="{{ $role->id }}">{{ $role->role_name }}</option>
+                                                <option value="{{ $role->id }}">{{ $role->role_name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -488,14 +494,27 @@
                                 </div>
 
                                 <!-- submit -->
-                                <div id="submit" class="content text-center pt-3 pt-lg-0">
-                                    <h5 class="mb-2 mt-3">Submit</h5>
-                                    <p>Submit to kick start your project.</p>
-                                    <!-- image -->
-                                    <img src="{{ asset('assets/img/illustrations/girl-doing-yoga-' . $configData['style'] . '.png') }}"
-                                        alt="Create App img" width="300" class="img-fluid"
-                                        data-app-light-img="illustrations/girl-doing-yoga-light.png"
-                                        data-app-dark-img="illustrations/girl-doing-yoga-dark.png">
+                                <div id="submit" class="content pt-3 pt-lg-0">
+                                    <h5 class="mb-2 mt-3">Reminder</h5>
+                                    <div class="row mt-3">
+                                        <div class="mb-3 form-input col-12">
+                                            <label class="form-label" for="add-email-reminder">Email Reminder</label>
+                                            <select name="email_reminder" id="add-email-reminder" class="form-control">
+                                                <option value="" disabled selected>Select Email Reminder</option>
+                                                <option value="1">Yes</option>
+                                                <option value="0">No</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3 form-input col-12">
+                                            <label class="form-label" for="add-web-notification">Web Notification</label>
+                                            <select name="web_notification" id="add-web-notification"
+                                                class="form-control">
+                                                <option value="" disabled selected>Select Web Notification</option>
+                                                <option value="1">Yes</option>
+                                                <option value="0">No</option>
+                                            </select>
+                                        </div>
+                                    </div>
                                     <div class="col-12 d-flex justify-content-between mt-4 pt-2">
                                         <button type="button" class="btn btn-label-secondary btn-prev"> <i
                                                 class="bx bx-left-arrow-alt bx-xs me-sm-1 me-0"></i> <span

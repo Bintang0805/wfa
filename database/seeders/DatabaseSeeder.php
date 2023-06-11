@@ -30,6 +30,7 @@ class DatabaseSeeder extends Seeder
       EquipmentSeeder::class,
       ITAssetSeeder::class,
       ApplicationSeeder::class,
+      WorkflowSeeder::class,
     ]);
   }
 }

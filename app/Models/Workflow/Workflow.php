@@ -16,7 +16,6 @@ class Workflow extends Model
       "description",
       "initiation_role",
       "level_of_approvers",
-      "approver_roles",
       "worker_roles",
       "status",
       "email_reminder",

@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -32,6 +33,19 @@ return new class extends Migration
    */
   public function down()
   {
+    DB::table("request_forms")->delete();
+    DB::table("workflows")->delete();
+
+    Schema::table('request_forms', function (Blueprint $table) {
+      // Hapus foreign key
+      $table->dropForeign(['workflow_id']);
+  });
+
+    Schema::table('workflows', function (Blueprint $table) {
+      // Hapus foreign key
+      $table->dropForeign(['associated_form']);
+  });
+
     Schema::dropIfExists('request_forms');
   }
 };

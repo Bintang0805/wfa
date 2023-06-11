@@ -49,16 +49,20 @@ class WorkflowApproverController extends Controller
     $request->validated();
 
     $credentials = $request->all();
-    WorkflowApprover::updateOrCreate(['id' => $request->id], $credentials);
+    $result = WorkflowApprover::updateOrCreate(['id' => $request->id], $credentials);
     if ($request->id == null) {
       $successMessage = 'Workflow Approver Created Successfully';
     } else {
       $successMessage = 'Workflow Approver Updated Successfully';
     }
 
-    return redirect()
-      ->route('workflow-approvers.index')
-      ->with('success', $successMessage);
+    $response = [
+      'status' => 'success',
+      'message' => $successMessage,
+      'data' => $result,
+    ];
+
+    return response()->json($response);
   }
 
   /**

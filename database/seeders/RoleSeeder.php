@@ -24,6 +24,38 @@ class RoleSeeder extends Seeder
         'id' => '2',
         'role_name' => 'User',
       ],
+      [
+        'id' => '3',
+        'role_name' => 'Developer',
+      ],
+      [
+        'id' => '4',
+        'role_name' => 'Tester',
+      ],
+      [
+        'id' => '5',
+        'role_name' => 'Project Manager',
+      ],
+      [
+        'id' => '6',
+        'role_name' => 'Database Administrator',
+      ],
+      [
+        'id' => '7',
+        'role_name' => 'Network Engineer',
+      ],
+      [
+        'id' => '8',
+        'role_name' => 'System Analyst',
+      ],
+      [
+        'id' => '9',
+        'role_name' => 'UI/UX Designer',
+      ],
+      [
+        'id' => '10',
+        'role_name' => 'IT Support',
+      ],
     ];
 
     DB::table('roles')->insert($data);
