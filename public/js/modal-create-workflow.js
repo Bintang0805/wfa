@@ -8,6 +8,56 @@ $(function () {
   // Modal id
   const appModal = document.getElementById('createApp');
 
+  var addNewWorkflow = document.getElementById('addNewWorkflowForm');
+
+  var fv = FormValidation.formValidation(addNewWorkflow, {
+    fields: {
+      name: {
+        validators: {
+          notEmpty: {
+            message: 'this is required'
+          }
+        }
+      },
+      // initiation_role: {
+      //   validators: {
+      //     notEmpty: {
+      //       message: 'this is required'
+      //     },
+      //   }
+      // },
+      // worker_roles: {
+      //   validators: {
+      //     notEmpty: {
+      //       message: 'this is required'
+      //     },
+      //   }
+      // },
+      approver_roles: {
+        validators: {
+          notEmpty: {
+            message: 'this is required'
+          },
+        }
+      },
+    },
+    plugins: {
+      trigger: new FormValidation.plugins.Trigger(),
+      bootstrap5: new FormValidation.plugins.Bootstrap5({
+        // Use this for enabling/changing valid/invalid class
+        eleValidClass: '',
+        rowSelector: function rowSelector(field, ele) {
+          // field is the field name & ele is the field element
+          return '.form-input';
+        }
+      }),
+      submitButton: new FormValidation.plugins.SubmitButton(),
+      // // Submit the form when all fields are valid
+      // defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
+      // autoFocus: new FormValidation.plugins.AutoFocus()
+    }
+  })
+
   appModal.addEventListener('show.bs.modal', function (event) {
     const wizardCreateApp = document.querySelector('#wizard-create-app');
     if (typeof wizardCreateApp !== undefined && wizardCreateApp !== null) {
@@ -37,56 +87,6 @@ $(function () {
 
       if (wizardCreateAppBtnSubmit) {
         wizardCreateAppBtnSubmit.addEventListener('click', event => {
-          var addNewWorkflow = document.getElementById('addNewWorkflowForm');
-
-          var fv = FormValidation.formValidation(addNewWorkflow, {
-            fields: {
-              name: {
-                validators: {
-                  notEmpty: {
-                    message: 'this is required'
-                  }
-                }
-              },
-              // initiation_role: {
-              //   validators: {
-              //     notEmpty: {
-              //       message: 'this is required'
-              //     },
-              //   }
-              // },
-              // worker_roles: {
-              //   validators: {
-              //     notEmpty: {
-              //       message: 'this is required'
-              //     },
-              //   }
-              // },
-              approver_roles: {
-                validators: {
-                  notEmpty: {
-                    message: 'this is required'
-                  },
-                }
-              },
-            },
-            plugins: {
-              trigger: new FormValidation.plugins.Trigger(),
-              bootstrap5: new FormValidation.plugins.Bootstrap5({
-                // Use this for enabling/changing valid/invalid class
-                eleValidClass: '',
-                rowSelector: function rowSelector(field, ele) {
-                  // field is the field name & ele is the field element
-                  return '.form-input';
-                }
-              }),
-              submitButton: new FormValidation.plugins.SubmitButton(),
-              // // Submit the form when all fields are valid
-              // defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
-              // autoFocus: new FormValidation.plugins.AutoFocus()
-            }
-          })
-
           let formData = $(event.target.parentNode.parentNode.parentNode.parentNode).serializeArray();
           let getApproverRoles = formData.filter(f => f.name == "approver_roles");
           let getWorkflow = formData.filter(f => f.name != "approver_roles");
@@ -124,12 +124,29 @@ $(function () {
                       }
                     });
                   });
+
+                  $("#datatables-workflows").load(location.href + " #datatables-workflows");
+                  $(".success-toast").toast('show');
+                  let fr = $("#addNewWorkflowForm")
+                  fr[0].reset(true);
+                  $("#createApp").modal("hide");
+                  setTimeout(() => {
+                    if ($(".success-toast")) {
+                      $(".success-toast").toast('hide');
+                    }
+                  }, 5000);
+
                   return true;
                 },
                 error: function () {
                   return false;
                 }
               });
+            } else {
+              createAppStepper.previous();
+              createAppStepper.previous();
+              createAppStepper.previous();
+              createAppStepper.previous();
             }
           })
         });

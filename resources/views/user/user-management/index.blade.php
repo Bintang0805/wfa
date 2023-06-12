@@ -174,7 +174,7 @@
         </div>
         <div class="mb-3">
           <label class="form-label" for="add-user-password">Password</label>
-          <input type="text" id="add-user-password" class="form-control" name="password">
+          <input type="password" id="add-user-password" class="form-control" name="password">
         </div>
         <button type="submit" class="btn btn-primary me-sm-3 me-1 data-submit">Submit</button>
         <button type="reset" class="btn btn-label-secondary" data-bs-dismiss="offcanvas">Cancel</button>

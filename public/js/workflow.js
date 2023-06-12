@@ -32,10 +32,12 @@ $(function () {
         $('#workflow-id').val(workflow.id);
         $('#add-workflow-name').val(workflow.name);
         $('#add-workflow-description').val(workflow.description);
-        $('#add-initiation-role').val(workflow.initiation_role);
+        let inputInitiationRole = $(".add-initiation-role").filter(function () {return $(this).val() == workflow.initiation_role});
+        inputInitiationRole.prop("checked", true);
         $('#add-approver-roles').val(workflow.approver_roles);
-        $('#add-worker-roles').val(workflow.worker_roles);
-        $('#add-status').val(workflow.status);
+        let inputWorkerRoles = $(".add-worker-roles").filter(function () {return $(this).val() == workflow.worker_roles});
+        inputWorkerRoles.prop("checked", true);
+        // $('#add-status').val(workflow.status);
         $('#add-email-reminder').val(workflow.email_reminder);
         $('#add-web-notification').val(workflow.web_notification);
       }

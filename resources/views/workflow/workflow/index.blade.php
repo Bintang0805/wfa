@@ -61,19 +61,17 @@
 @endsection
 
 @section('content')
-    @if (session('success'))
-        <div class="bs-toast toast fade show bg-primary position-fixed bottom-0 end-0 me-4 mb-4 success-toast"
-            role="alert" aria-live="assertive" aria-atomic="true">
-            <div class="toast-header pb-2">
-                {{-- <img src="..." class="rounded me-2" alt="" /> --}}
-                <div class="me-auto fw-semibold">Success Message</div>
-                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-            </div>
-            <div class="toast-body">
-                {{ session('success') }}
-            </div>
+    <div class="bs-toast toast fade bg-primary position-fixed bottom-0 end-0 me-4 mb-4 success-toast" role="alert"
+        aria-live="assertive" aria-atomic="true">
+        <div class="toast-header pb-2">
+            {{-- <img src="..." class="rounded me-2" alt="" /> --}}
+            <div class="me-auto fw-semibold">Success Message</div>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
         </div>
-    @endif
+        <div class="toast-body">
+            Success Create New Workflow
+        </div>
+    </div>
     @if ($errors->any())
         @foreach ($errors->all() as $error)
             <div class="alert alert-danger error-message" role="alert">
@@ -90,7 +88,7 @@
                 <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createApp">Add New
                     Workflow</button>
             </div>
-            <table class="datatables-workflows table border-top">
+            <table id="datatables-workflows" class="datatables-workflows table border-top">
                 <thead>
                     <tr>
                         <th>Id</th>
@@ -103,13 +101,13 @@
                     @foreach ($workflows as $workflow)
                         <tr>
                             <td>{{ $workflow->id }}</td>
-                            <td>{{ $workflow->name }}</td>\
+                            <td>{{ $workflow->name }}</td>
                             <td><span
                                     class="badge {{ $workflow->status == 'active' ? 'bg-success' : 'bg-warning' }}">{{ $workflow->status }}</span>
                             </td>
                             <td class="d-flex">
                                 <button class="edit-button btn-sm btn btn-primary" data-id="{{ $workflow->id }}"
-                                    data-bs-toggle="modal" data-bs-target="#modalCenter">
+                                    data-bs-toggle="modal" data-bs-target="#createApp">
                                     <i class="bx bx-edit"></i>
                                 </button>
                                 <form action="{{ route('workflows.destroy', ['workflow' => $workflow]) }}" method="POST"
@@ -380,7 +378,7 @@
                                 <div id="details" class="content pt-3 pt-lg-0">
                                     <div class="mb-3 form-input">
                                         <label class="pb-1" for="add-workflow-name">Workflow Name<span
-                                          class="text-danger ps-1 fs-6">*</span></label>
+                                                class="text-danger ps-1 fs-6">*</span></label>
                                         <input type="text" class="form-control form-control-lg" id="add-workflow-name"
                                             placeholder="Enter the Workflow Name" name="name">
                                     </div>
@@ -403,8 +401,7 @@
 
                                 <!-- Frameworks -->
                                 <div id="frameworks" class="content pt-3 pt-lg-0">
-                                    <h5 class="form-input">Initiator Role<span
-                                      class="text-danger ps-1 fs-6">*</span></h5>
+                                    <h5>Initiator Role<span class="text-danger ps-1 fs-6">*</span></h5>
                                     <ul class="p-0 m-0" style="max-height: 13rem; overflow-y: auto;">
                                         @foreach ($roles as $role)
                                             <li class="d-flex align-items-center mb-3">
@@ -417,7 +414,7 @@
                                                     </div>
                                                     <div class="d-flex align-items-center">
                                                         <div class="form-check form-check-inline">
-                                                            <input name="initiation_role" class="form-check-input"
+                                                            <input name="initiation_role" class="form-check-input add-initiation-role"
                                                                 type="radio" value="{{ $role->id }}" />
                                                         </div>
                                                     </div>
@@ -438,13 +435,12 @@
 
                                 <!-- Database -->
                                 <div id="database" class="content pt-3 pt-lg-0">
-                                    <h5 class="form-input">Select Worker Role<span
-                                      class="text-danger ps-1 fs-6">*</span></h5>
+                                    <h5>Select Worker Role<span class="text-danger ps-1 fs-6">*</span></h5>
                                     <ul class="p-0 m-0" style="max-height: 13rem; overflow-y: auto;">
                                         @foreach ($roles as $role)
                                             <li class="d-flex align-items-center mb-3">
                                                 <div class="badge bg-label-info p-2 me-3 rounded">
-                                                  <i class="fa-solid fa-user"></i>
+                                                    <i class="fa-solid fa-user"></i>
                                                 </div>
                                                 <div class="d-flex justify-content-between w-100 flex-wrap gap-2">
                                                     <div class="me-2">
@@ -452,7 +448,7 @@
                                                     </div>
                                                     <div class="d-flex align-items-center">
                                                         <div class="form-check form-check-inline">
-                                                            <input name="worker_roles" class="form-check-input"
+                                                            <input name="worker_roles" class="form-check-input add-worker-roles"
                                                                 type="radio" value="{{ $role->id }}" />
                                                         </div>
                                                     </div>
@@ -472,8 +468,7 @@
 
                                 <!-- billing -->
                                 <div id="billing" class="content">
-                                    <div id="AppNewCCForm" class="row g-3 pt-3 pt-lg-0 mb-5 form-input"
-                                        onsubmit="return false">
+                                    <div id="AppNewCCForm" class="row g-3 pt-3 pt-lg-0 mb-5 form-input">
                                         <label class="form-label" for="modalEditUserLanguage">Select the approvers</label>
                                         <select id="add-approver-roles" name="approver_roles" class="select2 form-select"
                                             multiple>

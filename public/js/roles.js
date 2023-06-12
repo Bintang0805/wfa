@@ -20,6 +20,7 @@
 
     let AJAXGetAllURL = `${window.location.origin}/AJAX/roles/AJAXGetAll`;
     let GetAllData = null;
+    let oldValue = null;
 
     $.ajax({
       url: AJAXGetAllURL,
@@ -128,6 +129,7 @@
       // clearing form data when offcanvas hidden
       modal.on('hidden.bs.modal', function () {
         let fv = $("#addNewRoleForm")
+        oldValue = null;
         fv[0].reset(true);
         $("#role_id").val("");
       });
@@ -148,6 +150,7 @@
         success: function (data) {
           console.log(urlEdit);
           let role = data.data.role;
+          oldValue = role.role_name;
           $('#role_id').val(role.id);
           $('#role_name').val(role.role_name);
         }
@@ -185,6 +188,23 @@
           validators: {
             notEmpty: {
               message: 'this is required'
+            },
+            callback: {
+              message: "This field must be unique",
+              callback: (input) => {
+                if (GetAllData != null) {
+                  let unique = GetAllData.find(function (data) {
+                    return data.role_name === input.value;
+                  });
+                  if (oldValue != null) {
+                    return unique.role_name == oldValue ? true : false;
+                  } else {
+                    return unique != null ? false : true;
+                  }
+                } else {
+                  return true;
+                }
+              }
             }
           }
         },
