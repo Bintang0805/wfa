@@ -100,5 +100,7 @@ Route::get('AJAX/applications/AJAXGetAll', [ApplicationController::class, "AJAXG
 Route::get('AJAX/request-forms/AJAXGetAll', [RequestFormController::class, "AJAXGetAll"]);
 Route::get('AJAX/roles/AJAXGetAll', [RoleController::class, "AJAXGetAll"]);
 
+Route::get("AJAX/workflow-approvers/deleteAll/{workflow_id}", [WorkflowApproverController::class, "destroyAll"]);
+
 
 Route::get("get-last-id-workflow", [WorkflowController::class, "getLastId"]);

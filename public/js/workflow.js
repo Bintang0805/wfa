@@ -17,6 +17,19 @@ $(function () {
 
   var baseUrl = window.location.origin;
 
+  let AJAXGetAllRolesURL = `${window.location.origin}/AJAX/roles/AJAXGetAll`;
+  let GetAllDataRoles = null;
+  fetch(AJAXGetAllRolesURL)
+    .then(response => response.json())
+    .then(data => {
+      GetAllDataRoles = data.data;
+      return true;
+    })
+    .catch(error => {
+      console.error(error);
+      return false;
+    });
+
   // Menambahkan event listener ke tombol edit
   $(".edit-button").on("click", function () {
     // Mendapatkan data-id dari tombol edit yang diklik
@@ -32,14 +45,27 @@ $(function () {
         $('#workflow-id').val(workflow.id);
         $('#add-workflow-name').val(workflow.name);
         $('#add-workflow-description').val(workflow.description);
-        let inputInitiationRole = $(".add-initiation-role").filter(function () {return $(this).val() == workflow.initiation_role});
+        let inputInitiationRole = $(".add-initiation-role").filter(function () { return $(this).val() == workflow.initiation_role });
         inputInitiationRole.prop("checked", true);
         $('#add-approver-roles').val(workflow.approver_roles);
-        let inputWorkerRoles = $(".add-worker-roles").filter(function () {return $(this).val() == workflow.worker_roles});
+        let inputWorkerRoles = $(".add-worker-roles").filter(function () { return $(this).val() == workflow.worker_roles });
         inputWorkerRoles.prop("checked", true);
         // $('#add-status').val(workflow.status);
         $('#add-email-reminder').val(workflow.email_reminder);
         $('#add-web-notification').val(workflow.web_notification);
+
+        $('#inputNewApprover').empty();
+
+        workflow.workflow_approvers.forEach(approver => {
+          let approverInput = `<div class="d-flex align-items-center px-0">
+                                <select name="approver_roles" class="form-select">
+                                  <option value="">Select</option>
+                                  ${GetAllDataRoles.map(role => `<option value="${role.id}" ${role.id === approver.approver_roles ? 'selected' : ''}>${role.role_name}</option>`).join('')}
+                                </select>
+                                <button class="btn btn-danger btn-sm ms-2">X</button>
+                              </div>`;
+          $('#inputNewApprover').append(approverInput);
+        });
       }
     });
   });

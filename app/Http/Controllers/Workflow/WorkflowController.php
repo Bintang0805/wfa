@@ -86,7 +86,7 @@ class WorkflowController extends Controller
    */
   public function edit($id)
   {
-    $workflow = Workflow::where('id', $id)->first();
+    $workflow = Workflow::with("workflow_approvers")->where('id', $id)->first();
 
     $data = [
       'workflow' => $workflow,

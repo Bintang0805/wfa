@@ -6,6 +6,7 @@ use App\Models\User\Role;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Workflow extends Model
 {
@@ -42,6 +43,16 @@ class Workflow extends Model
     public function request_form(): BelongsTo
     {
         return $this->belongsTo(RequestForm::class, 'associated_form', 'id');
+    }
+
+    /**
+     * Get all of the workflow_approvers for the Workflow
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function workflow_approvers(): HasMany
+    {
+        return $this->hasMany(WorkflowApprover::class, 'workflow_id', 'id');
     }
 
     public static function getEnumType()

@@ -414,7 +414,8 @@
                                                     </div>
                                                     <div class="d-flex align-items-center">
                                                         <div class="form-check form-check-inline">
-                                                            <input name="initiation_role" class="form-check-input add-initiation-role"
+                                                            <input name="initiation_role"
+                                                                class="form-check-input add-initiation-role"
                                                                 type="radio" value="{{ $role->id }}" />
                                                         </div>
                                                     </div>
@@ -448,8 +449,9 @@
                                                     </div>
                                                     <div class="d-flex align-items-center">
                                                         <div class="form-check form-check-inline">
-                                                            <input name="worker_roles" class="form-check-input add-worker-roles"
-                                                                type="radio" value="{{ $role->id }}" />
+                                                            <input name="worker_roles"
+                                                                class="form-check-input add-worker-roles" type="radio"
+                                                                value="{{ $role->id }}" />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -468,15 +470,18 @@
 
                                 <!-- billing -->
                                 <div id="billing" class="content">
-                                    <div id="AppNewCCForm" class="row g-3 pt-3 pt-lg-0 mb-5 form-input">
+                                    <div class="row g-3 pt-3 pt-lg-0 mb-5 form-input" id="inputNewApprover">
                                         <label class="form-label" for="modalEditUserLanguage">Select the approvers</label>
-                                        <select id="add-approver-roles" name="approver_roles" class="select2 form-select"
-                                            multiple>
+                                        <select id="add-approver-roles" name="approver_roles" class="form-select">
                                             <option value="">Select</option>
                                             @foreach ($roles as $role)
                                                 <option value="{{ $role->id }}">{{ $role->role_name }}</option>
                                             @endforeach
                                         </select>
+                                    </div>
+                                    <div class="button px-0" id="addNewApprover">
+                                        <button type="button" class="btn btn-success btn-sm w">Add New
+                                            Approver</button>
                                     </div>
                                     <div class="col-12 d-flex justify-content-between mt-4">
                                         <button type="button" class="btn btn-label-secondary btn-prev"> <i

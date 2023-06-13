@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 
 class WorkflowApproverController extends Controller
 {
+  private $check = 1;
   /**
    * Display a listing of the resource.
    *
@@ -49,6 +50,7 @@ class WorkflowApproverController extends Controller
     $request->validated();
 
     $credentials = $request->all();
+
     $result = WorkflowApprover::updateOrCreate(['id' => $request->id], $credentials);
     if ($request->id == null) {
       $successMessage = 'Workflow Approver Created Successfully';
@@ -135,5 +137,19 @@ class WorkflowApproverController extends Controller
     return redirect()
       ->route('workflow-approvers.index')
       ->with('success', 'Workflow Approver Deleted Successfully');
+  }
+
+  public function destroyAll($workflow_id) {
+    if ($workflow_id == null) return redirect()->route('workflow-approvers.index')->withErrors("Data with Id" . $workflow_id . "Not found");
+
+    WorkflowApprover::where("workflow_id", $workflow_id)->delete();
+
+    return response()->json(
+      [
+        'status' => 'Success',
+        'message' => 'Success Delete Old Data',
+        'data' => null,
+      ],
+    );
   }
 }

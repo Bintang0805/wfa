@@ -4,6 +4,19 @@
 
 'use strict';
 
+let AJAXGetAllURL = `${window.location.origin}/AJAX/roles/AJAXGetAll`;
+let GetAllDataRoles = null;
+fetch(AJAXGetAllURL)
+  .then(response => response.json())
+  .then(data => {
+    GetAllDataRoles = data.data;
+    return true;
+  })
+  .catch(error => {
+    console.error(error);
+    return false;
+  });
+
 $(function () {
   // Modal id
   const appModal = document.getElementById('createApp');
@@ -33,13 +46,13 @@ $(function () {
       //     },
       //   }
       // },
-      approver_roles: {
-        validators: {
-          notEmpty: {
-            message: 'this is required'
-          },
-        }
-      },
+      // approver_roles: {
+      //   validators: {
+      //     notEmpty: {
+      //       message: 'this is required'
+      //     },
+      //   }
+      // },
     },
     plugins: {
       trigger: new FormValidation.plugins.Trigger(),
@@ -107,34 +120,47 @@ $(function () {
                 type: 'POST',
                 data: getWorkflow,
                 success: function (data) {
-                  getApproverRoles.forEach(approverRole => {
-                    $.ajax({
-                      url: worfklowApproverStoreURL,
-                      type: 'POST',
-                      data: {
-                        workflow_id: data.data.id,
-                        approver_roles: approverRole.value
-                      },
-                      success: function (data) {
-                        console.log(data);
-                        return true;
-                      },
-                      error: function () {
-                        return false;
-                      }
-                    });
-                  });
+                  let worfklowApproverDeleteAllURL = `${window.location.origin}/AJAX/workflow-approvers/deleteAll/${data.data.id}`;
+                  $.ajax({
+                    url: worfklowApproverDeleteAllURL,
+                    type: 'GET',
+                    success: function () {
+                      setTimeout(() => {
+                        getApproverRoles.forEach(approverRole => {
+                          $.ajax({
+                            url: worfklowApproverStoreURL,
+                            type: 'POST',
+                            data: {
+                              workflow_id: data.data.id,
+                              approver_roles: approverRole.value
+                            },
+                            success: function (data) {
+                              console.log(data);
+                              return true;
+                            },
+                            error: function () {
+                              return false;
+                            }
+                          });
+                        });
 
-                  $("#datatables-workflows").load(location.href + " #datatables-workflows");
-                  $(".success-toast").toast('show');
-                  let fr = $("#addNewWorkflowForm")
-                  fr[0].reset(true);
-                  $("#createApp").modal("hide");
-                  setTimeout(() => {
-                    if ($(".success-toast")) {
-                      $(".success-toast").toast('hide');
+                        $("#datatables-workflows").load(location.href + " #datatables-workflows");
+                        $(".success-toast").toast('show');
+                        let fr = $("#addNewWorkflowForm")
+                        fr[0].reset(true);
+                        $("#createApp").modal("hide");
+                        setTimeout(() => {
+                          if ($(".success-toast")) {
+                            $(".success-toast").toast('hide');
+                          }
+                        }, 5000);
+                      }, 300);
+                      return true;
+                    },
+                    error: function () {
+                      return false;
                     }
-                  }, 5000);
+                  });
 
                   return true;
                 },
@@ -152,6 +178,72 @@ $(function () {
         });
       }
     }
+  });
+
+
+
+  $("#addNewApprover").on("click", () => {
+    let newApproverInput = document.createElement("div");
+    newApproverInput.className = "d-flex align-items-center px-0";
+
+    let selectElement = document.createElement("select");
+    selectElement.name = "approver_roles";
+    selectElement.className = "form-select";
+
+    let defaultOption = document.createElement("option");
+    defaultOption.value = "";
+    defaultOption.textContent = "Select";
+    selectElement.appendChild(defaultOption);
+
+    GetAllDataRoles.forEach(role => {
+      let optionElement = document.createElement("option");
+      optionElement.value = role.id;
+      optionElement.textContent = role.role_name;
+      selectElement.appendChild(optionElement);
+    });
+
+    let deleteButton = document.createElement("button");
+    deleteButton.className = "btn btn-danger btn-sm ms-2";
+    deleteButton.textContent = "X";
+
+    newApproverInput.appendChild(selectElement);
+    newApproverInput.appendChild(deleteButton);
+
+    $("#inputNewApprover").append(newApproverInput);
+
+    deleteButton.addEventListener("click", () => {
+      newApproverInput.remove();
+    });
+  })
+
+  function addDefaultInputApprover() {
+    let newApproverInput = document.createElement("div");
+    newApproverInput.className = "d-flex align-items-center px-0";
+
+    let selectElement = document.createElement("select");
+    selectElement.name = "approver_roles";
+    selectElement.className = "form-select";
+
+    let defaultOption = document.createElement("option");
+    defaultOption.value = "";
+    defaultOption.textContent = "Select";
+    selectElement.appendChild(defaultOption);
+
+    GetAllDataRoles.forEach(role => {
+      let optionElement = document.createElement("option");
+      optionElement.value = role.id;
+      optionElement.textContent = role.role_name;
+      selectElement.appendChild(optionElement);
+    });
+
+    newApproverInput.appendChild(selectElement);
+
+    $("#inputNewApprover").append(newApproverInput);
+  }
+
+  $('#createApp').on('hidden.bs.modal', function () {
+    $("#inputNewApprover").empty();
+    addDefaultInputApprover();
   });
 });
 
