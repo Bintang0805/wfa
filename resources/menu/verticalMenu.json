@@ -128,10 +128,10 @@
           "slug": "workflow-request-form"
         },
         {
-          "url": "/workflow-approvers",
-          "name": "Workflow Approver",
+          "url": "/request-workflow",
+          "name": "Request Workflow",
           "icon": "menu-icon tf-icons bx bx-cube",
-          "slug": "workflow-approvers"
+          "slug": "workflow-request-workflow"
         }
       ]
     }

@@ -69,7 +69,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
         </div>
         <div class="toast-body">
-            Success Create New Workflow
+            Success saved the workflow. waiting the page reload!
         </div>
     </div>
     @if ($errors->any())
@@ -121,6 +121,14 @@
                                     data-bs-toggle="modal" data-bs-target="#modalCenterDetail">
                                     <i class="bx bx-dots-vertical-rounded"></i>
                                 </button>
+                                @if ($workflow->associated_form == null)
+                                <button type="button" class="btn btn-outline-warning btn-sm ms-2 fs-6 rounded-pill" data-bs-toggle="tooltip"
+                                    data-bs-placement="right"
+                                    data-bs-title="Congratulation! You have created an awesome workflow. Now its time to attach a form to
+                                    it. In order to fetch details">
+                                    !
+                                </button>
+                                @endif
                             </td>
                         </tr>
                     @endforeach
@@ -301,6 +309,21 @@
                                 : Loading
                             </div>
                         </div>
+                        <table class="table table-striped mt-4">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Workflow Approvers</th>
+                                </tr>
+                            </thead>
+                            <tbody id="TableBody">
+                                {{-- <tr>
+                                  <th scope="row">1</th>
+                                  <td >Mark</td>
+                                  <td>Otto</td>
+                              </tr> --}}
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>

@@ -144,7 +144,7 @@ $(function () {
                           });
                         });
 
-                        $("#datatables-workflows").load(location.href + " #datatables-workflows");
+                        location.reload();
                         $(".success-toast").toast('show');
                         let fr = $("#addNewWorkflowForm")
                         fr[0].reset(true);
@@ -182,7 +182,17 @@ $(function () {
 
 
 
-  $("#addNewApprover").on("click", () => {
+  let removedRoles = [];
+  let oldFirstSelect = null;
+  let firstSelectValue = null;
+  $("#addNewApprover").on("click", (event) => {
+    let formData = $("#addNewWorkflowForm").serializeArray()
+    let selectedApproverRoles = formData.filter(f=> f.name == "approver_roles" && f.value != "");
+    let notSelectedRoles = GetAllDataRoles;
+    selectedApproverRoles.forEach(selectedApproverRole => {
+      notSelectedRoles = notSelectedRoles.filter(f => f.id != selectedApproverRole.value);
+    });
+
     let newApproverInput = document.createElement("div");
     newApproverInput.className = "d-flex align-items-center px-0";
 
@@ -195,7 +205,7 @@ $(function () {
     defaultOption.textContent = "Select";
     selectElement.appendChild(defaultOption);
 
-    GetAllDataRoles.forEach(role => {
+    notSelectedRoles.forEach(role => {
       let optionElement = document.createElement("option");
       optionElement.value = role.id;
       optionElement.textContent = role.role_name;
@@ -211,7 +221,11 @@ $(function () {
 
     $("#inputNewApprover").append(newApproverInput);
 
-    deleteButton.addEventListener("click", () => {
+    selectElement.addEventListener("change", (event) => {
+      console.log("okeee");
+    })
+
+    deleteButton.addEventListener("click", (event) => {
       newApproverInput.remove();
     });
   })
@@ -239,7 +253,21 @@ $(function () {
     newApproverInput.appendChild(selectElement);
 
     $("#inputNewApprover").append(newApproverInput);
+
+    // selectElement.addEventListener("change", (event) => {
+    //   let thisSelect = $(event.target).val();
+    //   let selectedRoles = GetAllDataRoles.find(f => f.id == thisSelect);
+    //   removedRoles.push(selectedRoles);
+    //   GetAllDataRoles.splice(GetAllDataRoles.indexOf(selectedRoles), 1)[0];
+    // })
   }
+
+  // $("#add-approver-roles").on("change", (event) => {
+  //   let thisSelect = $(event.target).val();
+  //   let selectedRoles = GetAllDataRoles.find(f => f.id == thisSelect);
+  //   removedRoles.push(selectedRoles);
+  //   GetAllDataRoles.splice(GetAllDataRoles.indexOf(selectedRoles), 1)[0];
+  // })
 
   $('#createApp').on('hidden.bs.modal', function () {
     $("#inputNewApprover").empty();

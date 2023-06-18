@@ -86,7 +86,7 @@ class WorkflowController extends Controller
    */
   public function edit($id)
   {
-    $workflow = Workflow::with("workflow_approvers")->where('id', $id)->first();
+    $workflow = Workflow::with(["workflow_approvers.role"])->where('id', $id)->first();
 
     $data = [
       'workflow' => $workflow,
@@ -144,5 +144,20 @@ class WorkflowController extends Controller
     $result = $workflow->orderBy("id", "desc")->first();
 
     dd($result);
+  }
+
+  public function AJAXGetAll()
+  {
+    $workflows = Workflow::all();
+
+    foreach ($workflows as $workflow) {
+      $nestedData['id'] = $workflow->id;
+      $nestedData['name'] = $workflow->name;
+      $nestedData['status'] = $workflow->status;
+
+      $data[] = $nestedData;
+    }
+
+    return response()->json(["data" => $data]);
   }
 }

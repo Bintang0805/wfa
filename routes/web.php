@@ -17,6 +17,7 @@ use App\Http\Controllers\RoleAndPermission\PermissionController;
 use App\Http\Controllers\User\RoleController;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\Workflow\RequestFormController;
+use App\Http\Controllers\Workflow\RequestWorkflowController;
 use App\Http\Controllers\Workflow\WorkflowApproverController;
 use App\Http\Controllers\Workflow\WorkflowController;
 use Illuminate\Support\Facades\Route;
@@ -74,6 +75,8 @@ Route::middleware("auth")->group(function () {
   Route::resource("workflow-approvers", WorkflowApproverController::class);
   Route::get("request-forms/create/{workflow_id}", [RequestFormController::class, "create"])->name("request-forms.create-custom");
 
+  // client
+  Route::resource("request-workflow", RequestWorkflowController::class);
 });
 
 
@@ -98,6 +101,7 @@ Route::get('AJAX/it-asset-types/AJAXGetAll', [ItAssetTypeController::class, "AJA
 Route::get('AJAX/it-assets/AJAXGetAll', [ItAssetController::class, "AJAXGetAll"]);
 Route::get('AJAX/applications/AJAXGetAll', [ApplicationController::class, "AJAXGetAll"]);
 Route::get('AJAX/request-forms/AJAXGetAll', [RequestFormController::class, "AJAXGetAll"]);
+Route::get('AJAX/workflows/AJAXGetAll', [WorkflowController::class, "AJAXGetAll"]);
 Route::get('AJAX/roles/AJAXGetAll', [RoleController::class, "AJAXGetAll"]);
 
 Route::get("AJAX/workflow-approvers/deleteAll/{workflow_id}", [WorkflowApproverController::class, "destroyAll"]);

@@ -55,6 +55,7 @@ class Workflow extends Model
         return $this->hasMany(WorkflowApprover::class, 'workflow_id', 'id');
     }
 
+
     public static function getEnumType()
     {
       $data = [
