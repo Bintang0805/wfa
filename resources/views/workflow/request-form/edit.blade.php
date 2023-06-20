@@ -513,7 +513,7 @@
                                 placeholder="Give a Description for this form"
                                 value="{{ $request_form->description != '' ? $request_form->description : '' }}" />
                         </div>
-                        <div class="preview-input-json w-100" id="preview-input-json"
+                        <div class="preview-input-json w-100 d-none" id="preview-input-json"
                             style="max-height: 40vh; overflow-x: auto">
 
                         </div>

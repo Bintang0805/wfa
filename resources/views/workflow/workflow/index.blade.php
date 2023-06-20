@@ -72,6 +72,18 @@
             Success saved the workflow. waiting the page reload!
         </div>
     </div>
+
+    <div id="errorRole" class="bs-toast toast fade bg-danger position-fixed bottom-0 end-0 me-4 mb-4"
+            role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header pb-2">
+                {{-- <img src="..." class="rounded me-2" alt="" /> --}}
+                <div class="me-auto fw-semibold">Error Message</div>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                The all roles selected!
+            </div>
+        </div>
     @if ($errors->any())
         @foreach ($errors->all() as $error)
             <div class="alert alert-danger error-message" role="alert">

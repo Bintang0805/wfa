@@ -17,6 +17,32 @@ fetch(AJAXGetAllURL)
     return false;
   });
 
+let AJAXGetAllFormURL = `${window.location.origin}/AJAX/request-forms/AJAXGetAll`;
+let GetAllDataForm = null;
+let selectOptionsForm = {};
+fetch(AJAXGetAllFormURL)
+  .then(response => response.json())
+  .then(data => {
+
+    GetAllDataForm = data.data;
+    GetAllDataForm = GetAllDataForm.map(form => {
+      let fields = form.id;
+      let value = form.name;
+      return { [fields]: value };
+    });
+    GetAllDataForm.forEach(obj => {
+      let key = Object.keys(obj)[0];
+      let value = obj[key];
+      selectOptionsForm[key] = value.toString();
+    });
+
+    return true;
+  })
+  .catch(error => {
+    console.error(error);
+    return false;
+  });
+
 $(function () {
   // Modal id
   const appModal = document.getElementById('createApp');
@@ -144,16 +170,68 @@ $(function () {
                           });
                         });
 
-                        location.reload();
-                        $(".success-toast").toast('show');
-                        let fr = $("#addNewWorkflowForm")
-                        fr[0].reset(true);
-                        $("#createApp").modal("hide");
-                        setTimeout(() => {
-                          if ($(".success-toast")) {
-                            $(".success-toast").toast('hide');
+                        Swal.fire({
+                          title: 'You want to use form have been added?',
+                          input: 'select',
+                          inputOptions: selectOptionsForm,
+                          showCancelButton: true,
+                          confirmButtonText: 'Yes',
+                          showLoaderOnConfirm: true,
+                          preConfirm: (input) => {
+                            console.log(input);
+                            console.log(data);
+                            // Mendapatkan token CSRF dari meta tag di halaman Laravel
+                            // let csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+                            let request = data.data;
+                            request.associated_form = input;
+                            request.status = "active";
+                            $.ajax({
+                              url: worfklowStoreURL,
+                              type: "POST",
+                              data: request,
+                              success: function () {
+                                $(".success-toast").toast('show');
+                                let fr = $("#addNewWorkflowForm")
+                                fr[0].reset(true);
+                                $("#createApp").modal("hide");
+                                setTimeout(() => {
+                                  if ($(".success-toast")) {
+                                    $(".success-toast").toast('hide');
+                                  }
+                                }, 5000);
+                                location.reload();
+                              },
+                              error: function () {
+                                console.log("error");
+                              }
+                            });
+
+                            // let options = {
+                            //   method: 'POST',
+                            //   headers: {
+                            //     'Content-Type': 'application/json',
+                            //     'X-CSRF-TOKEN': csrfToken // Sertakan token CSRF dalam header permintaan
+                            //   },
+                            //   body: JSON.stringify(data)
+                            // };
+
+                            // fetch(worfklowStoreURL, options)
+                            //   .then(data => {
+                            //     console.log('Respon:', data);
+                            //     // Lakukan sesuatu dengan respon yang diterima
+                            //     location.reload();
+                            //   })
+                            //   .catch(error => {
+                            //     console.error('Terjadi kesalahan:', error);
+                            //   });
+                          },
+                          allowOutsideClick: () => !Swal.isLoading()
+                        }).then((result) => {
+                          if (result.isConfirmed) {
+                            console.log("test");
                           }
-                        }, 5000);
+                        });
                       }, 300);
                       return true;
                     },
@@ -187,11 +265,20 @@ $(function () {
   let firstSelectValue = null;
   $("#addNewApprover").on("click", (event) => {
     let formData = $("#addNewWorkflowForm").serializeArray()
-    let selectedApproverRoles = formData.filter(f=> f.name == "approver_roles" && f.value != "");
+    let selectedApproverRoles = formData.filter(f => f.name == "approver_roles" && f.value != "");
     let notSelectedRoles = GetAllDataRoles;
     selectedApproverRoles.forEach(selectedApproverRole => {
       notSelectedRoles = notSelectedRoles.filter(f => f.id != selectedApproverRole.value);
     });
+
+    if (notSelectedRoles.length == 0) {
+      $("#errorRole").toast("show");
+      setTimeout(() => {
+        $("#errorRole").toast("hide");
+      }, 3000);
+
+      return false;
+    }
 
     let newApproverInput = document.createElement("div");
     newApproverInput.className = "d-flex align-items-center px-0";

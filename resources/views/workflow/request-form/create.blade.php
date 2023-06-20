@@ -485,7 +485,7 @@
                             <input id="form-description" class="form-control" name="description"
                                 placeholder="Give a Description for this form" />
                         </div>
-                        <div class="preview-input-json w-100" id="preview-input-json"
+                        <div class="preview-input-json w-100 d-none" id="preview-input-json"
                             style="max-height: 40vh; overflow-x: auto">
 
                         </div>
