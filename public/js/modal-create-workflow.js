@@ -230,6 +230,8 @@ $(function () {
                         }).then((result) => {
                           if (result.isConfirmed) {
                             console.log("test");
+                          } else {
+                            location.reload();
                           }
                         });
                       }, 300);

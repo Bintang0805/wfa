@@ -18,7 +18,7 @@ class RequestWorkflowController extends Controller
    */
   public function index()
   {
-    $workflows = Workflow::whereStatus("active")->get();
+    $workflows = Workflow::whereStatus("active")->whereInitiationRole(Auth::user()->role->id)->get();
     $sender_request = RequestWorkflow::whereUserId(Auth::user()->id)->with(["user", "workflow"])->get();
 
     $data = [
