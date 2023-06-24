@@ -51,11 +51,22 @@ class WorkflowApproverController extends Controller
 
     $credentials = $request->all();
 
-    $result = WorkflowApprover::updateOrCreate(['id' => $request->id], $credentials);
-    if ($request->id == null) {
+    $workflowApprover = [];
+    foreach($credentials["approver_roles"] as $approver_roles) {
+      $createWorkflowApprover = [
+        "workflow_id" => $credentials["workflow_id"],
+        "approver_roles" => $approver_roles["value"]
+      ];
+      array_push($workflowApprover, $createWorkflowApprover);
+    }
+
+    $result = WorkflowApprover::insert($workflowApprover);
+    if ($result) {
+      Workflow::whereId($credentials["workflow_id"])->first()->update(["level_of_approvers" => count($workflowApprover)]);
+
       $successMessage = 'Workflow Approver Created Successfully';
     } else {
-      $successMessage = 'Workflow Approver Updated Successfully';
+      $successMessage = 'Workflow Approver Failed To Create';
     }
 
     $response = [

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Workflow;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateRequestWorkflowRequest;
+use App\Models\Workflow\AssociatedForm;
 use App\Models\Workflow\RequestWorkflow;
 use App\Models\Workflow\Workflow;
 use Illuminate\Http\Request;
@@ -19,6 +20,10 @@ class RequestWorkflowController extends Controller
   public function index()
   {
     $workflows = Workflow::whereStatus("active")->whereInitiationRole(Auth::user()->role->id)->get();
+    foreach($workflows as $workflow) {
+      $associatedForm = AssociatedForm::whereWorkflowId($workflow->id)->first();
+      $workflow->associated_form =  $associatedForm->request_form_id;
+    }
     $sender_request = RequestWorkflow::whereUserId(Auth::user()->id)->with(["user", "workflow"])->get();
 
     $data = [

@@ -23,7 +23,6 @@ return new class extends Migration
             $table->enum("status", ["active", "inactive"])->default("inactive");
             $table->boolean("email_reminder")->default(false)->nullable();
             $table->boolean("web_notification")->default(false)->nullable();
-            $table->unsignedBigInteger("associated_form")->nullable();
             $table->timestamps();
 
             $table->foreign("initiation_role")->references("id")->on("roles")->cascadeOnDelete()->cascadeOnUpdate();

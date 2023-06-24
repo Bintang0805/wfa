@@ -54,6 +54,7 @@ $(function () {
             // $('#add-status').val(workflow.status);
             $('#add-email-reminder').val(workflow.email_reminder);
             $('#add-web-notification').val(workflow.web_notification);
+            $('#add-associated-form').val(workflow.associated_form);
 
             $('#inputNewApprover').empty();
 
@@ -95,12 +96,14 @@ $(function () {
                 });
               });
             } else {
-              let approverInput = `<div class="d-flex align-items-center px-0">
-              <select name="approver_roles" class="form-select">
-                <option value="">Select</option>
-                ${GetAllDataRoles.map(role => `<option value="${role.id}">${role.role_name}</option>`).join('')}
-              </select>
-            </div>`
+              let approverInput = `
+              <div class="d-flex flex-column justify-content-center form-input px-0">
+                <label class="form-label" for="modalEditUserLanguage">Select the approvers</label>
+                <select name="approver_roles" class="form-select">
+                  <option value="">Select</option>
+                  ${GetAllDataRoles.map(role => `<option value="${role.id}">${role.role_name}</option>`).join('')}
+                </select>
+              </div>`
               $("#inputNewApprover").append(approverInput);
             }
           }
@@ -172,6 +175,7 @@ $(function () {
         // $('#add-status').val(workflow.status);
         $('#add-email-reminder').val(workflow.email_reminder);
         $('#add-web-notification').val(workflow.web_notification);
+        $('#add-associated-form').val(workflow.associated_form);
 
         $('#inputNewApprover').empty();
 
@@ -213,7 +217,8 @@ $(function () {
             });
           });
         } else {
-          let approverInput = `<div class="d-flex align-items-center px-0">
+          let approverInput = `<div class="d-flex flex-column justify-content-center px-0">
+          <label class="form-label" for="modalEditUserLanguage">Select the approvers</label>
           <select name="approver_roles" class="form-select">
             <option value="">Select</option>
             ${GetAllDataRoles.map(role => `<option value="${role.id}">${role.role_name}</option>`).join('')}

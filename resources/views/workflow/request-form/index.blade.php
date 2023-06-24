@@ -43,8 +43,62 @@
 
 @section('content')
     <div class="card">
-        <div class="card-header">
+        <div class="card-header d-flex justify-content-between">
             <h5 class="card-title mb-0">Form Fields Table</h5>
+            <div class="button">
+              <a href="{{ route('request-forms.create') }}">
+                <button class="btn btn-primary">Add New Form</button>
+              </a>
+            </div>
+        </div>
+        <div class="card-datatable table-responsive px-3">
+            <table class="datatables-form-fields2 table border-top">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Form Name</th>
+                        <th>Status</th>
+                        <th>Associated Workflow</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($request_forms as $request_form)
+                        <tr>
+                            <td>{{ $request_form->id }}</td>
+                            <td class="request-form-name">{{ $request_form->name }}</td>
+                            <td class="request-form-status">
+                              <span class="badge {{ $request_form->status == true ? 'bg-success' : 'bg-warning' }}">{{ $request_form->status == true ? "active" : "inactive" }}</span>
+                            </td>
+                            <td>
+                              {{ $request_form->associated_form_to_string }}
+                            </td>
+                            <td class="d-flex">
+                              <a
+                              href="{{ route('request-forms.edit', ['request_form' => $request_form->id]) }}">
+                              <button class="edit-button btn-sm btn btn-primary" data-id="">
+                                  <i class="bx bx-edit"></i>
+                              </button>
+                          </a>
+                          <form
+                              action="{{ route('request-forms.destroy', ['request_form' => $request_form->id]) }}"
+                              method="POST" class="DeleteForm">
+                              @csrf
+                              @method('DELETE')
+                              <button type="submit" class="btn btn-sm btn-danger mx-2"
+                                  onclick="showPermission(this.parentNode)"><i class="bx bx-trash"></i></button>
+                          </form>
+                          <button class="detail-button btn btn-sm btn-secondary button-fields-preview"
+                              data-id="{{ $request_form->id != null ? $request_form->id : '' }}"
+                              data-bs-toggle="modal" data-bs-target="#fieldsPreview">
+                              {{-- <i class="bx bx-dots-vertical-rounded"></i> --}}
+                              View Form
+                          </button>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
         </div>
         <div class="card-datatable table-responsive px-3">
             <table class="datatables-form-fields table border-top">
@@ -70,12 +124,12 @@
                             </td>
                             <td class="d-flex">
                                 @if ($workflow->request_form != null)
-                                    <a
+                                    {{-- <a
                                         href="{{ route('request-forms.edit', ['request_form' => $workflow->request_form]) }}">
                                         <button class="edit-button btn-sm btn btn-primary" data-id="">
                                             <i class="bx bx-edit"></i>
                                         </button>
-                                    </a>
+                                    </a> --}}
                                     <form
                                         action="{{ route('request-forms.destroy', ['request_form' => $workflow->request_form]) }}"
                                         method="POST" class="DeleteForm">

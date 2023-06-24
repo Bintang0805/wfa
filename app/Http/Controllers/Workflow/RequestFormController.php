@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Workflow;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateRequestFormRequest;
+use App\Models\Workflow\AssociatedForm;
 use App\Models\Workflow\RequestForm;
 use App\Models\Workflow\Workflow;
 use Illuminate\Http\Request;
@@ -17,8 +18,39 @@ class RequestFormController extends Controller
    */
   public function index()
   {
+    // $requestForms = collect(RequestForm::with("workflows")->get());
+    // dd(RequestForm::all());
+    $requestForms = RequestForm::all();
+    foreach($requestForms as $requestForm) {
+      $requestForm->status = count(AssociatedForm::where("request_form_id", $requestForm->id)->get()) > 0;
+      $requestForm->associated_form = AssociatedForm::with(["request_form", "workflow"])->where("request_form_id", $requestForm->id)->get();
+      $associated_form_to_string = "";
+      foreach ($requestForm->associated_form as $associated_form) {
+        if($associated_form_to_string == "") {
+          $associated_form_to_string .= $associated_form->workflow->name;
+        } else {
+          $associated_form_to_string .= ", " . $associated_form->workflow->name;
+        }
+      }
+      $requestForm->associated_form_to_string = $associated_form_to_string;
+    }
+
+    $workflows = Workflow::all();
+
+    foreach ($workflows as $workflow) {
+      $workflow->associated_form = AssociatedForm::select("request_form_id")->where("workflow_id", $workflow->id)->get();
+      $associatedForm = AssociatedForm::with(["request_form", "workflow"])->where("workflow_id", $workflow->id)->first();
+      if($associatedForm != null) {
+        $workflow->request_form = $associatedForm->request_form;
+      } else {
+        $workflow->request_form = null;
+      }
+    }
+
+    // dd($requestForms);
     $data = [
-      "workflows" => Workflow::with("request_form")->get(),
+      "workflows" => $workflows,
+      "request_forms" => $requestForms
     ];
 
     return view("workflow.request-form.index", $data);
@@ -29,13 +61,18 @@ class RequestFormController extends Controller
    *
    * @return \Illuminate\Http\Response
    */
-  public function create($workflow_id)
+  public function create($workflow_id = null)
   {
-    $data = [
-      "workflow" => Workflow::where("id", $workflow_id)->first(),
-    ];
+    if($workflow_id != null) {
+      $data = [
+        "workflow" => Workflow::where("id", $workflow_id)->first(),
+      ];
 
-    return view("workflow.request-form.create", $data);
+      return view("workflow.request-form.create", $data);
+    } else {
+      return view("workflow.request-form.create");
+    }
+
   }
 
   /**
@@ -46,17 +83,34 @@ class RequestFormController extends Controller
    */
   public function store(CreateRequestFormRequest $request)
   {
-    $request->validated();
+    $credentials = $request->validated();
 
-    $workflow = Workflow::where("id", $request->workflow_id)->first();
-    $requestForm = RequestForm::create($request->all());
+    $requestForm = RequestForm::updateOrCreate(['id' => $request->id], $credentials);
 
-    $updateWorkflow = [
-      "associated_form" => $requestForm->id,
-      "status" => "active"
-    ];
+    if(isset($request->workflow_id) && $requestForm != null) {
+      $associatedForm = [
+        "workflow_id" => $request->workflow_id,
+        "request_form_id" => $requestForm->id
+      ];
 
-    $workflow->update($updateWorkflow);
+      $createAssociatedForm = AssociatedForm::create($associatedForm);
+
+      if($createAssociatedForm != null) {
+        $updateWorkflow = [
+          "status" => "active",
+        ];
+
+        Workflow::where("id", $request->workflow_id)->update($updateWorkflow);
+      }
+    }
+
+    // $workflow = Workflow::where("id", $request->workflow_id)->first();
+    // $updateWorkflow = [
+    //   "associated_form" => $requestForm->id,
+    //   "status" => "active"
+    // ];
+
+    // $workflow->update($updateWorkflow);
 
     return redirect()
       ->route('request-forms.index')
@@ -83,7 +137,6 @@ class RequestFormController extends Controller
   public function edit(RequestForm $requestForm)
   {
     $data = [
-      "workflows" => Workflow::where("associated_form", null)->orWhere("associated_form", $requestForm->id)->get(),
       "request_form" => $requestForm,
     ];
 
@@ -112,15 +165,21 @@ class RequestFormController extends Controller
   {
     if ($requestForm == null) return redirect()->route('request-forms.index')->withErrors("Data with Id" . $requestForm->id . "Not found");
 
-    $workflow = Workflow::where("id", $requestForm->workflow_id)->first();
+    $associatedForm = AssociatedForm::where("request_form_id", $requestForm->id)->get();
 
-    $requestForm->delete();
+    $updateWorkflow = [];
+    foreach ($associatedForm as $form) {
+      array_push($updateWorkflow, $form->workflow_id);
+    }
 
-    $updateWorkflow = [
-      "status" => "inactive",
-    ];
 
-    $workflow->update($updateWorkflow);
+    if($associatedForm != null) {
+      $workflowUpdated = Workflow::whereIn("id", $updateWorkflow)->update(["status" => "inactive"]);
+    }
+
+    if($workflowUpdated) {
+      $requestForm->delete();
+    }
 
     return redirect()
       ->route('request-forms.index')

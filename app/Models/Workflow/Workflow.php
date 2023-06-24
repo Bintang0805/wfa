@@ -20,8 +20,7 @@ class Workflow extends Model
       "worker_roles",
       "status",
       "email_reminder",
-      "web_notification",
-      "associated_form",
+      "web_notification"
     ];
     protected $guarded = ["id"];
 
@@ -35,15 +34,6 @@ class Workflow extends Model
         return $this->belongsTo(Role::class, 'inititation_role', 'id');
     }
 
-    /**
-     * Get the request_form that owns the Workflow
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function request_form(): BelongsTo
-    {
-        return $this->belongsTo(RequestForm::class, 'associated_form', 'id');
-    }
 
     /**
      * Get all of the workflow_approvers for the Workflow
@@ -54,7 +44,6 @@ class Workflow extends Model
     {
         return $this->hasMany(WorkflowApprover::class, 'workflow_id', 'id');
     }
-
 
     public static function getEnumType()
     {

@@ -170,11 +170,11 @@
         <div class="card-footer">
             <div class="w-100 d-flex justify-content-end pt-3 align-items-end">
                 <div class="button-group">
-                  <a href="{{ route('request-forms.index') }}">
-                    <button class="btn btn-danger">
-                        Cancel
-                    </button>
-                  </a>
+                    <a href="{{ route('request-forms.index') }}">
+                        <button class="btn btn-danger">
+                            Cancel
+                        </button>
+                    </a>
                     <button class="btn btn-primary ms-2" data-bs-toggle="modal" data-bs-target="#modalSaveForm">
                         Save Form
                     </button>
@@ -462,19 +462,21 @@
                     </div>
                     <div class="modal-body">
                         <input type="hidden" id="input-form-fields" name="fields">
-                        <div class="form-input mb-3">
-                            <label for="workflow_id">Workflow</label>
-                            <input type="hidden" name="workflow_id" id="workflow_id" class="form-control"
-                                value="{{ $workflow->id }}">
-                            <input type="text" disabled name="workflow_name" id="workflow_name" class="form-control"
-                                value="{{ $workflow->name }}">
-                            {{-- <select name="workflow_id" id="workflow_id" class="form-control">
+                        @if (isset($workflow))
+                            <div class="form-input mb-3">
+                                <label for="workflow_id">Workflow</label>
+                                <input type="hidden" name="workflow_id" id="workflow_id" class="form-control"
+                                    value="{{ $workflow->id }}">
+                                <input type="text" disabled name="workflow_name" id="workflow_name"
+                                    class="form-control" value="{{ $workflow->name }}">
+                                {{-- <select name="workflow_id" id="workflow_id" class="form-control">
                           <option value="" disabled selected>Select the workflow</option>
                           @foreach ($workflows as $workflow)
                               <option value="{{ $workflow->id }}">{{ $workflow->name }}</option>
                           @endforeach
                         </select> --}}
-                        </div>
+                            </div>
+                        @endif
                         <div class="form-input mb-3">
                             <label for="form-name">Form Name</label>
                             <input id="form-name" class="form-control" name="name"

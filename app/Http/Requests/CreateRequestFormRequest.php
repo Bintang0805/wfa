@@ -24,7 +24,6 @@ class CreateRequestFormRequest extends FormRequest
     public function rules()
     {
         return [
-            "workflow_id" => ["required"],
             "name" => ["required"],
             "fields" => ["required"],
         ];
@@ -33,7 +32,6 @@ class CreateRequestFormRequest extends FormRequest
     public function messages()
     {
       return [
-        "workflow_id.required" => "the Workflow is a required",
         "name.required" => "the Form Name is a required",
         "fields.required" => "the Form Fields is a required",
       ];

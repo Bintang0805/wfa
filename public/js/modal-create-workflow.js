@@ -151,97 +151,38 @@ $(function () {
                     url: worfklowApproverDeleteAllURL,
                     type: 'GET',
                     success: function () {
-                      setTimeout(() => {
-                        getApproverRoles.forEach(approverRole => {
-                          $.ajax({
-                            url: worfklowApproverStoreURL,
-                            type: 'POST',
-                            data: {
-                              workflow_id: data.data.id,
-                              approver_roles: approverRole.value
-                            },
-                            success: function (data) {
-                              console.log(data);
-                              return true;
-                            },
-                            error: function () {
-                              return false;
-                            }
-                          });
-                        });
-
-                        Swal.fire({
-                          title: 'You want to use form have been added?',
-                          input: 'select',
-                          inputOptions: selectOptionsForm,
-                          showCancelButton: true,
-                          confirmButtonText: 'Yes',
-                          showLoaderOnConfirm: true,
-                          preConfirm: (input) => {
-                            console.log(input);
-                            console.log(data);
-                            // Mendapatkan token CSRF dari meta tag di halaman Laravel
-                            // let csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-
-                            let request = data.data;
-                            request.associated_form = input;
-                            request.status = "active";
-                            $.ajax({
-                              url: worfklowStoreURL,
-                              type: "POST",
-                              data: request,
-                              success: function () {
-                                $(".success-toast").toast('show');
-                                let fr = $("#addNewWorkflowForm")
-                                fr[0].reset(true);
-                                $("#createApp").modal("hide");
-                                setTimeout(() => {
-                                  if ($(".success-toast")) {
-                                    $(".success-toast").toast('hide');
-                                  }
-                                }, 5000);
-                                location.reload();
-                              },
-                              error: function () {
-                                console.log("error");
-                              }
-                            });
-
-                            // let options = {
-                            //   method: 'POST',
-                            //   headers: {
-                            //     'Content-Type': 'application/json',
-                            //     'X-CSRF-TOKEN': csrfToken // Sertakan token CSRF dalam header permintaan
-                            //   },
-                            //   body: JSON.stringify(data)
-                            // };
-
-                            // fetch(worfklowStoreURL, options)
-                            //   .then(data => {
-                            //     console.log('Respon:', data);
-                            //     // Lakukan sesuatu dengan respon yang diterima
-                            //     location.reload();
-                            //   })
-                            //   .catch(error => {
-                            //     console.error('Terjadi kesalahan:', error);
-                            //   });
-                          },
-                          allowOutsideClick: () => !Swal.isLoading()
-                        }).then((result) => {
-                          if (result.isConfirmed) {
-                            console.log("test");
-                          } else {
+                      $.ajax({
+                        url: worfklowApproverStoreURL,
+                        type: 'POST',
+                        data: {
+                          workflow_id: data.data.id,
+                          approver_roles: getApproverRoles,
+                        },
+                        success: function (data) {
+                          $(".success-toast").toast('show');
+                          let fr = $("#addNewWorkflowForm")
+                          fr[0].reset(true);
+                          $("#createApp").modal("hide");
+                          setTimeout(() => {
                             location.reload();
-                          }
-                        });
-                      }, 300);
+                          }, 1000);
+                          setTimeout(() => {
+                            if ($(".success-toast")) {
+                              $(".success-toast").toast('hide');
+                            }
+                          }, 5000);
+                          return true;
+                        },
+                        error: function () {
+                          return false;
+                        }
+                      });
                       return true;
                     },
                     error: function () {
                       return false;
                     }
                   });
-
                   return true;
                 },
                 error: function () {
@@ -249,6 +190,8 @@ $(function () {
                 }
               });
             } else {
+              createAppStepper.previous();
+              createAppStepper.previous();
               createAppStepper.previous();
               createAppStepper.previous();
               createAppStepper.previous();
@@ -283,7 +226,7 @@ $(function () {
     }
 
     let newApproverInput = document.createElement("div");
-    newApproverInput.className = "d-flex align-items-center px-0";
+    newApproverInput.className = "d-flex flex-colum justify-content-center px-0";
 
     let selectElement = document.createElement("select");
     selectElement.name = "approver_roles";

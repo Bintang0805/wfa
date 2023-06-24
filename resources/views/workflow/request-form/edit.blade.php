@@ -483,24 +483,26 @@
             <div class="modal-content">
                 <form action="{{ route('request-forms.store') }}" method="POST">
                     @csrf
-                    <input type="hidden" value="{{ $request_form->id }}">
+                    <input type="hidden" value="{{ $request_form->id }}" name="id">
                     <div class="modal-header">
                         <h5 class="modal-title" id="modalSaveFormLabel">Form Builder</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <input type="hidden" id="input-form-fields" name="fields">
-                        <div class="form-input mb-3">
-                            <label for="workflow_id">Workflow</label>
-                            <select name="workflow_id" id="workflow_id" class="form-control">
-                                <option value="" disabled selected>Select the workflow</option>
-                                @foreach ($workflows as $workflow)
-                                    <option value="{{ $workflow->id }}"
-                                        {{ $workflow->id == $request_form->workflow_id ? 'selected' : '' }}>
-                                        {{ $workflow->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
+                      <input type="hidden" id="input-form-fields" name="fields">
+                      @isset($workflow)
+                      <div class="form-input mb-3">
+                          <label for="workflow_id">Workflow</label>
+                          <select name="workflow_id" id="workflow_id" class="form-control">
+                              <option value="" disabled selected>Select the workflow</option>
+                              @foreach ($workflows as $workflow)
+                                  <option value="{{ $workflow->id }}"
+                                      {{ $workflow->id == $request_form->workflow_id ? 'selected' : '' }}>
+                                      {{ $workflow->name }}</option>
+                              @endforeach
+                          </select>
+                      </div>
+                      @endisset
                         <div class="form-input mb-3">
                             <label for="form-name">Form Name</label>
                             <input id="form-name" class="form-control" name="name"

@@ -73,17 +73,17 @@
         </div>
     </div>
 
-    <div id="errorRole" class="bs-toast toast fade bg-danger position-fixed bottom-0 end-0 me-4 mb-4"
-            role="alert" aria-live="assertive" aria-atomic="true">
-            <div class="toast-header pb-2">
-                {{-- <img src="..." class="rounded me-2" alt="" /> --}}
-                <div class="me-auto fw-semibold">Error Message</div>
-                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-            </div>
-            <div class="toast-body">
-                The all roles selected!
-            </div>
+    <div id="errorRole" class="bs-toast toast fade bg-danger position-fixed bottom-0 end-0 me-4 mb-4" role="alert"
+        aria-live="assertive" aria-atomic="true">
+        <div class="toast-header pb-2">
+            {{-- <img src="..." class="rounded me-2" alt="" /> --}}
+            <div class="me-auto fw-semibold">Error Message</div>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
         </div>
+        <div class="toast-body">
+            The all roles selected!
+        </div>
+    </div>
     @if ($errors->any())
         @foreach ($errors->all() as $error)
             <div class="alert alert-danger error-message" role="alert">
@@ -133,13 +133,13 @@
                                     data-bs-toggle="modal" data-bs-target="#modalCenterDetail">
                                     <i class="bx bx-dots-vertical-rounded"></i>
                                 </button>
-                                @if ($workflow->associated_form == null)
-                                <button type="button" class="btn btn-outline-warning btn-sm ms-2 fs-6 rounded-pill" data-bs-toggle="tooltip"
-                                    data-bs-placement="right"
-                                    data-bs-title="Congratulation! You have created an awesome workflow. Now its time to attach a form to
+                                @if ($workflow->status != "active")
+                                    <button type="button" class="btn btn-outline-warning btn-sm ms-2 fs-6 rounded-pill"
+                                        data-bs-toggle="tooltip" data-bs-placement="right"
+                                        data-bs-title="Congratulation! You have created an awesome workflow. Now its time to attach a form to
                                     it. In order to fetch details">
-                                    !
-                                </button>
+                                        !
+                                    </button>
                                 @endif
                             </td>
                         </tr>
@@ -395,12 +395,32 @@
                                 </button>
                             </div>
                             <div class="line"></div>
+                            <div class="step" data-target="#reminder">
+                                <button type="button" class="step-trigger">
+                                    <span class="bs-stepper-circle"><i class="bx bx-credit-card fs-5"></i></span>
+                                    <span class="bs-stepper-label">
+                                        <span class="bs-stepper-title text-uppercase">Reminder</span>
+                                        <span class="bs-stepper-subtitle">Setting the Reminder</span>
+                                    </span>
+                                </button>
+                            </div>
+                            <div class="line"></div>
+                            <div class="step" data-target="#form">
+                                <button type="button" class="step-trigger">
+                                    <span class="bs-stepper-circle"><i class="bx bx-credit-card fs-5"></i></span>
+                                    <span class="bs-stepper-label">
+                                        <span class="bs-stepper-title text-uppercase">Form</span>
+                                        <span class="bs-stepper-subtitle">Select the older Form</span>
+                                    </span>
+                                </button>
+                            </div>
+                            <div class="line"></div>
                             <div class="step" data-target="#submit">
                                 <button type="button" class="step-trigger">
                                     <span class="bs-stepper-circle"><i class="bx bx-check fs-5"></i></span>
                                     <span class="bs-stepper-label">
-                                        <span class="bs-stepper-title text-uppercase">Reminder</span>
-                                        <span class="bs-stepper-subtitle">Reminder</span>
+                                        <span class="bs-stepper-title text-uppercase">Submit</span>
+                                        <span class="bs-stepper-subtitle">Submit</span>
                                     </span>
                                 </button>
                             </div>
@@ -437,7 +457,7 @@
                                 <!-- Frameworks -->
                                 <div id="frameworks" class="content pt-3 pt-lg-0">
                                     <h5>Initiator Role<span class="text-danger ps-1 fs-6">*</span></h5>
-                                    <ul class="p-0 m-0" style="max-height: 13rem; overflow-y: auto;">
+                                    <ul class="p-0 m-0" style="max-height: 18rem; overflow-y: auto;">
                                         @foreach ($roles as $role)
                                             <li class="d-flex align-items-center mb-3">
                                                 <div class="badge bg-label-info p-2 me-3 rounded">
@@ -472,7 +492,7 @@
                                 <!-- Database -->
                                 <div id="database" class="content pt-3 pt-lg-0">
                                     <h5>Select Worker Role<span class="text-danger ps-1 fs-6">*</span></h5>
-                                    <ul class="p-0 m-0" style="max-height: 13rem; overflow-y: auto;">
+                                    <ul class="p-0 m-0" style="max-height: 18rem; overflow-y: auto;">
                                         @foreach ($roles as $role)
                                             <li class="d-flex align-items-center mb-3">
                                                 <div class="badge bg-label-info p-2 me-3 rounded">
@@ -506,6 +526,7 @@
                                 <!-- billing -->
                                 <div id="billing" class="content">
                                     <div class="row g-3 pt-3 pt-lg-0 mb-5 form-input" id="inputNewApprover">
+                                        <h5>Approvers</h5>
                                         <label class="form-label" for="modalEditUserLanguage">Select the approvers</label>
                                         <select id="add-approver-roles" name="approver_roles" class="form-select">
                                             <option value="">Select</option>
@@ -528,8 +549,8 @@
                                     </div>
                                 </div>
 
-                                <!-- submit -->
-                                <div id="submit" class="content pt-3 pt-lg-0">
+                                <!-- reminder -->
+                                <div id="reminder" class="content pt-3 pt-lg-0">
                                     <h5 class="mb-2 mt-3">Reminder</h5>
                                     <div class="row mt-3">
                                         <div class="mb-3 form-input col-12">
@@ -550,6 +571,51 @@
                                             </select>
                                         </div>
                                     </div>
+                                    <div class="col-12 d-flex justify-content-between mt-4 pt-2">
+                                        <button type="button" class="btn btn-label-secondary btn-prev"> <i
+                                                class="bx bx-left-arrow-alt bx-xs me-sm-1 me-0"></i> <span
+                                                class="align-middle d-sm-inline-block d-none">Previous</span> </button>
+                                        <button type="button" class="btn btn-primary btn-next"> <span
+                                                class="align-middle d-sm-inline-block d-none me-sm-1">Next</span> <i
+                                                class="bx bx-right-arrow-alt bx-xs"></i></button>
+                                    </div>
+                                </div>
+
+                                <!-- form -->
+                                <div id="form" class="content pt-3 pt-lg-0">
+                                    <h5 class="mb-2 mt-3">Form</h5>
+                                    <div class="row mt-3">
+                                        <div class="mb-3 form-input col-12">
+                                            <label class="form-label" for="add-associated-form">Form</label>
+                                            <select name="associated_form" id="add-associated-form" class="form-select">
+                                                <option value="" selected>Make form later</option>
+                                                @foreach ($forms as $form)
+                                                    <option value="{{ $form->id }}">{{ $form->name }}</option>
+                                                @endforeach
+                                            </select>
+                                            <small class="text-secondary">yo
+                                                u can use older form or you can make the form later!</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 d-flex justify-content-between mt-4 pt-2">
+                                        <button type="button" class="btn btn-label-secondary btn-prev"> <i
+                                                class="bx bx-left-arrow-alt bx-xs me-sm-1 me-0"></i> <span
+                                                class="align-middle d-sm-inline-block d-none">Previous</span> </button>
+                                        <button type="button" class="btn btn-primary btn-next"> <span
+                                                class="align-middle d-sm-inline-block d-none me-sm-1">Next</span> <i
+                                                class="bx bx-right-arrow-alt bx-xs"></i></button>
+                                    </div>
+                                </div>
+
+                                <!-- submit -->
+                                <div id="submit" class="content text-center pt-3 pt-lg-0">
+                                    <h5 class="mb-2 mt-3">Submit</h5>
+                                    <p>Submit to kick start your workflow.</p>
+                                    <!-- image -->
+                                    <img src="{{ asset('assets/img/illustrations/girl-doing-yoga-' . $configData['style'] . '.png') }}"
+                                        alt="Create App img" width="300" class="img-fluid"
+                                        data-app-light-img="illustrations/girl-doing-yoga-light.png"
+                                        data-app-dark-img="illustrations/girl-doing-yoga-dark.png">
                                     <div class="col-12 d-flex justify-content-between mt-4 pt-2">
                                         <button type="button" class="btn btn-label-secondary btn-prev"> <i
                                                 class="bx bx-left-arrow-alt bx-xs me-sm-1 me-0"></i> <span

@@ -4,22 +4,32 @@ namespace App\Models\Workflow;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class RequestForm extends Model
 {
   use HasFactory;
   protected $table = 'request_forms';
-  protected $fillable = ['name', 'workflow_id', 'description', 'fields'];
+  protected $fillable = ['name', 'workflow_id', 'description', 'fields', 'status'];
   protected $guarded = ['id'];
 
+  // /**
+  //  * Get the workflow that owns the RequestForm
+  //  *
+  //  * @return \Illuminate\Database\Eloquent\Relations\HasMany
+  //  */
+  // public function workflows(): HasMany
+  // {
+  //     return $this->belongsTo(Workflow::class, 'workflow_id', 'id');
+  // }
+
   /**
-   * Get the workflow that owns the RequestForm
+   * Get all of the workflows for the RequestForm
    *
-   * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+   * @return \Illuminate\Database\Eloquent\Relations\HasMany
    */
-  public function workflow(): BelongsTo
+  public function workflows(): HasMany
   {
-      return $this->belongsTo(Workflow::class, 'workflow_id', 'id');
+      return $this->hasMany(Workflow::class, 'workflow_id', 'id');
   }
 }
