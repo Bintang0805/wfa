@@ -13,9 +13,10 @@ use App\Http\Controllers\masters\InstrumentTypeController;
 use App\Http\Controllers\masters\ItAssetController;
 use App\Http\Controllers\masters\ItAssetTypeController;
 use App\Http\Controllers\masters\LocationController;
-use App\Http\Controllers\RoleAndPermission\PermissionController;
+use App\Http\Controllers\User\PermissionController;
 use App\Http\Controllers\User\RoleController;
 use App\Http\Controllers\User\UserController;
+use App\Http\Controllers\Workflow\ConfirmWorkflowController;
 use App\Http\Controllers\Workflow\RequestFormController;
 use App\Http\Controllers\Workflow\RequestWorkflowController;
 use App\Http\Controllers\Workflow\WorkflowApproverController;
@@ -53,6 +54,7 @@ Route::middleware("auth")->group(function () {
   Route::get('/user/user-managements', [UserController::class, 'UserManagement'])->name('user-management');
   Route::resource('/user-list', UserController::class);
   Route::resource("user/roles", RoleController::class);
+  Route::resource("user/permissions", PermissionController::class);
 
 
   // Master
@@ -74,6 +76,8 @@ Route::middleware("auth")->group(function () {
   Route::resource("workflows", WorkflowController::class);
   Route::resource("workflow-approvers", WorkflowApproverController::class);
   Route::get("request-forms/create/{workflow_id}", [RequestFormController::class, "create"])->name("request-forms.create-custom");
+  Route::get("confirm-workflows", [ConfirmWorkflowController::class, "index"])->name("confirm-workflows.index");
+  Route::post("confirm-workflows", [ConfirmWorkflowController::class, "confirm"])->name("confirm-workflows.confirm");
 
   // client
   Route::resource("request-workflow", RequestWorkflowController::class);
@@ -103,6 +107,7 @@ Route::get('AJAX/applications/AJAXGetAll', [ApplicationController::class, "AJAXG
 Route::get('AJAX/request-forms/AJAXGetAll', [RequestFormController::class, "AJAXGetAll"]);
 Route::get('AJAX/workflows/AJAXGetAll', [WorkflowController::class, "AJAXGetAll"]);
 Route::get('AJAX/roles/AJAXGetAll', [RoleController::class, "AJAXGetAll"]);
+Route::get('AJAX/permissions/AJAXGetAll', [PermissionController::class, "AJAXGetAll"]);
 
 Route::get("AJAX/workflow-approvers/deleteAll/{workflow_id}", [WorkflowApproverController::class, "destroyAll"]);
 

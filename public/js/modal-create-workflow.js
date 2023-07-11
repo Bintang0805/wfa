@@ -47,55 +47,53 @@ $(function () {
   // Modal id
   const appModal = document.getElementById('createApp');
 
-  var addNewWorkflow = document.getElementById('addNewWorkflowForm');
-
-  var fv = FormValidation.formValidation(addNewWorkflow, {
-    fields: {
-      name: {
-        validators: {
-          notEmpty: {
-            message: 'this is required'
-          }
-        }
-      },
-      // initiation_role: {
-      //   validators: {
-      //     notEmpty: {
-      //       message: 'this is required'
-      //     },
-      //   }
-      // },
-      // worker_roles: {
-      //   validators: {
-      //     notEmpty: {
-      //       message: 'this is required'
-      //     },
-      //   }
-      // },
-      // approver_roles: {
-      //   validators: {
-      //     notEmpty: {
-      //       message: 'this is required'
-      //     },
-      //   }
-      // },
-    },
-    plugins: {
-      trigger: new FormValidation.plugins.Trigger(),
-      bootstrap5: new FormValidation.plugins.Bootstrap5({
-        // Use this for enabling/changing valid/invalid class
-        eleValidClass: '',
-        rowSelector: function rowSelector(field, ele) {
-          // field is the field name & ele is the field element
-          return '.form-input';
-        }
-      }),
-      submitButton: new FormValidation.plugins.SubmitButton(),
-      // // Submit the form when all fields are valid
-      // defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
-      // autoFocus: new FormValidation.plugins.AutoFocus()
-    }
-  })
+  // var fv = FormValidation.formValidation(addNewWorkflow, {
+  //   fields: {
+  //     name: {
+  //       validators: {
+  //         notEmpty: {
+  //           message: 'this is required'
+  //         }
+  //       }
+  //     },
+  //     // initiation_role: {
+  //     //   validators: {
+  //     //     notEmpty: {
+  //     //       message: 'this is required'
+  //     //     },
+  //     //   }
+  //     // },
+  //     // worker_roles: {
+  //     //   validators: {
+  //     //     notEmpty: {
+  //     //       message: 'this is required'
+  //     //     },
+  //     //   }
+  //     // },
+  //     // approver_roles: {
+  //     //   validators: {
+  //     //     notEmpty: {
+  //     //       message: 'this is required'
+  //     //     },
+  //     //   }
+  //     // },
+  //   },
+  //   plugins: {
+  //     trigger: new FormValidation.plugins.Trigger(),
+  //     // bootstrap5: new FormValidation.plugins.Bootstrap5({
+  //     //   // Use this for enabling/changing valid/invalid class
+  //     //   eleValidClass: '',
+  //     //   rowSelector: function rowSelector(field, ele) {
+  //     //     // field is the field name & ele is the field element
+  //     //     return '.form-input';
+  //     //   }
+  //     // }),
+  //     submitButton: new FormValidation.plugins.SubmitButton(),
+  //     // // Submit the form when all fields are valid
+  //     // defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
+  //     // autoFocus: new FormValidation.plugins.AutoFocus()
+  //   }
+  // })
 
   appModal.addEventListener('show.bs.modal', function (event) {
     const wizardCreateApp = document.querySelector('#wizard-create-app');
@@ -127,77 +125,61 @@ $(function () {
       if (wizardCreateAppBtnSubmit) {
         wizardCreateAppBtnSubmit.addEventListener('click', event => {
           let formData = $(event.target.parentNode.parentNode.parentNode.parentNode).serializeArray();
-          let getApproverRoles = formData.filter(f => f.name == "approver_roles");
-          let getWorkflow = formData.filter(f => f.name != "approver_roles");
+
+          if (formData.length == 0) {
+            formData = $(event.target.parentNode.parentNode.parentNode).serializeArray();
+          }
 
           let worfklowStoreURL = `${window.location.origin}/workflows`;
           let worfklowApproverStoreURL = `${window.location.origin}/workflow-approvers`;
 
-          fv.validate().then((status) => {
-            if (status == "Valid") {
-              $.ajaxSetup({
-                headers: {
-                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-              });
+          let validate = checkValidInput(formData, ["name", "initiation_role", "worker_roles", "approver_roles"], ["_token", "id"]);
+          // console.log(validate);
+          if (validate.isValid) {
+            createNewWorkflow(worfklowStoreURL, worfklowApproverStoreURL, formData)
+          } else {
+            showErrors(validate.validateInput);
+            let firstInvalidInput = validate.validateInput.find(f => f.isValid == false);
 
-              $.ajax({
-                url: worfklowStoreURL,
-                type: 'POST',
-                data: getWorkflow,
-                success: function (data) {
-                  let worfklowApproverDeleteAllURL = `${window.location.origin}/AJAX/workflow-approvers/deleteAll/${data.data.id}`;
-                  $.ajax({
-                    url: worfklowApproverDeleteAllURL,
-                    type: 'GET',
-                    success: function () {
-                      $.ajax({
-                        url: worfklowApproverStoreURL,
-                        type: 'POST',
-                        data: {
-                          workflow_id: data.data.id,
-                          approver_roles: getApproverRoles,
-                        },
-                        success: function (data) {
-                          $(".success-toast").toast('show');
-                          let fr = $("#addNewWorkflowForm")
-                          fr[0].reset(true);
-                          $("#createApp").modal("hide");
-                          setTimeout(() => {
-                            location.reload();
-                          }, 1000);
-                          setTimeout(() => {
-                            if ($(".success-toast")) {
-                              $(".success-toast").toast('hide');
-                            }
-                          }, 5000);
-                          return true;
-                        },
-                        error: function () {
-                          return false;
-                        }
-                      });
-                      return true;
-                    },
-                    error: function () {
-                      return false;
-                    }
-                  });
-                  return true;
-                },
-                error: function () {
-                  return false;
-                }
-              });
-            } else {
-              createAppStepper.previous();
-              createAppStepper.previous();
-              createAppStepper.previous();
-              createAppStepper.previous();
-              createAppStepper.previous();
-              createAppStepper.previous();
+            if (firstInvalidInput) {
+              switch (firstInvalidInput.name) {
+                case "name":
+                  createAppStepper.previous();
+                  createAppStepper.previous();
+                  createAppStepper.previous();
+                  createAppStepper.previous();
+                  createAppStepper.previous();
+                  createAppStepper.previous();
+                  break;
+                case "initiation_role":
+                  createAppStepper.previous();
+                  createAppStepper.previous();
+                  createAppStepper.previous();
+                  createAppStepper.previous();
+                  createAppStepper.previous();
+                  break;
+                case "worker_roles":
+                  createAppStepper.previous();
+                  createAppStepper.previous();
+                  createAppStepper.previous();
+                  createAppStepper.previous();
+                  break;
+                case "approver_roles":
+                  createAppStepper.previous();
+                  createAppStepper.previous();
+                  createAppStepper.previous();
+                  break;
+                default:
+                  createAppStepper.previous();
+                  createAppStepper.previous();
+                  createAppStepper.previous();
+                  createAppStepper.previous();
+                  createAppStepper.previous();
+                  createAppStepper.previous();
+                  break;
+              }
             }
-          })
+          }
         });
       }
     }
@@ -232,15 +214,15 @@ $(function () {
     selectElement.name = "approver_roles";
     selectElement.className = "form-select";
 
-    let defaultOption = document.createElement("option");
-    defaultOption.value = "";
-    defaultOption.textContent = "Select";
-    selectElement.appendChild(defaultOption);
+    // let defaultOption = document.createElement("option");
+    // defaultOption.value = "";
+    // defaultOption.textContent = "Select";
+    // selectElement.appendChild(defaultOption);
 
     notSelectedRoles.forEach(role => {
       let optionElement = document.createElement("option");
       optionElement.value = role.id;
-      optionElement.textContent = role.role_name;
+      optionElement.textContent = role.name;
       selectElement.appendChild(optionElement);
     });
 
@@ -270,36 +252,22 @@ $(function () {
     selectElement.name = "approver_roles";
     selectElement.className = "form-select";
 
-    let defaultOption = document.createElement("option");
-    defaultOption.value = "";
-    defaultOption.textContent = "Select";
-    selectElement.appendChild(defaultOption);
+    // let defaultOption = document.createElement("option");
+    // defaultOption.value = "";
+    // defaultOption.textContent = "Select";
+    // selectElement.appendChild(defaultOption);
 
     GetAllDataRoles.forEach(role => {
       let optionElement = document.createElement("option");
       optionElement.value = role.id;
-      optionElement.textContent = role.role_name;
+      optionElement.textContent = role.name;
       selectElement.appendChild(optionElement);
     });
 
     newApproverInput.appendChild(selectElement);
 
     $("#inputNewApprover").append(newApproverInput);
-
-    // selectElement.addEventListener("change", (event) => {
-    //   let thisSelect = $(event.target).val();
-    //   let selectedRoles = GetAllDataRoles.find(f => f.id == thisSelect);
-    //   removedRoles.push(selectedRoles);
-    //   GetAllDataRoles.splice(GetAllDataRoles.indexOf(selectedRoles), 1)[0];
-    // })
   }
-
-  // $("#add-approver-roles").on("change", (event) => {
-  //   let thisSelect = $(event.target).val();
-  //   let selectedRoles = GetAllDataRoles.find(f => f.id == thisSelect);
-  //   removedRoles.push(selectedRoles);
-  //   GetAllDataRoles.splice(GetAllDataRoles.indexOf(selectedRoles), 1)[0];
-  // })
 
   $('#createApp').on('hidden.bs.modal', function () {
     $("#inputNewApprover").empty();
@@ -308,3 +276,155 @@ $(function () {
 });
 
 
+function checkValidInput(serializeForm, notText = [], ignore = []) {
+  let response = [];
+  let object = {};
+
+  if (ignore.length > 0) {
+    ignore.forEach(field => {
+      serializeForm = serializeForm.filter(f => f.name != field);
+    });
+  }
+
+  let getApproverRoles = serializeForm.filter(f => f.name == "approver_roles");
+
+  if (notText.length > 0) {
+    notText.forEach(fieldName => {
+      if (fieldName != "approver_roles") {
+        if (serializeForm.filter(f => f.name == fieldName).length == 0) {
+          object = {
+            "name": fieldName,
+            "isValid": false,
+          }
+
+          response.push(object)
+        } else {
+          if (serializeForm.find(f => f.name == fieldName).value == "") {
+            object = {
+              "name": fieldName,
+              "isValid": false,
+            }
+          } else {
+            object = {
+              "name": fieldName,
+              "isValid": true,
+            }
+          }
+
+          response.push(object)
+        }
+      } else {
+        let approverRolesValid = true;
+        if (getApproverRoles.length > 0) {
+          getApproverRoles.forEach(input => {
+            if (input.value == "") {
+              approverRolesValid = false;
+            }
+          })
+        } else {
+          approverRolesValid = false;
+        }
+
+        object = {
+          "name": "approver_roles",
+          "isValid": approverRolesValid
+        }
+
+        response.push(object);
+      }
+    });
+  }
+
+  let formValid = true;
+  response.forEach(res => {
+    if (!res.isValid) {
+      formValid = false;
+    }
+  });
+
+  response = {
+    "validateInput": response,
+    "isValid": formValid
+  }
+
+  return response;
+}
+
+
+function showErrors(validateData) {
+  console.log(validateData);
+  validateData.forEach(input => {
+    let elInput = $(`#input_${input.name}`);
+    if (!input.isValid) {
+      if (elInput.hasClass("d-none")) {
+        elInput.removeClass("d-none");
+      }
+    } else {
+      if (!elInput.hasClass("d-none")) {
+        elInput.addClass("d-none");
+      }
+    }
+  })
+}
+
+function createNewWorkflow(workflowURL, approverURL, formData) {
+  let getWorkflow = formData.filter(f => f.name != "approver_roles");
+  let getApproverRoles = formData.filter(f => f.name == "approver_roles");
+
+  $.ajaxSetup({
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+  });
+
+  $.ajax({
+    url: workflowURL,
+    type: 'POST',
+    data: getWorkflow,
+    async: false,
+    success: function (data) {
+      let worfklowApproverDeleteAllURL = `${window.location.origin}/AJAX/workflow-approvers/deleteAll/${data.data.id}`;
+      $.ajax({
+        url: worfklowApproverDeleteAllURL,
+        type: 'GET',
+        async: false,
+        success: function () {
+          $.ajax({
+            url: approverURL,
+            type: 'POST',
+            data: {
+              workflow_id: data.data.id,
+              approver_roles: getApproverRoles,
+            },
+            success: function (data) {
+              $(".success-toast").toast('show');
+              let fr = $("#addNewWorkflowForm")
+              fr[0].reset(true);
+              $("#createApp").modal("hide");
+              setTimeout(() => {
+                location.reload();
+              }, 1000);
+              setTimeout(() => {
+                if ($(".success-toast")) {
+                  $(".success-toast").toast('hide');
+                }
+              }, 5000);
+              return true;
+            },
+            error: function () {
+              return false;
+            }
+          });
+          return true;
+        },
+        error: function () {
+          return false;
+        }
+      });
+      return true;
+    },
+    error: function () {
+      return false;
+    }
+  });
+}

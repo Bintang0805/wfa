@@ -117,7 +117,7 @@
                             <td>{{ $workflow->id }}</td>
                             <td class="request-form-name">{{ $workflow->name }}</td>
                             <td class="request-form-name">
-                                {{ $workflow->request_form != null ? $workflow->request_form->name : 'Create Request Form' }}
+                                {{ $workflow->request_form != null ? $workflow->request_form->name : '' }}
                             </td>
                             <td class="request-form-status"><span
                                     class="badge {{ $workflow->status == 'active' ? 'bg-success' : 'bg-warning' }}">{{ $workflow->status }}</span>
@@ -165,7 +165,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Preview Input</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">

@@ -97,7 +97,8 @@
         </div>
         <div class="card-datatable table-responsive">
             <div class="button d-flex w-100 justify-content-end pe-3">
-                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createApp">Add New
+                <button id="buttonCreateWorkflow" class="btn btn-primary" data-bs-toggle="modal"
+                    data-bs-target="#createApp">Add New
                     Workflow</button>
             </div>
             <table id="datatables-workflows" class="datatables-workflows table border-top">
@@ -133,7 +134,7 @@
                                     data-bs-toggle="modal" data-bs-target="#modalCenterDetail">
                                     <i class="bx bx-dots-vertical-rounded"></i>
                                 </button>
-                                @if ($workflow->status != "active")
+                                @if ($workflow->status != 'active')
                                     <button type="button" class="btn btn-outline-warning btn-sm ms-2 fs-6 rounded-pill"
                                         data-bs-toggle="tooltip" data-bs-placement="right"
                                         data-bs-title="Congratulation! You have created an awesome workflow. Now its time to attach a form to
@@ -275,22 +276,6 @@
                         </div>
                         <div class="row py-2">
                             <div class="col-4">
-                                Level Of Approvers
-                            </div>
-                            <div class="col-8" id="level-of-approvers-detail">
-                                : 0
-                            </div>
-                        </div>
-                        <div class="row py-2">
-                            <div class="col-4">
-                                Approver Roles
-                            </div>
-                            <div class="col-8" id="approver-roles-detail">
-                                : Loading
-                            </div>
-                        </div>
-                        <div class="row py-2">
-                            <div class="col-4">
                                 Worker Roles
                             </div>
                             <div class="col-8" id="worker-roles-detail">
@@ -349,13 +334,13 @@
                 <div class="modal-body p-2">
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     <div class="text-center">
-                        <h3 class="mb-2">Create Workflow</h3>
+                        <h3 class="mb-2" id="modal-title">Create Workflow</h3>
                         <p>Provide data with this form to create your workflow.</p>
                     </div>
                     <!-- Property Listing Wizard -->
                     <div id="wizard-create-app" class="bs-stepper vertical mt-2 shadow-none border-0">
                         <div class="bs-stepper-header border-0 p-1">
-                            <div class="step" data-target="#details">
+                            <div class="step" data-target="#workflow" id="workflow-stepper">
                                 <button type="button" class="step-trigger">
                                     <span class="bs-stepper-circle"><i class="bx bx-file fs-5"></i></span>
                                     <span class="bs-stepper-label">
@@ -365,7 +350,7 @@
                                 </button>
                             </div>
                             <div class="line"></div>
-                            <div class="step" data-target="#frameworks">
+                            <div class="step" data-target="#initiator" id="initiator-stepper">
                                 <button type="button" class="step-trigger">
                                     <span class="bs-stepper-circle"><i class="bx bx-box fs-5"></i></span>
                                     <span class="bs-stepper-label">
@@ -375,7 +360,7 @@
                                 </button>
                             </div>
                             <div class="line"></div>
-                            <div class="step" data-target="#database">
+                            <div class="step" data-target="#worker" id="worker-stepper">
                                 <button type="button" class="step-trigger">
                                     <span class="bs-stepper-circle"><i class="bx bx-data fs-5"></i></span>
                                     <span class="bs-stepper-label">
@@ -385,7 +370,7 @@
                                 </button>
                             </div>
                             <div class="line"></div>
-                            <div class="step" data-target="#billing">
+                            <div class="step" data-target="#approvers" id="approvers-stepper">
                                 <button type="button" class="step-trigger">
                                     <span class="bs-stepper-circle"><i class="bx bx-credit-card fs-5"></i></span>
                                     <span class="bs-stepper-label">
@@ -395,7 +380,7 @@
                                 </button>
                             </div>
                             <div class="line"></div>
-                            <div class="step" data-target="#reminder">
+                            <div class="step" data-target="#reminder" id="reminder-stepper">
                                 <button type="button" class="step-trigger">
                                     <span class="bs-stepper-circle"><i class="bx bx-credit-card fs-5"></i></span>
                                     <span class="bs-stepper-label">
@@ -405,7 +390,7 @@
                                 </button>
                             </div>
                             <div class="line"></div>
-                            <div class="step" data-target="#form">
+                            <div class="step" data-target="#form" id="form-stepper">
                                 <button type="button" class="step-trigger">
                                     <span class="bs-stepper-circle"><i class="bx bx-credit-card fs-5"></i></span>
                                     <span class="bs-stepper-label">
@@ -430,7 +415,10 @@
                                 @csrf
                                 <input type="hidden" name="id" id="workflow-id">
                                 <!-- Details -->
-                                <div id="details" class="content pt-3 pt-lg-0">
+                                <div id="workflow" class="content pt-3 pt-lg-0">
+                                    <div id="input_name" class="alert alert-danger d-none" role="alert">
+                                        Workflow Name is required
+                                    </div>
                                     <div class="mb-3 form-input">
                                         <label class="pb-1" for="add-workflow-name">Workflow Name<span
                                                 class="text-danger ps-1 fs-6">*</span></label>
@@ -455,7 +443,10 @@
                                 </div>
 
                                 <!-- Frameworks -->
-                                <div id="frameworks" class="content pt-3 pt-lg-0">
+                                <div id="initiator" class="content pt-3 pt-lg-0">
+                                    <div id="input_initiation_role" class="alert alert-danger d-none" role="alert">
+                                        Initiation Role is required
+                                    </div>
                                     <h5>Initiator Role<span class="text-danger ps-1 fs-6">*</span></h5>
                                     <ul class="p-0 m-0" style="max-height: 18rem; overflow-y: auto;">
                                         @foreach ($roles as $role)
@@ -465,7 +456,7 @@
                                                 </div>
                                                 <div class="d-flex justify-content-between w-100 flex-wrap gap-2">
                                                     <div class="me-2">
-                                                        <h6 class="mb-0">{{ $role->role_name }}</h6>
+                                                        <h6 class="mb-0">{{ $role->name }}</h6>
                                                     </div>
                                                     <div class="d-flex align-items-center">
                                                         <div class="form-check form-check-inline">
@@ -490,7 +481,10 @@
                                 </div>
 
                                 <!-- Database -->
-                                <div id="database" class="content pt-3 pt-lg-0">
+                                <div id="worker" class="content pt-3 pt-lg-0">
+                                    <div id="input_worker_roles" class="alert alert-danger d-none" role="alert">
+                                        Worker Role is required
+                                    </div>
                                     <h5>Select Worker Role<span class="text-danger ps-1 fs-6">*</span></h5>
                                     <ul class="p-0 m-0" style="max-height: 18rem; overflow-y: auto;">
                                         @foreach ($roles as $role)
@@ -500,7 +494,7 @@
                                                 </div>
                                                 <div class="d-flex justify-content-between w-100 flex-wrap gap-2">
                                                     <div class="me-2">
-                                                        <h6 class="mb-0">{{ $role->role_name }}</h6>
+                                                        <h6 class="mb-0">{{ $role->name }}</h6>
                                                     </div>
                                                     <div class="d-flex align-items-center">
                                                         <div class="form-check form-check-inline">
@@ -524,14 +518,16 @@
                                 </div>
 
                                 <!-- billing -->
-                                <div id="billing" class="content">
+                                <div id="approvers" class="content">
+                                    <div id="input_approver_roles" class="alert alert-danger d-none" role="alert">
+                                        Approver Roles is required & Delete the select without selected roles
+                                    </div>
+                                    <h5>Approvers</h5>
+                                    <label class="form-label" for="modalEditUserLanguage">Select the approvers</label>
                                     <div class="row g-3 pt-3 pt-lg-0 mb-5 form-input" id="inputNewApprover">
-                                        <h5>Approvers</h5>
-                                        <label class="form-label" for="modalEditUserLanguage">Select the approvers</label>
                                         <select id="add-approver-roles" name="approver_roles" class="form-select">
-                                            <option value="">Select</option>
                                             @foreach ($roles as $role)
-                                                <option value="{{ $role->id }}">{{ $role->role_name }}</option>
+                                                <option value="{{ $role->id }}">{{ $role->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -587,14 +583,21 @@
                                     <div class="row mt-3">
                                         <div class="mb-3 form-input col-12">
                                             <label class="form-label" for="add-associated-form">Form</label>
-                                            <select name="associated_form" id="add-associated-form" class="form-select">
-                                                <option value="" selected>Make form later</option>
+                                            <select name="associated_form" id="add-associated-form" class="form-select"
+                                                disabled>
+                                                <option value="" selected>Choose Form To Associate</option>
                                                 @foreach ($forms as $form)
                                                     <option value="{{ $form->id }}">{{ $form->name }}</option>
                                                 @endforeach
                                             </select>
-                                            <small class="text-secondary">yo
-                                                u can use older form or you can make the form later!</small>
+                                            {{-- <small class="text-secondary">yo
+                                                u can use older form or you can make the form later!</small> --}}
+                                            <div class="form-check mt-3">
+                                                <input type="checkbox" class="form-check-input" id="make-form-later"
+                                                    checked onchange="toogleAssociatedForm(this.checked)">
+                                                <label class="form-check-label" for="make-form-later">I will create form
+                                                    later</label>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-12 d-flex justify-content-between mt-4 pt-2">
@@ -620,7 +623,7 @@
                                         <button type="button" class="btn btn-label-secondary btn-prev"> <i
                                                 class="bx bx-left-arrow-alt bx-xs me-sm-1 me-0"></i> <span
                                                 class="align-middle d-sm-inline-block d-none">Previous</span> </button>
-                                        <button type="submit" class="btn btn-success btn-next btn-submit"> <span
+                                        <button type="button" class="btn btn-success btn-next btn-submit"> <span
                                                 class="align-middle d-sm-inline-block d-none">Submit</span></button>
                                     </div>
                                 </div>

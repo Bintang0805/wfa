@@ -23,6 +23,7 @@
 
 @section('page-script')
     <script src="{{ asset('js/roles.js') }}"></script>
+    <script src="{{ asset('js/modal-add-role.js') }}"></script>
     {{-- <script src="{{ asset('assets/js/modal-add-role.js') }}"></script> --}}
 @endsection
 
@@ -86,8 +87,8 @@
                         </div>
                         <div class="d-flex justify-content-between align-items-end">
                             <div class="role-heading">
-                                <h4 class="mb-1">{{ $role->role_name }}</h4>
-                                <a href="javascript:;" data-bs-toggle="modal" data-bs-target="#addRoleModal"
+                                <h4 class="mb-1">{{ $role->name }}</h4>
+                                <a href="javascript:;" data-bs-toggle="modal" data-bs-target="#editRoleModal"
                                     class="edit-button" data-id={{ $role->id }}><small>Edit Role</small></a>
                             </div>
                             <form action="{{ route('roles.destroy', ['role' => $role]) }}" method="POST"
@@ -125,5 +126,6 @@
 
     <!-- Add Role Modal -->
     @include('_partials/_modals/modal-add-role')
+    @include('_partials/_modals/modal-edit-role')
     <!-- / Add Role Modal -->
 @endsection

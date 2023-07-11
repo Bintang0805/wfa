@@ -3,7 +3,7 @@
   <div class="modal-dialog modal-dialog-centered modal-simple">
     <div class="modal-content p-3 p-md-5">
       <div class="modal-body">
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button type="reset" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         <div class="text-center mb-4">
           <h3>Edit Permission</h3>
           <p>Edit permission as per your requirements.</p>

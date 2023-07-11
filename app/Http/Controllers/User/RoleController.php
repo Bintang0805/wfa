@@ -5,6 +5,8 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateRoleRequest;
 use App\Models\User\Role;
+use Spatie\Permission\Models\Role as SpatieRole;
+use Spatie\Permission\Models\Permission as SpatiePermission;
 use Illuminate\Http\Request;
 
 class RoleController extends Controller
@@ -16,9 +18,32 @@ class RoleController extends Controller
    */
   public function index()
   {
+    $SpatiePermissions = SpatiePermission::all();
+    $permissions = [];
+    foreach ($SpatiePermissions as $SpatiePermission) {
+      $SpatiePermissionEx = explode("-", $SpatiePermission->name);
+      if (array_key_exists($SpatiePermissionEx[1], $permissions)) {
+        $newPermission = [
+          "permission" => $SpatiePermission,
+          "function" => $SpatiePermissionEx[0]
+        ];
+
+        array_push($permissions[$SpatiePermissionEx[1]], $newPermission);
+      } else {
+        $newPermission = [
+          "permission" => $SpatiePermission,
+          "function" => $SpatiePermissionEx[0]
+        ];
+
+        $permissions[$SpatiePermissionEx[1]] = [$newPermission];
+      }
+    }
+
     $data = [
       "roles" => Role::all(),
+      "permissions" => $permissions
     ];
+
     return view("user.role.index", $data);
   }
 
@@ -40,8 +65,19 @@ class RoleController extends Controller
    */
   public function store(CreateRoleRequest $request)
   {
-    $credentials = $request->validated();
-    Role::updateOrCreate(['id' => $request->id], $credentials);
+    $roles = [
+      "name" => $request->role_name,
+      "guard_name" => "web"
+    ];
+
+    $role = SpatieRole::updateOrCreate(['id' => $request->id], $roles);
+
+    if(!$role) {
+      return redirect()->route("roles.index")->withErrors("Failed To Add New Role");
+    }
+
+    $role->givePermissionTo($request->permission);
+    
     if ($request->id == null) {
       $successMessage = 'Role Created Successfully';
     } else {
@@ -72,7 +108,7 @@ class RoleController extends Controller
    */
   public function edit($id)
   {
-    $role = Role::where('id', $id)->first();
+    $role = SpatieRole::where("id", $id)->with("permissions")->first();
 
     $data = [
       'role' => $role,

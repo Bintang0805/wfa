@@ -18,9 +18,8 @@
      * Page User List
      */
 
-    let AJAXGetAllURL = `${window.location.origin}/AJAX/roles/AJAXGetAll`;
+    let AJAXGetAllURL = `${window.location.origin}/AJAX/permissions/AJAXGetAll`;
     let GetAllData = null;
-    let oldValue = null;
 
     $.ajax({
       url: AJAXGetAllURL,
@@ -50,88 +49,20 @@
     // Datatable (jquery)
     $(function () {
       // Variable declaration for table
-      var dt_role_table = $('.datatables-roles'),
+      var dt_location_table = $('.datatables-permissions'),
         modal = $('#modalCenter');
 
       // Locations datatable
-      if (dt_role_table.length) {
-        var dt_role = dt_role_table.DataTable({
-          dom: '<"row mx-2"' + '<"col-md-2"<"me-3"l>>' + '<"col-md-10"<"dt-action-buttons text-xl-end text-lg-start text-md-end text-start d-flex align-items-center justify-content-end flex-md-row flex-column mb-3 mb-md-0"fB>>' + '>t' + '<"row mx-2"' + '<"col-sm-12 col-md-6"i>' + '<"col-sm-12 col-md-6"p>' + '>',
-          buttons: [
-            {
-              extend: 'collection',
-              className: 'btn btn-label-secondary dropdown-toggle mx-3',
-              text: '<i class="bx bx-export me-2"></i>Export',
-              buttons: [
-                {
-                  extend: 'print',
-                  title: 'Locations Print',
-                  text: 'Print',
-                  className: 'dropdown-item',
-                  exportOptions: {
-                    columns: [1, 2],
-                  },
-                  customize: function (win) {
-                    //customize print view for dark
-                    $(win.document.body)
-                      .css('color', config.colors.headingColor)
-                      .css('border-color', config.colors.borderColor)
-                      .css('background-color', config.colors.body);
-                    $(win.document.body)
-                      .find('table')
-                      .addClass('compact')
-                      .css('color', 'inherit')
-                      .css('border-color', 'inherit')
-                      .css('background-color', 'inherit');
-                  }
-                },
-                {
-                  extend: 'csv',
-                  title: 'Locations CSV',
-                  text: '<i class="bx bx-file me-2" ></i>Csv',
-                  className: 'dropdown-item',
-                  exportOptions: {
-                    columns: [1, 2],
-                  }
-                },
-                {
-                  extend: 'excel',
-                  title: 'Location Excel',
-                  text: '<i class="bx bxs-file-export me-1"></i>Excel',
-                  className: 'dropdown-item',
-                  exportOptions: {
-                    columns: [1, 2],
-                  }
-                },
-                {
-                  extend: 'pdf',
-                  title: 'Locations PDF',
-                  text: '<i class="bx bxs-file-pdf me-2"></i>Pdf',
-                  className: 'dropdown-item',
-                  exportOptions: {
-                    columns: [1, 2],
-                  }
-                },
-                {
-                  extend: 'copy',
-                  title: 'Locations Copy',
-                  text: '<i class="bx bx-copy me-2" ></i>Copy',
-                  className: 'dropdown-item',
-                  exportOptions: {
-                    columns: [1, 2],
-                  }
-                }
-              ]
-            }],
+      if (dt_location_table.length) {
+        var dt_location = dt_location_table.DataTable({
         });
       }
 
       // clearing form data when offcanvas hidden
       modal.on('hidden.bs.modal', function () {
-        let fv = $("#addNewRoleForm")
-        oldValue = null;
+        let fv = $("#addNewLocationForm")
         fv[0].reset(true);
-        $("#role_id").val("");
+        $("#location_id").val("");
       });
     });
 
@@ -142,53 +73,49 @@
       // Mendapatkan data-id dari tombol edit yang diklik
       var id = $(this).data("id");
 
-      let urlEdit = `${baseUrl}/user/roles/${id}/edit`;
+      let urlEdit = `${baseUrl}/locations/${id}/edit`;
 
       $.ajax({
         url: urlEdit,
         type: 'GET',
         success: function (data) {
-          console.log(data.data.role);
-          let role = data.data.role;
-          oldValue = role.name;
-          $('#edit_role_id').val(role.id);
-          $('#edit_role_name').val(role.name);
-          role.permissions.forEach(permission => {
-            console.log($("#" + permission.name));
-            document.getElementById("edit-" + permission.name).checked = true;
-          });
+          console.log(urlEdit);
+          let location = data.data.location;
+          $('#location_id').val(location.id);
+          $('#add-location-name').val(location.location_name);
+          $('#add-location-company').val(location.company_id);
         }
       });
     });
 
     // Menambahkan event listener ke tombol detail
-    // $(".detail-button").on("click", function () {
-    //   // Mendapatkan data-id dari tombol edit yang diklik
-    //   var id = $(this).data("id");
+    $(".detail-button").on("click", function () {
+      // Mendapatkan data-id dari tombol edit yang diklik
+      var id = $(this).data("id");
 
-    //   let urlEdit = `${baseUrl}/roles/${id}/edit`;
+      let urlEdit = `${baseUrl}/locations/${id}/edit`;
 
-    //   $.ajax({
-    //     url: urlEdit,
-    //     type: 'GET',
-    //     success: function (data) {
-    //       console.log(urlEdit);
-    //       let location = data.data.location;
-    //       console.log(location);
-    //       $('#location-id-detail').text(`: ${location.id}`);
-    //       $('#location-name-detail').text(`: ${location.location_name}`);
-    //       $('#company-id').text(`: ${location.company_id}`);
-    //       $('#company-name-detail').text(`: ${location.company.name}`);
-    //     }
-    //   });
-    // });
+      $.ajax({
+        url: urlEdit,
+        type: 'GET',
+        success: function (data) {
+          console.log(urlEdit);
+          let location = data.data.location;
+          console.log(location);
+          $('#location-id-detail').text(`: ${location.id}`);
+          $('#location-name-detail').text(`: ${location.location_name}`);
+          $('#company-id').text(`: ${location.company_id}`);
+          $('#company-name-detail').text(`: ${location.company.name}`);
+        }
+      });
+    });
 
     // validating form and updating user's data
-    var addNewRoleForm = document.getElementById('addNewRoleForm');
+    var addNewPermissionForm = document.getElementById('addNewPermissionForm');
 
-    var fv = FormValidation.formValidation(addNewRoleForm, {
+    var fv = FormValidation.formValidation(addNewPermissionForm, {
       fields: {
-        role_name: {
+        name: {
           validators: {
             notEmpty: {
               message: 'this is required'
@@ -198,15 +125,24 @@
               callback: (input) => {
                 if (GetAllData != null) {
                   let unique = GetAllData.find(function (data) {
-                    return data.role_name === input.value;
+                    return data.name === input.value;
                   });
-                  if (oldValue != null) {
-                    return unique.role_name == oldValue ? true : false;
-                  } else {
-                    return unique != null ? false : true;
-                  }
+                  return unique != null ? false : true;
                 } else {
                   return true;
+                }
+              }
+            },
+            callback: {
+              message: "Format for this field is invalid",
+              callback: (input) => {
+                var regex = /^[a-z]+-[a-z_]+$/;
+                // return regex.test(input) ? true : false;
+                console.log(regex.test(input.value));
+                if (regex.test(input.value)) {
+                  return true;
+                } else {
+                  return false;
                 }
               }
             }
@@ -231,7 +167,7 @@
     })
 
     // validating form and updating location's data
-    // var addNewLocationFormEdit = document.getElementById('addNewLocationFormEdit');
+    var addNewLocationFormEdit = document.getElementById('addNewLocationFormEdit');
 
     // var fv = FormValidation.formValidation(addNewLocationFormEdit, {
     //   fields: {

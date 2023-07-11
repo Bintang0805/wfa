@@ -28,6 +28,7 @@ let fields = {
 
 let previewJSON = document.getElementById("preview-input-json");
 let inputFormFields = document.getElementById("input-form-fields");
+let formValid = false;
 
 function loadFields() {
   var formBuilder = $(".dropper-elements");
@@ -42,13 +43,49 @@ function loadFields() {
       loadCombinedInput(field, formBuilder);
     } else if (field.input.select) {
       loadSelectInput(field, formBuilder)
-    } else if(field.input.input.attributes.type == "checkbox") {
+    } else if (field.input.input.attributes.type == "checkbox") {
       loadCheckboxInput(field, formBuilder)
     } else {
       loadSingleInput(field, formBuilder);
     }
   });
 
+  // let invalidFields = [];
+  // let hasInvalidFields = false;
+  fields.data.forEach(field => {
+    if (Array.isArray(field.input)) {
+      invalidFields = field.input.filter(f => f.input.input.attributes.name == "");
+      if (invalidFields.length > 0) {
+        formInvalid = true;
+      } else {
+        formInvalid = false;
+      }
+    } else if(field.input.select != undefined) {
+      if(field.input.select.name == "") {
+        formInvalid = true;
+      } else {
+        formInvalid = false;
+      }
+    } else {
+      // invalidFields = field.input.filter(f => f.input.input.attributes.name == "");
+      if (field.input.input.attributes.name == "") {
+        formInvalid = true;
+      } else {
+        formInvalid = false;
+      }
+    }
+  });
+
+  // invalidFields = fields.data.filter(f => f.input.input.attributes.name == "");
+  // if (invalidFields.length > 0) {
+  //   formInvalid = true;
+  // }
+
+  // if(invalidFields.length > 0) {
+  //   formInvalid = true;
+  // } else {
+  //   formInvalid = false;
+  // }
   console.log(fields);
   console.log(JSON.stringify(fields, null, 2));
   let inputJSON = JSON.stringify(fields);
@@ -640,7 +677,7 @@ function createInput(baseInput) {
     input = $("<textarea>", baseInput.input.input.attributes);
   } else if (baseInput.input.input.attributes.type == "checkbox") {
     input = $("<div>");
-    if(baseInput.input.input.option.option.text) {
+    if (baseInput.input.input.option.option.text) {
       for (let i = 0; i < baseInput.input.input.option.option.text.length; i++) {
         let grp = $("<div>").addClass("form-check");
         grp.append($("<input>", baseInput.input.input.attributes).attr("name", `${baseInput.input.input.attributes.name}[]`).val(baseInput.input.input.option.option.value[i]));
@@ -753,7 +790,7 @@ function addNewInput(type, label, placeholder) {
   let baseInput = null;
   if (type == "select") {
     baseInput = {
-      id: Math.floor(Math.random() * 100000) + 1,
+      id: Date.now(),
       input: {
         wrapper: {
           class: "mb-3 form-input",
@@ -778,7 +815,7 @@ function addNewInput(type, label, placeholder) {
     }
   } else if (type == "checkbox") {
     baseInput = {
-      id: Math.floor(Math.random() * 100000) + 1,
+      id: Date.now(),
       input: {
         wrapper: {
           class: "mb-3 form-input",
@@ -804,7 +841,7 @@ function addNewInput(type, label, placeholder) {
     };
   } else {
     baseInput = {
-      id: Math.floor(Math.random() * 100000) + 1,
+      id: Date.now(),
       input: {
         wrapper: {
           class: "mb-3 form-input",
@@ -1067,7 +1104,7 @@ function loadPreviewFields(id) {
       loadCombinedInputPreview(field, formBuilder);
     } else if (field.input.select) {
       loadSelectInputPreview(field, formBuilder)
-    } else if(field.input.input.attributes.type == "checkbox") {
+    } else if (field.input.input.attributes.type == "checkbox") {
       loadCheckboxInputPreview(field, formBuilder)
     } else {
       loadSingleInputPreview(field, formBuilder);
@@ -1192,3 +1229,13 @@ $("#addNewCheckboxOption").on("click", () => {
   addNewCheckboxOption();
 })
 
+$(function () {
+  $("#saveFormSubmit").on("submit", (event) => {
+    if (formInvalid) {
+      $("#form-invalid-alert").removeClass("d-none");
+    } else {
+      $("#form-invalid-alert").addClass("d-none");
+      event.target.submit();
+    }
+  })
+})

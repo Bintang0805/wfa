@@ -29,9 +29,19 @@ class Workflow extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function role(): BelongsTo
+    public function initiation_role(): BelongsTo
     {
-        return $this->belongsTo(Role::class, 'inititation_role', 'id');
+        return $this->belongsTo(Role::class, 'initiation_role', 'id');
+    }
+
+    /**
+     * Get the role that owns the workflow
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function worker_role(): BelongsTo
+    {
+        return $this->belongsTo(Role::class, 'worker_roles', 'id');
     }
 
 

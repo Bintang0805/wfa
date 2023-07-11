@@ -98,7 +98,7 @@ class UserController extends Controller
         $nestedData['name'] = $user->name;
         $nestedData['email'] = $user->email;
         $nestedData['verified'] = $user->verified;
-        $nestedData['role'] = $user->role->role_name;
+        $nestedData['role'] = $user->getRoleNames() != null ? $user->getRoleNames() : "";
 
         $data[] = $nestedData;
       }
@@ -148,6 +148,8 @@ class UserController extends Controller
         ['name' => $request->name, 'email' => $request->email, 'contact' => $request->contact, 'country' => $request->country, 'company_id' => $request->company_id, 'user_role' => $request->user_role, 'password' => Hash::make($request->password)]
       );
 
+      $users->assignRole($request->user_role);
+
       // user updated
       return response()->json('Updated');
     } else {
@@ -159,6 +161,8 @@ class UserController extends Controller
           ['id' => $userID],
           ['name' => $request->name, 'email' => $request->email, 'contact' => $request->contact, 'country' => $request->country, 'company_id' => $request->company_id, 'user_role' => $request->user_role, 'password' => Hash::make($request->password)]
         );
+
+        $users->assignRole($request->user_role);
 
         // user created
         return response()->json('Created');

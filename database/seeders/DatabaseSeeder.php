@@ -31,6 +31,7 @@ class DatabaseSeeder extends Seeder
       ITAssetSeeder::class,
       ApplicationSeeder::class,
       WorkflowSeeder::class,
+      PermissionSeeder::class,
     ]);
   }
 }

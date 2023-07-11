@@ -454,13 +454,17 @@
     <div class="modal fade" id="modalSaveForm" tabindex="-1" aria-labelledby="modalSaveFormLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <form action="{{ route('request-forms.store') }}" method="POST">
+                <form action="{{ route('request-forms.store') }}" method="POST" onsubmit="return false"
+                    id="saveFormSubmit">
                     @csrf
                     <div class="modal-header">
                         <h5 class="modal-title" id="modalSaveFormLabel">Form Builder</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
+                        <div id="form-invalid-alert" class="alert alert-danger error-message d-none" role="alert">
+                            All input must have name attribute!
+                        </div>
                         <input type="hidden" id="input-form-fields" name="fields">
                         @if (isset($workflow))
                             <div class="form-input mb-3">

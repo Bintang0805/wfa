@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\User\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -19,8 +20,8 @@ class UserSeeder extends Seeder
     $data = [
       [
         "id" => 1,
-        "name" => "Admin",
-        "email" => "admin@gmail.com",
+        "name" => "Super Admin",
+        "email" => "superadmin@gmail.com",
         "contact" => "+628123321123",
         "company_id" => 1,
         "country" => "Indonesia",
@@ -30,8 +31,8 @@ class UserSeeder extends Seeder
       ],
       [
         "id" => 2,
-        "name" => "User",
-        "email" => "user@gmail.com",
+        "name" => "Admin",
+        "email" => "admin@gmail.com",
         "contact" => "+6285155011637",
         "company_id" => 1,
         "country" => "Indonesia",
@@ -41,8 +42,8 @@ class UserSeeder extends Seeder
       ],
       [
         "id" => 3,
-        "name" => "Developer",
-        "email" => "developer@example.com",
+        "name" => "User",
+        "email" => "user@example.com",
         "contact" => "+628123456789",
         "company_id" => 1,
         "country" => "Indonesia",
@@ -52,8 +53,8 @@ class UserSeeder extends Seeder
       ],
       [
         "id" => 4,
-        "name" => "Tester",
-        "email" => "tester@example.com",
+        "name" => "Developer",
+        "email" => "developer@example.com",
         "contact" => "+628987654321",
         "company_id" => 1,
         "country" => "Indonesia",
@@ -63,8 +64,8 @@ class UserSeeder extends Seeder
       ],
       [
         "id" => 5,
-        "name" => "Project Manager",
-        "email" => "pm@example.com",
+        "name" => "Tester",
+        "email" => "tester@example.com",
         "contact" => "+628111222333",
         "company_id" => 1,
         "country" => "Indonesia",
@@ -74,8 +75,8 @@ class UserSeeder extends Seeder
       ],
       [
         "id" => 6,
-        "name" => "Database Administrator",
-        "email" => "dbadmin@example.com",
+        "name" => "Project Manager",
+        "email" => "projectmanager@example.com",
         "contact" => "+628444555666",
         "company_id" => 1,
         "country" => "Indonesia",
@@ -129,6 +130,9 @@ class UserSeeder extends Seeder
       ],
     ];
 
-    DB::table('users')->insert($data);
+    foreach ($data as $d) {
+      $user = User::create($d);
+      $user->assignRole($user->role->name);
+    }
   }
 }

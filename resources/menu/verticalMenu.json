@@ -19,20 +19,38 @@
           "url": "/user/user-managements",
           "name": "Users",
           "icon": "menu-icon tf-icons bx bx-cube",
-          "slug": "user"
+          "slug": "users",
+          "can": [
+            "write-users",
+            "read-users"
+          ]
         },
         {
           "url": "/user/roles",
           "name": "Roles",
           "icon": "menu-icon tf-icons bx bx-cube",
-          "slug": "role"
+          "slug": "roles",
+          "can": [
+            "write-roles",
+            "read-roles"
+          ]
+        },
+        {
+          "url": "/user/permissions",
+          "name": "Permission",
+          "icon": "menu-icon tf-icons bx bx-cube",
+          "slug": "permissions",
+          "can": [
+            "write-permissions",
+            "read-permissions"
+          ]
         }
       ]
     },
     {
       "name": "Masters",
       "icon": "menu-icon tf-icons bx bx-home-circle",
-      "slug": "master",
+      "slug": "masters",
       "badge": [
         "primary",
         "3"
@@ -42,67 +60,110 @@
           "url": "/companies",
           "name": "Companies",
           "icon": "menu-icon tf-icons bx bx-building",
-          "slug": "master-company"
+          "slug": "companies",
+          "can": [
+            "write-companies",
+            "read-companies"
+          ]
         },
         {
           "url": "/locations",
           "name": "Locations",
           "icon": "menu-icon tf-icons bx bx-map",
-          "slug": "master-location"
+          "slug": "locations",
+          "can": [
+            "write-locations",
+            "read-locations"
+          ]
         },
         {
           "url": "/facilities",
           "name": "Facilities",
           "icon": "menu-icon tf-icons bx bx-building-house",
-          "slug": "master-facility"
+          "slug": "facilities","can": [
+            "write-facilities",
+            "read-facilities"
+          ]
         },
         {
           "url": "/departments",
           "name": "Departments",
           "icon": "menu-icon tf-icons bx bx-building",
-          "slug": "master-department"
+          "slug": "departments",
+          "can": [
+            "write-departments",
+            "read-departments"
+          ]
         },
         {
           "url": "/equipment-types",
           "name": "Equipment Types",
           "icon": "menu-icon tf-icons bx bx-package",
-          "slug": "master-equipment-type"
+          "slug": "equipment-types",
+          "can": [
+            "write-equipment_types",
+            "read-equipment_types"
+          ]
         },
         {
           "url": "/equipments",
           "name": "Equipments",
           "icon": "menu-icon tf-icons bx bx-package",
-          "slug": "master-equipment"
+          "slug": "equipments",
+          "can": [
+            "write-equipments",
+            "read-equipments"
+          ]
         },
         {
           "url": "/instrument-types",
           "name": "Instrument Types",
           "icon": "menu-icon tf-icons bx bx-microchip",
-          "slug": "master-instrument-type"
+          "slug": "instrument-types",
+          "can": [
+            "write-instrument_types",
+            "read-instrument_types"
+          ]
         },
         {
           "url": "/instruments",
           "name": "Instruments",
           "icon": "menu-icon tf-icons bx bx-microchip",
-          "slug": "master-instrument"
+          "slug": "instruments",
+          "can": [
+            "write-instruments",
+            "read-instruments"
+          ]
         },
         {
           "url": "/it-asset-types",
           "name": "IT Asset Types",
           "icon": "menu-icon tf-icons bx bx-laptop",
-          "slug": "master-it-asset-type"
+          "slug": "it-asset-types",
+          "can": [
+            "write-it_asset_types",
+            "read-it_asset_types"
+          ]
         },
         {
           "url": "/it-assets",
           "name": "IT Assets",
           "icon": "menu-icon tf-icons bx bx-laptop",
-          "slug": "master-it-asset"
+          "slug": "it-assets",
+          "can": [
+            "write-it_assets",
+            "read-it_assets"
+          ]
         },
         {
           "url": "/applications",
           "name": "Applications",
           "icon": "menu-icon tf-icons bx bx-cube",
-          "slug": "master-application"
+          "slug": "applications",
+          "can": [
+            "write-applications",
+            "read-applications"
+          ]
         }
       ]
     },
@@ -119,19 +180,41 @@
           "url": "/workflows",
           "name": "Workflows",
           "icon": "menu-icon tf-icons bx bx-cube",
-          "slug": "workflow-workflow"
+          "slug": "workflow-workflow",
+          "can": [
+            "write-workflows",
+            "read-workflows"
+          ]
         },
         {
           "url": "/request-forms",
           "name": "Request Forms",
           "icon": "menu-icon tf-icons bx bx-cube",
-          "slug": "workflow-request-form"
+          "slug": "workflow-request-form",
+          "can": [
+            "write-request_forms",
+            "read-request_forms"
+          ]
         },
         {
           "url": "/request-workflow",
           "name": "Request Workflow",
           "icon": "menu-icon tf-icons bx bx-cube",
-          "slug": "workflow-request-workflow"
+          "slug": "workflow-request-workflow",
+          "can": [
+            "write-request_workflows",
+            "read-request_workflows"
+          ]
+        },
+        {
+          "url": "/confirm-workflows",
+          "name": "Confirm Workflow",
+          "icon": "menu-icon tf-icons bx bx-cube",
+          "slug": "confirm-workflows",
+          "can": [
+            "write-confirm_workflows",
+            "read-confirm_workflows"
+          ]
         }
       ]
     }

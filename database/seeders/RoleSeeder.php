@@ -18,43 +18,53 @@ class RoleSeeder extends Seeder
     $data = [
       [
         'id' => '1',
-        'role_name' => 'Admin',
+        'name' => 'Super Admin',
+        'guard_name' => "web"
       ],
       [
         'id' => '2',
-        'role_name' => 'User',
+        'name' => 'Admin',
+        'guard_name' => "web"
       ],
       [
         'id' => '3',
-        'role_name' => 'Developer',
+        'name' => 'User',
+        'guard_name' => "web"
       ],
       [
         'id' => '4',
-        'role_name' => 'Tester',
+        'name' => 'Developer',
+        'guard_name' => "web"
       ],
       [
         'id' => '5',
-        'role_name' => 'Project Manager',
+        'name' => 'Tester',
+        'guard_name' => "web"
       ],
       [
         'id' => '6',
-        'role_name' => 'Database Administrator',
+        'name' => 'Project Manager',
+        'guard_name' => "web"
       ],
       [
         'id' => '7',
-        'role_name' => 'Network Engineer',
+        'name' => 'Network Engineer',
+        'guard_name' => "web"
       ],
       [
         'id' => '8',
-        'role_name' => 'System Analyst',
+        'name' => 'System Analyst',
+        'guard_name' => "web"
       ],
       [
         'id' => '9',
-        'role_name' => 'UI/UX Designer',
+        'name' => 'UI/UX Designer',
+        'guard_name' => "web"
       ],
       [
         'id' => '10',
-        'role_name' => 'IT Support',
+        'name' => 'IT Support',
+        'guard_name' => "web"
       ],
     ];
 

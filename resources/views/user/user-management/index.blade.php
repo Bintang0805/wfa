@@ -166,7 +166,7 @@
           <label class="form-label" for="add-user-role">User Role</label>
           <select id="add-user-role" class="form-select" name="user_role">
             @forelse ($roles as $role)
-                <option value="{{ $role->id }}">{{ $role->role_name }}</option>
+                <option value="{{ $role->id }}">{{ $role->name }}</option>
             @empty
                 <option value="" disabled selected>Roles data is empty</option>
             @endforelse

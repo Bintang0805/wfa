@@ -1,7 +1,23 @@
+baseUrl = window.location.origin;
+
+let AJAXGetAllRolesURL = `${window.location.origin}/AJAX/roles/AJAXGetAll`;
+GetAllDataRoles = null;
+fetch(AJAXGetAllRolesURL)
+  .then(response => response.json())
+  .then(data => {
+    GetAllDataRoles = data.data;
+    return true;
+  })
+  .catch(error => {
+    console.error(error);
+    return false;
+  });
+
 $(function () {
 
+  // $("#make-form-later").checked
   var dt_workflow_table = $('.datatables-workflows')
-  let modal = $('#modalCenter');
+  let modal = $('#createApp');
 
   // Locations datatable
   if (dt_workflow_table.length) {
@@ -14,21 +30,6 @@ $(function () {
     fv[0].reset(true);
     $("#workflow-id").val("");
   });
-
-  var baseUrl = window.location.origin;
-
-  let AJAXGetAllRolesURL = `${window.location.origin}/AJAX/roles/AJAXGetAll`;
-  let GetAllDataRoles = null;
-  fetch(AJAXGetAllRolesURL)
-    .then(response => response.json())
-    .then(data => {
-      GetAllDataRoles = data.data;
-      return true;
-    })
-    .catch(error => {
-      console.error(error);
-      return false;
-    });
 
   dt_workflow.on('page.dt', function (e, settings) {
     setTimeout(() => {
@@ -55,6 +56,12 @@ $(function () {
             $('#add-email-reminder').val(workflow.email_reminder);
             $('#add-web-notification').val(workflow.web_notification);
             $('#add-associated-form').val(workflow.associated_form);
+            if (workflow.associated_form != null) {
+              document.getElementById("make-form-later").checked = false;
+              document.getElementById("add-associated-form").disabled = false;
+            }
+
+            $("#modal-title").text("Edit Workflow");
 
             $('#inputNewApprover').empty();
 
@@ -67,15 +74,15 @@ $(function () {
                 selectElement.name = "approver_roles";
                 selectElement.className = "form-select";
 
-                let defaultOption = document.createElement("option");
-                defaultOption.value = "";
-                defaultOption.textContent = "Select";
-                selectElement.appendChild(defaultOption);
+                // let defaultOption = document.createElement("option");
+                // defaultOption.value = "";
+                // defaultOption.textContent = "Select";
+                // selectElement.appendChild(defaultOption);
 
                 GetAllDataRoles.forEach(role => {
                   let optionElement = document.createElement("option");
                   optionElement.value = role.id;
-                  optionElement.textContent = role.role_name;
+                  optionElement.textContent = role.name;
                   if (role.id == approver.approver_roles) {
                     optionElement.selected = true;
                   }
@@ -98,10 +105,8 @@ $(function () {
             } else {
               let approverInput = `
               <div class="d-flex flex-column justify-content-center form-input px-0">
-                <label class="form-label" for="modalEditUserLanguage">Select the approvers</label>
                 <select name="approver_roles" class="form-select">
-                  <option value="">Select</option>
-                  ${GetAllDataRoles.map(role => `<option value="${role.id}">${role.role_name}</option>`).join('')}
+                  ${GetAllDataRoles.map(role => `<option value="${role.id}">${role.name}</option>`).join('')}
                 </select>
               </div>`
               $("#inputNewApprover").append(approverInput);
@@ -126,25 +131,28 @@ $(function () {
             $('#workflow-id-detail').text(`: ${workflow.id}`);
             $('#workflow-name-detail').text(`: ${workflow.name}`);
             $('#workflow-description-detail').text(`: ${workflow.description}`);
-            $('#initiation-role-detail').text(`: ${workflow.initiation_role}`);
-            $('#level-of-approvers-detail').text(`: ${workflow.workflow_approvers.length}`);
-            $('#worker-roles-detail').text(`: ${workflow.worker_roles}`);
+            $('#initiation-role-detail').text(`: ${workflow.initiation_role.name}`);
+            // $('#level-of-approvers-detail').text(`: ${workflow.workflow_approvers.length}`);
+            $('#worker-roles-detail').text(`: ${workflow.worker_role.name}`);
             $('#status-detail').text(`: ${workflow.status}`);
-            $('#email-reminder-detail').text(`: ${workflow.email_reminder}`);
-            $('#web-notification-detail').text(`: ${workflow.web_notification}`);
+            $('#email-reminder-detail').text(`: ${workflow.email_reminder == 1 ? 'Yes' : 'No'}`);
+            $('#web-notification-detail').text(`: ${workflow.web_notification == 1 ? 'Yes' : 'No'}`);
             let i = 1
-            workflow.workflow_approvers.forEach(workflow_approver => {
-              $('#TableBody').append(`
-            <tr>
-            <td>
-            ${i++}
-            </td>
-            <td>
-            ${workflow_approver.role.role_name}
-            </td>
-            </tr>
-            `);
-            });
+            $("#TableBody").empty();
+            if (workflow.workflow_approvers.length != 0) {
+              workflow.workflow_approvers.forEach(workflow_approver => {
+                $('#TableBody').append(`
+              <tr>
+              <td>
+              ${i++}
+              </td>
+              <td>
+              ${workflow_approver.role.name}
+              </td>
+              </tr>
+              `);
+              });
+            }
 
           }
         });
@@ -177,6 +185,13 @@ $(function () {
         $('#add-web-notification').val(workflow.web_notification);
         $('#add-associated-form').val(workflow.associated_form);
 
+        $("#modal-title").text("Edit Workflow");
+
+        if (workflow.associated_form != null) {
+          document.getElementById("make-form-later").checked = false;
+          document.getElementById("add-associated-form").disabled = false;
+        }
+
         $('#inputNewApprover').empty();
 
         if (workflow.workflow_approvers.length > 0) {
@@ -188,15 +203,15 @@ $(function () {
             selectElement.name = "approver_roles";
             selectElement.className = "form-select";
 
-            let defaultOption = document.createElement("option");
-            defaultOption.value = "";
-            defaultOption.textContent = "Select";
-            selectElement.appendChild(defaultOption);
+            // let defaultOption = document.createElement("option");
+            // defaultOption.value = "";
+            // defaultOption.textContent = "Select";
+            // selectElement.appendChild(defaultOption);
 
             GetAllDataRoles.forEach(role => {
               let optionElement = document.createElement("option");
               optionElement.value = role.id;
-              optionElement.textContent = role.role_name;
+              optionElement.textContent = role.name;
               if (role.id == approver.approver_roles) {
                 optionElement.selected = true;
               }
@@ -218,10 +233,8 @@ $(function () {
           });
         } else {
           let approverInput = `<div class="d-flex flex-column justify-content-center px-0">
-          <label class="form-label" for="modalEditUserLanguage">Select the approvers</label>
           <select name="approver_roles" class="form-select">
-            <option value="">Select</option>
-            ${GetAllDataRoles.map(role => `<option value="${role.id}">${role.role_name}</option>`).join('')}
+            ${GetAllDataRoles.map(role => `<option value="${role.id}">${role.name}</option>`).join('')}
           </select>
         </div>`
           $("#inputNewApprover").append(approverInput);
@@ -247,30 +260,37 @@ $(function () {
         $('#workflow-id-detail').text(`: ${workflow.id}`);
         $('#workflow-name-detail').text(`: ${workflow.name}`);
         $('#workflow-description-detail').text(`: ${workflow.description}`);
-        $('#initiation-role-detail').text(`: ${workflow.initiation_role}`);
-        $('#level-of-approvers-detail').text(`: ${workflow.workflow_approvers.length}`);
-        $('#worker-roles-detail').text(`: ${workflow.worker_roles}`);
+        $('#initiation-role-detail').text(`: ${workflow.initiation_role.name}`);
+        // $('#level-of-approvers-detail').text(`: ${workflow.workflow_approvers.length}`);
+        $('#worker-roles-detail').text(`: ${workflow.worker_role.name}`);
         $('#status-detail').text(`: ${workflow.status}`);
-        $('#email-reminder-detail').text(`: ${workflow.email_reminder}`);
-        $('#web-notification-detail').text(`: ${workflow.web_notification}`);
+        $('#email-reminder-detail').text(`: ${workflow.email_reminder == 1 ? 'Yes' : 'No'}`);
+        $('#web-notification-detail').text(`: ${workflow.web_notification == 1 ? 'Yes' : 'No'}`);
 
         let i = 1
-        workflow.workflow_approvers.forEach(workflow_approver => {
-          $('#TableBody').append(`
-            <tr>
-            <td>
-            ${i++}
-            </td>
-            <td>
-            ${workflow_approver.role.role_name}
-            </td>
-            </tr>
-            `);
-        });
+        $("#TableBody").empty();
+        if (workflow.workflow_approvers.length != 0) {
+          workflow.workflow_approvers.forEach(workflow_approver => {
+            $('#TableBody').append(`
+              <tr>
+              <td>
+              ${i++}
+              </td>
+              <td>
+              ${workflow_approver.role.name}
+              </td>
+              </tr>
+              `);
+          });
+        }
       }
     });
   });
 
+
+  $("#buttonCreateWorkflow").on("click", function () {
+    $("#modal-title").text("Create Workflow")
+  })
 
 });
 
@@ -297,4 +317,15 @@ function showPermission(form) {
       )
     }
   })
+}
+
+
+function toogleAssociatedForm(checked) {
+  var select = document.getElementById("add-associated-form");
+  if (checked) {
+    select.disabled = true;
+  } else {
+    select.disabled = false;
+  }
+  // if(checked)
 }

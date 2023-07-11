@@ -47,11 +47,11 @@ class RequestFormController extends Controller
       }
     }
 
-    // dd($requestForms);
     $data = [
       "workflows" => $workflows,
       "request_forms" => $requestForms
     ];
+    // dd($data);
 
     return view("workflow.request-form.index", $data);
   }

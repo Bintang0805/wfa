@@ -16,11 +16,11 @@ return new class extends Migration
         Schema::create('workflow_approvers', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger("workflow_id");
-            $table->unsignedBigInteger("approver_roles");
+            $table->unsignedBigInteger("approver_roles")->nullable();
             $table->timestamps();
 
             $table->foreign("workflow_id")->on("workflows")->references("id")->cascadeOnDelete()->cascadeOnUpdate();
-            $table->foreign("approver_roles")->on("roles")->references("id")->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreign("approver_roles")->on("roles")->references("id")->nullOnDelete()->cascadeOnUpdate();
         });
     }
 

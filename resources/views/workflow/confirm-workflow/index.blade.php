@@ -43,12 +43,15 @@
     <script src="{{ asset('js/request-form.js') }}"></script>
     <script>
         $(".send-request-button").on("click", (event) => {
-            let workflowId = $(event.target).attr("data-workflow-id");
-            let associatedForm = $(event.target).attr("data-id");
-            $("#workflow_id").val(workflowId);
-            loadPreviewFields(associatedForm);
+            let workflowId = $(event.target).attr("data-id");
+            let approvedWorkflowId = $(event.target).attr("data-approved-workflow-id");
+            console.log(approvedWorkflowId);
+            // $("#workflow_id").val(workflowId);
+            $("#approved_workflow_id").val(approvedWorkflowId);
+            loadPreviewFields(workflowId);
         })
     </script>
+    <script src="{{ asset("js/confirm-workflow.js") }}"></script>
 @endsection
 
 @section('content')
@@ -70,63 +73,37 @@
             </div>
         @endforeach
     @endif
-    <div class="card">
-        <div class="card-header">
-            <h5 class="card-title mb-0">Workflows Table</h5>
-        </div>
-        <div class="card-datatable table-responsive">
-            <table id="datatables-workflows" class="datatables-workflows table border-top">
-                <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>Workflow Name</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($workflows as $workflow)
-                        <tr>
-                            <td>{{ $workflow->id }}</td>
-                            <td>{{ $workflow->name }}</td>
-                            <td class="d-flex">
-                                <button class="send-request-button btn-sm btn btn-primary" data-id="{{ $workflow->associated_form }}" data-workflow-id="{{ $workflow->id }}"
-                                    data-bs-toggle="modal" data-bs-target="#sendRequest">
-                                    <i class="bx bx-edit"></i> Send Request
-                                </button>
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
-    </div>
     <div class="card mt-4">
         <div class="card-header">
-            <h5 class="card-title mb-0">Sender Request Table</h5>
+            <h5 class="card-title mb-0">Confirm Workflow Table</h5>
         </div>
         <div class="card-datatable table-responsive">
             <table id="datatables-workflows" class="datatables-workflows table border-top">
                 <thead>
                     <tr>
                         <th>Id</th>
+                        <th>User Name</th>
                         <th>Workflow Name</th>
-                        <th>Need Approved</th>
-                        <th>Approved</th>
-                        <th>Rejected</th>
-                        <th>Status</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($approved_workflows as $approved_workflow)
+                  @php
+                      $i = 1;
+                  @endphp
+                    @foreach ($workflow_approvers as $workflow_approver)
                         <tr>
-                            <td>{{ $approved_workflow->id }}</td>
-                            <td>{{ $approved_workflow->request_workflow->workflow->name }}</td>
-                            <td>{{ $approved_workflow->need_approved }}</td>
-                            <td>{{ $approved_workflow->has_approved }}</td>
-                            <td>{{ $approved_workflow->has_rejected }}</td>
+                            <td>{{ $i++ }}</td>
+                            <td>{{ $workflow_approver->request_workflow->user->name }}</td>
+                            <td>{{ $workflow_approver->request_workflow->workflow->name }}</td>
                             <td>
-                              <span class="badge {{ $approved_workflow->request_workflow->status == 'pending' ? 'text-bg-warning' : ($approved_workflow->request_workflow->status == "rejected" ? 'text-bg-danger' : ($approved_workflow->request_workflow->status == "approved" ? "text-bg-success" : "")) }}">{{ $approved_workflow->request_workflow->status }}</span>
+                              <button class="btn btn-primary button-confirm" data-request="{{ $workflow_approver->request_workflow->request_workflow }}" data-approved-workflow-id="{{ $workflow_approver->id }}">
+                                Confirm
+                              </button>
                             </td>
+                            {{-- <td>
+                              <span class="badge {{ $request_workflow->status == 'pending' ? 'text-bg-warning' : "" }}">{{ $request_workflow->status }}</span>
+                            </td> --}}
                         </tr>
                     @endforeach
                 </tbody>
@@ -240,26 +217,26 @@
     </div> --}}
 
     <!-- Create App Modal -->
-    <div class="modal fade" id="sendRequest" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="confirmRequest" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered modal-simple modal-upgrade-plan">
             <div class="modal-content p-3 p-md-5">
                 <div class="modal-body p-2">
-                  <form action="{{ route('request-workflow.store') }}" method="POST">
+                  <form action="{{ route('confirm-workflows.confirm') }}" method="POST">
                     @csrf
-                    <input type="hidden" name="workflow_id" id="workflow_id">
+                    {{-- <input type="hidden" name="workflow_id" id="workflow_id"> --}}
+                    <input type="hidden" name="approved_workflow_id" id="approved_workflow_id">
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     <div class="text-center">
-                      <h3 class="mb-2">Send Request</h3>
-                      <p>Send request workflow.</p>
+                      <h3 class="mb-2">Approval Workflow</h3>
                     </div>
-                    <div class="input-preview w-100">
+                    <div class="input-preview w-100 row">
                     </div>
-                    <div class="button d-flex justify-content-end pt-4">
-                      <button type="button" class="btn btn-secondary me-3" data-bs-dismiss="modal" aria-label="Close">
-                        Cancel
+                    <div class="button d-flex justify-content-end pt-5">
+                      <button type="submit" name="button" class="btn btn-danger me-3" value="0">
+                        Reject
                       </button>
-                      <button type="submit" class="btn btn-success">
-                        Submit
+                      <button type="submit" name="button" class="btn btn-success" value="1">
+                        Approve
                       </button>
                     </div>
                   </form>

@@ -53,22 +53,32 @@ class WorkflowController extends Controller
 
     $credentials = $request->all();
 
-    if($credentials["associated_form"] != null) {
-      $credentials["status"] = "active";
+    if(isset($credentials["associated_form"])) {
+      if($credentials["associated_form"] != null) {
+        $credentials["status"] = "active";
+      } else {
+        $credentials["status"] = "inactive";
+      }
+    } else {
+      $credentials["status"] = "inactive";
     }
     // dd($credentials);
     $result = Workflow::updateOrCreate(['id' => $request->id], $credentials);
     if($result) {
-      if($credentials["associated_form"] != null) {
-        $associatedFormId = AssociatedForm::select("id")->whereWorkflowId($result->id)->first();
-        $createAssociatedForm = [
-          "workflow_id" => $result->id,
-          "request_form_id" => $credentials["associated_form"]
-        ];
-        if($associatedFormId) {
-          AssociatedForm::where("workflow_id", $result->id)->update($createAssociatedForm);
+      if(isset($credentials["associated_form"])) {
+        if($credentials["associated_form"] != null) {
+          $associatedFormId = AssociatedForm::select("id")->whereWorkflowId($result->id)->first();
+          $createAssociatedForm = [
+            "workflow_id" => $result->id,
+            "request_form_id" => $credentials["associated_form"]
+          ];
+          if($associatedFormId) {
+            AssociatedForm::where("workflow_id", $result->id)->update($createAssociatedForm);
+          } else {
+            AssociatedForm::create($createAssociatedForm);
+          }
         } else {
-          AssociatedForm::create($createAssociatedForm);
+          AssociatedForm::whereWorkflowId($result->id)->delete();
         }
       } else {
         AssociatedForm::whereWorkflowId($result->id)->delete();
@@ -111,7 +121,7 @@ class WorkflowController extends Controller
    */
   public function edit($id)
   {
-    $workflow = Workflow::with("workflow_approvers.role")->whereId($id)->first();
+    $workflow = Workflow::with(["workflow_approvers.role", "initiation_role", "worker_role"])->whereId($id)->first();
     $workflowAssociatedForm = AssociatedForm::whereWorkflowId($id)->first();
     if($workflowAssociatedForm) {
       $workflow->associated_form = $workflowAssociatedForm->request_form_id;

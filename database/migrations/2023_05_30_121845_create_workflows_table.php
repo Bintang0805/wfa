@@ -17,16 +17,16 @@ return new class extends Migration
             $table->id();
             $table->string("name");
             $table->string("description")->nullable();
-            $table->unsignedBigInteger("initiation_role");
+            $table->unsignedBigInteger("initiation_role")->nullable();
             $table->integer("level_of_approvers")->nullable();
-            $table->unsignedBigInteger("worker_roles");
+            $table->unsignedBigInteger("worker_roles")->nullable();
             $table->enum("status", ["active", "inactive"])->default("inactive");
             $table->boolean("email_reminder")->default(false)->nullable();
             $table->boolean("web_notification")->default(false)->nullable();
             $table->timestamps();
 
-            $table->foreign("initiation_role")->references("id")->on("roles")->cascadeOnDelete()->cascadeOnUpdate();
-            $table->foreign("worker_roles")->on("roles")->references("id")->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreign("initiation_role")->references("id")->on("roles")->nullOnDelete()->cascadeOnUpdate();
+            $table->foreign("worker_roles")->on("roles")->references("id")->nullOnDelete()->cascadeOnUpdate();
         });
     }
 
